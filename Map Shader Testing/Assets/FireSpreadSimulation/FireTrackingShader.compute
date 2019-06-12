@@ -6,22 +6,19 @@
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 RWTexture2D<float4> FireMap; 
-
 RWTexture2D<float> HeatMap; // shows the heat generated from that frame of the firemap
+RWTexture2D<float> FuelMap;
+RWTexture2D<float> WaterMap;
+
 
 Texture2D<float4> FirePattern;
-
+Texture2D<float> HeightMap;
 Texture2D<float> BaseFuelMap;
-
-RWTexture2D<float> FuelMap;
 
 float4 FireData[32]; // x pos, y pos, scale, intensity
 int NumFires;
 
-float FireThreshold;
-
 float2 WindOffset;
-
 float WindStrength;
 
 [numthreads(8,8,1)]
@@ -38,7 +35,6 @@ void LoadBaseMap(uint3 id : SV_DispatchThreadID)
 	}
 	
 	FireMap[id.xy] = (Fires + FireMap[id.xy]) *.99;
-	FuelMap[id.xy] = BaseFuelMap[id.xy];
 }
 
 [numthreads(8, 8, 1)]
@@ -56,13 +52,15 @@ void GenerateHeatMap(uint3 id : SV_DispatchThreadID)
 	value += FireMap[float2(id.x - 1, id.y - 1)];
 	value *= .0025f;
 
+	// TODO: Adjust value based on height map
+
 	// TODO: Adjust value based on moisture map
 
 	// add heat value and adjust for fuelmap
 	HeatMap[id.xy] = ((value + HeatMap[id.xy]) * FuelMap[id.xy]);// -.000025;
 
 	// alter fuelmap
-	FuelMap[id.xy] -= value * .25;
+	FuelMap[id.xy] -= value * .15;
 }
 
 [numthreads(8, 8, 1)]
@@ -73,6 +71,4 @@ void GenerateFireMap(uint3 id : SV_DispatchThreadID)
 	value += FireMap[id.xy];
 	value *= FuelMap[id.xy] + .955;
 	FireMap[id.xy] = float4(value, value, value, 0);
-
-	// TODO: Apply fuel map to persist fire values
 }

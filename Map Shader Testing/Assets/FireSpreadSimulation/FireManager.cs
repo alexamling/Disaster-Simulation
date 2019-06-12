@@ -11,9 +11,9 @@ public class FireManager : MonoBehaviour
     int heatMapKernel;
     int fireMapKernel;
 
-    [Range(64, 4096)]
+    [Range(64, 8192)]
     public int mapWidth = 64;
-    [Range(64,4096)]
+    [Range(64, 8192)]
     public int mapHeight = 64;
     
     [Range(0, 1)]
@@ -26,26 +26,26 @@ public class FireManager : MonoBehaviour
     private int numFires = 0;
 
     public Texture2D fireEffect;
-    public Texture2D heightMap;
+    #endregion
 
+
+    [Header("Data Maps")]
+    #region Data Map Variables
+    public Texture2D heightMap;
     public Texture2D baseFuelMap;
+    public Texture2D baseWaterMap;
 
     private RenderTexture fireMap;
     private RenderTexture heatMap;
     private RenderTexture fuelMap;
+    private RenderTexture waterMap;
 
     public Material targetMat;
-    #endregion
-
-    [Header("Tree Data")]
-    #region Countermeasure Variables
-    RenderTexture Humidity;
     #endregion
 
     void Start()
     {
         locationArray = new float[128];
-        baseFuelMap = GeneratePerlinNoise(mapWidth, mapHeight);
 
         fireMap = new RenderTexture(mapWidth, mapHeight, 24);
         fireMap.enableRandomWrite = true;
@@ -59,11 +59,33 @@ public class FireManager : MonoBehaviour
         fuelMap.enableRandomWrite = true;
         fuelMap.Create();
 
+        waterMap = new RenderTexture(mapWidth, mapHeight, 24);
+        fuelMap.enableRandomWrite = true;
+        fuelMap.Create();
+
+        // populate the data maps with provided data, or generate random data
+        if (!heightMap)
+            heightMap = GeneratePerlinNoise(mapWidth, mapHeight);
+        
+        if (baseFuelMap)
+            Graphics.Blit(baseFuelMap, fuelMap);
+        else
+            Graphics.Blit(GeneratePerlinNoise(mapWidth, mapHeight), fuelMap);
+
+        if (baseWaterMap)
+            Graphics.Blit(baseWaterMap, waterMap);
+        else
+            Graphics.Blit(GeneratePerlinNoise(mapWidth, mapHeight), waterMap);
+
+
         UpdateLocationArray();
         
+
+        // load shader kernels
         baseMapKernel = trackingShader.FindKernel("LoadBaseMap");
         heatMapKernel = trackingShader.FindKernel("GenerateHeatMap");
         fireMapKernel = trackingShader.FindKernel("GenerateFireMap");
+
 
         // set firemaps
         trackingShader.SetTexture(baseMapKernel, "FireMap", fireMap);
@@ -77,12 +99,17 @@ public class FireManager : MonoBehaviour
         // set fire pattern texture
         trackingShader.SetTexture(baseMapKernel, "FirePattern", fireEffect);
 
-        // set fuelmap
-        trackingShader.SetTexture(baseMapKernel, "BaseFuelMap", baseFuelMap);
-        trackingShader.SetTexture(baseMapKernel, "FuelMap", fuelMap);
+        // set fuelmaps
         trackingShader.SetTexture(heatMapKernel, "FuelMap", fuelMap);
         trackingShader.SetTexture(fireMapKernel, "FuelMap", fuelMap);
 
+        // set heightmap
+        trackingShader.SetTexture(heatMapKernel, "HeightMap", heightMap);
+
+        // set watermap
+        trackingShader.SetTexture(heatMapKernel, "WaterMap", waterMap);
+
+        // run the shader basemap setup
         trackingShader.Dispatch(baseMapKernel, mapWidth / 8, mapHeight / 8, 1);
     }
     
@@ -91,10 +118,10 @@ public class FireManager : MonoBehaviour
         trackingShader.SetFloat("WindStrength", WindStrength);
         trackingShader.SetFloats("WindOffset", new float[] { WindDirection.x, WindDirection.y });
 
-        trackingShader.Dispatch(heatMapKernel, mapWidth / 8, mapHeight / 8, 1); // run the compute shader
-        trackingShader.Dispatch(fireMapKernel, mapWidth / 8, mapHeight / 8, 1); 
+        trackingShader.Dispatch(heatMapKernel, mapWidth / 8, mapHeight / 8, 1); // update the heatmap
+        trackingShader.Dispatch(fireMapKernel, mapWidth / 8, mapHeight / 8, 1); // update the firemap
 
-        targetMat.SetTexture("_MainTex", fireMap); // assign the render texture to the material
+        targetMat.SetTexture("_MainTex", fireMap); // assign the firemap render texture to the material
     }
 
     /// <summary>
@@ -102,30 +129,27 @@ public class FireManager : MonoBehaviour
     /// </summary>
     void UpdateLocationArray()
     {
-        if(true) //fireLocations.Count != numFires)
+        numFires = fireLocations.Count;
+
+        for (int i = 0; i < numFires; i++)
         {
-            numFires = fireLocations.Count;
-
-            for (int i = 0; i < numFires; i++)
-            {
-                locationArray[i * 4] = Mathf.FloorToInt(fireLocations[i].x);        // x pos
-                locationArray[i * 4 + 1] = Mathf.FloorToInt(fireLocations[i].y);    // y pos
-                locationArray[i * 4 + 2] = 1 / fireLocations[i].z;                  // scale
-                locationArray[i * 4 + 3] = fireLocations[i].w;                      // intensity
-            }
-
-            trackingShader.SetFloats("FireData", locationArray);
-            trackingShader.SetInt("NumFires", numFires);
+            locationArray[i * 4] = Mathf.FloorToInt(fireLocations[i].x);        // x pos
+            locationArray[i * 4 + 1] = Mathf.FloorToInt(fireLocations[i].y);    // y pos
+            locationArray[i * 4 + 2] = 1 / fireLocations[i].z;                  // scale
+            locationArray[i * 4 + 3] = fireLocations[i].w;                      // intensity
         }
+
+        trackingShader.SetFloats("FireData", locationArray);
+        trackingShader.SetInt("NumFires", numFires);
     }
     
     /// <summary>
-    /// Used to Generate a placeholder foliage map
+    /// Used to generate placeholder data maps
     /// </summary>
-    /// <param name="width"></param>
-    /// <param name="height"></param>
-    /// <param name="octaves"></param>
-    /// <returns></returns>
+    /// <param name="width">width of texture</param>
+    /// <param name="height">height of texture</param>
+    /// <param name="octaves">number of times to pass over the texture with perlin noise</param>
+    /// <returns>a grayscale texture with perlin noise values</returns>
     Texture2D GeneratePerlinNoise(int width, int height, int octaves = 3)
     {
         float offsetX = Random.Range(0, 100f);
@@ -136,6 +160,7 @@ public class FireManager : MonoBehaviour
 
         float maxValue = 0;
 
+        // noise loop
         for (int y = 0; y < height; y++)
         {
             for (int x = 0;x < width; x++)
@@ -149,7 +174,7 @@ public class FireManager : MonoBehaviour
 
                 if (value > maxValue) maxValue = value;
             }
-        }
+        } 
 
         // normalization loop
         for (int y = 0; y < height; y++)
