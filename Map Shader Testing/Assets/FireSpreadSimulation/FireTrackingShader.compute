@@ -14,6 +14,7 @@ RWTexture2D<float> WaterMap;
 Texture2D<float4> FirePattern;
 Texture2D<float> HeightMap;
 Texture2D<float> BaseFuelMap;
+Texture2D<float> WaterBodyMap;
 
 float4 FireData[32]; // x pos, y pos, scale, intensity
 int NumFires;
@@ -35,6 +36,7 @@ void LoadBaseMap(uint3 id : SV_DispatchThreadID)
 	}
 	
 	FireMap[id.xy] = (Fires + FireMap[id.xy]) *.99;
+	WaterMap[id.xy] = saturate(.1 * WaterMap[id.xy] + WaterBodyMap[id.xy]);
 }
 
 [numthreads(8, 8, 1)]
@@ -72,7 +74,7 @@ void GenerateHeatMap(uint3 id : SV_DispatchThreadID)
 	value *= .005f;
 
 	// TODO: Adjust value based on moisture map
-	value -= WaterMap[id.xy] * WaterMap[id.xy] * .001;
+	value -= WaterMap[id.xy] * WaterMap[id.xy] * .1;
 	WaterMap[id.xy] -= value;
 
 	// add heat value and adjust for fuelmap

@@ -34,11 +34,12 @@ public class FireManager : MonoBehaviour
     public Texture2D heightMap;
     public Texture2D baseFuelMap;
     public Texture2D baseWaterMap;
+    public Texture2D waterBodyMap;
 
     [HideInInspector]
     public RenderTexture fireMap;
     private RenderTexture heatMap;
-    public RenderTexture fuelMap;
+    private RenderTexture fuelMap;
     private RenderTexture waterMap;
 
     public Material targetMat;
@@ -108,6 +109,8 @@ public class FireManager : MonoBehaviour
         trackingShader.SetTexture(heatMapKernel, "HeightMap", heightMap);
 
         // set watermap
+        trackingShader.SetTexture(baseMapKernel, "WaterBodyMap", waterBodyMap);
+        trackingShader.SetTexture(baseMapKernel, "WaterMap", waterMap);
         trackingShader.SetTexture(heatMapKernel, "WaterMap", waterMap);
 
         // run the shader basemap setup

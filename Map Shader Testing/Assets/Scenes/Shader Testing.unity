@@ -168,8 +168,8 @@ MonoBehaviour:
   heightMap: {fileID: 0}
   baseFuelMap: {fileID: 2800000, guid: 94208158130aa6d4f905e28a0b8b4208, type: 3}
   baseWaterMap: {fileID: 0}
+  waterBodyMap: {fileID: 0}
   fireMap: {fileID: 0}
-  fuelMap: {fileID: 0}
   targetMat: {fileID: 2100000, guid: 5b736594a27a27d44a372692247a6c8a, type: 2}
 --- !u!64 &161593563
 MeshCollider:
@@ -656,18 +656,18 @@ MonoBehaviour:
   trackingShader: {fileID: 7200000, guid: e471e59a88fbb9f4cb72792ddddf982c, type: 3}
   mapWidth: 4096
   mapHeight: 4096
-  WindStrength: 0
-  WindDirection: {x: 0, y: 0}
+  WindStrength: 0.147
+  WindDirection: {x: 2, y: 1}
   fireLocations:
   - {x: 32, y: 32, z: 1, w: 2}
   - {x: 128, y: 2657.8, z: 1, w: 2}
   - {x: 2770, y: 128, z: 1, w: 2}
   fireEffect: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
-  heightMap: {fileID: 2800000, guid: aa46bf3c6b45b9646857e47453bff062, type: 3}
+  heightMap: {fileID: 2800000, guid: ebc203d803c494744ae56e51cd51fee0, type: 3}
   baseFuelMap: {fileID: 0}
   baseWaterMap: {fileID: 0}
+  waterBodyMap: {fileID: 2800000, guid: de8077b22eb5ce8438b2228499a56838, type: 3}
   fireMap: {fileID: 0}
-  fuelMap: {fileID: 0}
   targetMat: {fileID: 2100000, guid: 5b736594a27a27d44a372692247a6c8a, type: 2}
 --- !u!114 &1943949313
 MonoBehaviour:
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireManager: {fileID: 1943949312}
   material: {fileID: 2100000, guid: 5b736594a27a27d44a372692247a6c8a, type: 2}
-  scale: 25
+  scale: 50
   LOD: 16
 --- !u!23 &1943949314
 MeshRenderer:
