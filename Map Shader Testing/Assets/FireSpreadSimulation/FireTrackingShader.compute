@@ -40,27 +40,46 @@ void LoadBaseMap(uint3 id : SV_DispatchThreadID)
 [numthreads(8, 8, 1)]
 void GenerateHeatMap(uint3 id : SV_DispatchThreadID)
 {
-	// sample neighboring coordinates
-	float value = FireMap[id.xy];
-	value += FireMap[float2(id.x, id.y + 1)];
-	value += FireMap[float2(id.x, id.y - 1)];
-	value += FireMap[float2(id.x + 1, id.y)];
-	value += FireMap[float2(id.x - 1, id.y)];
-	value += FireMap[float2(id.x + 1, id.y + 1)];
-	value += FireMap[float2(id.x + 1, id.y - 1)];
-	value += FireMap[float2(id.x - 1, id.y + 1)];
-	value += FireMap[float2(id.x - 1, id.y - 1)];
-	value *= .0025f;
+	float baseHeight = 1 - HeightMap[id.xy];
 
-	// TODO: Adjust value based on height map
+	float heightDif;
+
+	// sample neighboring coordinates, scale based off of the change in heightmap
+	float value = FireMap[id.xy];
+	heightDif = baseHeight + (HeightMap[float2(id.x, id.y + 1)]);
+	value += FireMap[float2(id.x, id.y + 1)] * heightDif * heightDif * heightDif * heightDif * heightDif * heightDif;
+
+	heightDif = baseHeight + (HeightMap[float2(id.x, id.y - 1)]);
+	value += FireMap[float2(id.x, id.y - 1)] * heightDif * heightDif * heightDif * heightDif * heightDif * heightDif;
+
+	heightDif = baseHeight + (HeightMap[float2(id.x + 1, id.y)]);
+	value += FireMap[float2(id.x + 1, id.y)] * heightDif * heightDif * heightDif * heightDif * heightDif * heightDif;
+
+	heightDif = baseHeight + (HeightMap[float2(id.x - 1, id.y)]);
+	value += FireMap[float2(id.x - 1, id.y)] * heightDif * heightDif * heightDif * heightDif * heightDif * heightDif;
+
+	heightDif = baseHeight + (HeightMap[float2(id.x + 1, id.y + 1)]);
+	value += FireMap[float2(id.x + 1, id.y + 1)] * heightDif * heightDif * heightDif * heightDif * heightDif * heightDif;
+
+	heightDif = baseHeight + (HeightMap[float2(id.x + 1, id.y - 1)]);
+	value += FireMap[float2(id.x + 1, id.y - 1)] * heightDif * heightDif * heightDif * heightDif * heightDif * heightDif;
+
+	heightDif = baseHeight + (HeightMap[float2(id.x - 1, id.y + 1)]);
+	value += FireMap[float2(id.x - 1, id.y + 1)] * heightDif * heightDif * heightDif * heightDif * heightDif * heightDif;
+
+	heightDif = baseHeight + (HeightMap[float2(id.x - 1, id.y - 1)]);
+	value += FireMap[float2(id.x - 1, id.y - 1)] * heightDif * heightDif * heightDif * heightDif * heightDif * heightDif;
+	value *= .005f;
 
 	// TODO: Adjust value based on moisture map
+	value -= WaterMap[id.xy] * WaterMap[id.xy] * .001;
+	WaterMap[id.xy] -= value;
 
 	// add heat value and adjust for fuelmap
 	HeatMap[id.xy] = ((value + HeatMap[id.xy]) * FuelMap[id.xy]);// -.000025;
 
 	// alter fuelmap
-	FuelMap[id.xy] -= value * .15;
+	FuelMap[id.xy] -= value * .15 + .001;
 }
 
 [numthreads(8, 8, 1)]

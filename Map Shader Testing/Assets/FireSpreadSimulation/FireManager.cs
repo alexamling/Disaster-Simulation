@@ -12,9 +12,9 @@ public class FireManager : MonoBehaviour
     int fireMapKernel;
 
     [Range(64, 8192)]
-    public int mapWidth = 64;
+    public int mapWidth = 2048;
     [Range(64, 8192)]
-    public int mapHeight = 64;
+    public int mapHeight = 2048;
     
     [Range(0, 1)]
     public float WindStrength;
@@ -35,9 +35,10 @@ public class FireManager : MonoBehaviour
     public Texture2D baseFuelMap;
     public Texture2D baseWaterMap;
 
-    private RenderTexture fireMap;
+    [HideInInspector]
+    public RenderTexture fireMap;
     private RenderTexture heatMap;
-    private RenderTexture fuelMap;
+    public RenderTexture fuelMap;
     private RenderTexture waterMap;
 
     public Material targetMat;
@@ -60,22 +61,22 @@ public class FireManager : MonoBehaviour
         fuelMap.Create();
 
         waterMap = new RenderTexture(mapWidth, mapHeight, 24);
-        fuelMap.enableRandomWrite = true;
-        fuelMap.Create();
+        waterMap.enableRandomWrite = true;
+        waterMap.Create();
 
         // populate the data maps with provided data, or generate random data
         if (!heightMap)
-            heightMap = GeneratePerlinNoise(mapWidth, mapHeight);
+            heightMap = GeneratePerlinNoise(mapWidth, mapHeight, 3);
         
         if (baseFuelMap)
             Graphics.Blit(baseFuelMap, fuelMap);
         else
-            Graphics.Blit(GeneratePerlinNoise(mapWidth, mapHeight), fuelMap);
+            Graphics.Blit(GeneratePerlinNoise(mapWidth, mapHeight, 3), fuelMap);
 
         if (baseWaterMap)
             Graphics.Blit(baseWaterMap, waterMap);
         else
-            Graphics.Blit(GeneratePerlinNoise(mapWidth, mapHeight), waterMap);
+            Graphics.Blit(GeneratePerlinNoise(mapWidth, mapHeight, 3), waterMap);
 
 
         UpdateLocationArray();
@@ -159,6 +160,7 @@ public class FireManager : MonoBehaviour
         Color[] colors = new Color[width * height];
 
         float maxValue = 0;
+        float minValue = 10000000;
 
         // noise loop
         for (int y = 0; y < height; y++)
@@ -173,6 +175,7 @@ public class FireManager : MonoBehaviour
                 colors[y * width + x] =  new Color(value,value,value,0);
 
                 if (value > maxValue) maxValue = value;
+                if (value < minValue) minValue = value;
             }
         } 
 
@@ -181,7 +184,7 @@ public class FireManager : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                float value = Mathf.InverseLerp(-.5f, maxValue, colors[y * width + x].r);
+                float value = Mathf.InverseLerp(minValue, maxValue, colors[y * width + x].r);
 
                 colors[y * width + x] = new Color(value, value, value, 0);
             }
