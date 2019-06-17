@@ -19,6 +19,6 @@ public class FloodManager : Manager
     // Update is called once per frame
     void Update()
     {
-        WaterQuad.transform.position += new Vector3(0, 25 * Mathf.Sin(Time.time), 0) * Time.deltaTime;
+        WaterQuad.transform.position += new Vector3(0, 2.5f * Mathf.Sin(Time.time * .1f), 0) * Time.deltaTime;
     }
 }

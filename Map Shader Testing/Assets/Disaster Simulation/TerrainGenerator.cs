@@ -74,20 +74,20 @@ public class TerrainGenerator : MonoBehaviour
 
     void GenerateMesh()
     {
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < this.height; y++)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < this.width; x++)
             {
-                int index = y * width + x;
+                int index = y * this.width + x;
 
-                vertecies[index] = new Vector3(-x, heightMap.GetPixel(Mathf.FloorToInt(x * detailModifier / scaleDif), Mathf.FloorToInt(y * detailModifier / scaleDif)).r * scale, y);
+                vertecies[index] = new Vector3(-x, heightMap.GetPixel(Mathf.FloorToInt(x * detailModifier / scaleDif), Mathf.FloorToInt(y * detailModifier / scaleDif)).r * scale + Random.Range(.0f,.01f), y);
 
-                uvs[index] = new Vector2((float)x / width, (float)y / height);
+                uvs[index] = new Vector2((float)x / this.width, (float)y / this.height);
 
-                if (x < width - 1 && y < height - 1)
+                if (x < this.width - 1 && y < this.height - 1)
                 {
-                    AddTriangle(index, index + width + 1, index + width);
-                    AddTriangle(index + width + 1, index, index + 1);
+                    AddTriangle(index, index + this.width + 1, index + this.width);
+                    AddTriangle(index + this.width + 1, index, index + 1);
                 }
             }
         }
@@ -98,7 +98,6 @@ public class TerrainGenerator : MonoBehaviour
         mesh.RecalculateNormals();
 
         meshFilter.mesh = mesh;
-        
     }
 
     // Update is called once per frame
