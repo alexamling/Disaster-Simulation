@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum MapType { HeightMap, FuelMap, WaterMap};
+
 public class FireManager : Manager
 {
     [Header("Shader Data")]
@@ -35,8 +37,12 @@ public class FireManager : Manager
     public RenderTexture waterMap;
     #endregion
 
+    int texturesLoading = 0;
+
     void Start()
     {
+        texturesLoading = 1;
+
         locationArray = new float[128];
 
         output = new RenderTexture(mapWidth, mapHeight, 24);
@@ -55,30 +61,49 @@ public class FireManager : Manager
         waterMap.enableRandomWrite = true;
         waterMap.Create();
 
+        UpdateLocationArray();
+    }
+    
+    public override IEnumerator Load()
+    {
+        texturesLoading = 0;
+        Debug.Log(texturesLoading);
+
         // populate the data maps with provided data, or generate random data
         if (!heightMap)
-            heightMap = GeneratePerlinNoise(mapWidth, mapHeight, 3);
+        {
+            texturesLoading++;
+            Debug.Log(texturesLoading);
+            yield return StartCoroutine(GeneratePerlinNoise(mapWidth, mapHeight, MapType.HeightMap));
+        }
         
-        if (baseFuelMap)
-            Graphics.Blit(baseFuelMap, fuelMap);
-        else
-            Graphics.Blit(GeneratePerlinNoise(mapWidth, mapHeight, 3), fuelMap);
+        if (!baseFuelMap)
+        {
+            texturesLoading++;
+            Debug.Log(texturesLoading);
+            yield return StartCoroutine(GeneratePerlinNoise(mapWidth, mapHeight, MapType.FuelMap));
+        }
 
-        if (baseWaterMap)
-            Graphics.Blit(baseWaterMap, waterMap);
-        else
-            Graphics.Blit(GeneratePerlinNoise(mapWidth, mapHeight, 3), waterMap);
+        Graphics.Blit(baseFuelMap, fuelMap);
 
+        if (!baseWaterMap)
+        {
+            texturesLoading++;
+            Debug.Log(texturesLoading);
+            yield return StartCoroutine(GeneratePerlinNoise(mapWidth, mapHeight, MapType.WaterMap));
+        }
 
-        UpdateLocationArray();
-        
+        Debug.Log(texturesLoading);
+        Graphics.Blit(baseWaterMap, waterMap);
+
+        while (texturesLoading > 0)
+            yield return null;
 
         // load shader kernels
         baseMapKernel = trackingShader.FindKernel("LoadBaseMap");
         heatMapKernel = trackingShader.FindKernel("GenerateHeatMap");
         fireMapKernel = trackingShader.FindKernel("GenerateFireMap");
-
-
+        
         // set firemaps
         trackingShader.SetTexture(baseMapKernel, "FireMap", output);
         trackingShader.SetTexture(heatMapKernel, "FireMap", output);
@@ -106,10 +131,15 @@ public class FireManager : Manager
 
         // run the shader basemap setup
         trackingShader.Dispatch(baseMapKernel, mapWidth / 8, mapHeight / 8, 1);
+
+        isLoaded = true;
     }
-    
+
     void Update()
     {
+        if (!isLoaded)
+            return;
+
         trackingShader.SetFloat("WindStrength", WindStrength);
         trackingShader.SetFloats("WindOffset", new float[] { WindDirection.x, WindDirection.y });
 
@@ -137,7 +167,7 @@ public class FireManager : Manager
         trackingShader.SetFloats("FireData", locationArray);
         trackingShader.SetInt("NumFires", numFires);
     }
-    
+
     /// <summary>
     /// Used to generate placeholder data maps
     /// </summary>
@@ -145,7 +175,7 @@ public class FireManager : Manager
     /// <param name="height">height of texture</param>
     /// <param name="octaves">number of times to pass over the texture with perlin noise</param>
     /// <returns>a grayscale texture with perlin noise values</returns>
-    Texture2D GeneratePerlinNoise(int width, int height, int octaves = 3)
+    IEnumerator GeneratePerlinNoise(int width, int height, MapType type, int octaves = 3)
     {
         float offsetX = Random.Range(0, 100f);
         float offsetY = Random.Range(0, 100f);
@@ -170,6 +200,12 @@ public class FireManager : Manager
 
                 if (value > maxValue) maxValue = value;
                 if (value < minValue) minValue = value;
+
+            }
+            if(y % 8 == 0)
+            {
+                Debug.Log("x");
+                yield return null;
             }
         } 
 
@@ -181,13 +217,28 @@ public class FireManager : Manager
                 float value = Mathf.InverseLerp(minValue, maxValue, colors[y * width + x].r);
 
                 colors[y * width + x] = new Color(value, value, value, 0);
+
+            }
+            if (y % 64 == 0)
+            {
+                Debug.Log("y");
+                yield return null;
             }
         }
 
         texture.SetPixels(colors);
         texture.Apply();
 
-        return texture;
+        Debug.Log("texture created");
+
+        if (type == MapType.HeightMap)
+            heightMap = texture;
+        else if (type == MapType.FuelMap)
+            baseFuelMap = texture;
+        else if (type == MapType.WaterMap)
+            baseWaterMap = texture;
+
+        texturesLoading--;
     }
 }
 

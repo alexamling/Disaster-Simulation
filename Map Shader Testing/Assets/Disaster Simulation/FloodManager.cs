@@ -21,4 +21,9 @@ public class FloodManager : Manager
     {
         WaterQuad.transform.position += new Vector3(0, 2.5f * Mathf.Sin(Time.time * .1f), 0) * Time.deltaTime;
     }
+
+    public override IEnumerator Load()
+    {
+        yield return null;
+    }
 }

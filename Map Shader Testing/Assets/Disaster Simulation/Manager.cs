@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Manager : MonoBehaviour
+public abstract class Manager : MonoBehaviour
 {
 
     [Range(64, 8192)]
@@ -15,4 +15,8 @@ public class Manager : MonoBehaviour
     public RenderTexture output;
 
     public Material targetMat;
+
+    public bool isLoaded;
+
+    public abstract IEnumerator Load();
 }
