@@ -204,7 +204,6 @@ public class FireManager : Manager
             }
             if(y % 8 == 0)
             {
-                Debug.Log("x");
                 yield return null;
             }
         } 
@@ -221,7 +220,6 @@ public class FireManager : Manager
             }
             if (y % 64 == 0)
             {
-                Debug.Log("y");
                 yield return null;
             }
         }

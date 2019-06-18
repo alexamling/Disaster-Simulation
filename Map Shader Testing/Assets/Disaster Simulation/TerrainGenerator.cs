@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    public Manager manager;
-    public Material material;
+    private Manager manager;
+    private Material material;
 
     public NavMeshSurface surface;
 
@@ -42,6 +42,10 @@ public class TerrainGenerator : MonoBehaviour
 
         meshFilter = gameObject.GetComponent<MeshFilter>();
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
+
+        manager = gameObject.GetComponent<Manager>();
+
+        material = gameObject.GetComponent<Renderer>().material;
 
         Debug.Log("Awake");
         StartCoroutine(Load());
@@ -113,6 +117,12 @@ public class TerrainGenerator : MonoBehaviour
         gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
 
         surface.BuildNavMesh();
+
+        if (gameObject.GetComponent<UnitController>())
+        {
+            for (int i = 0; i < 10; i++)
+                gameObject.GetComponent<UnitController>().SpawnUnit();
+        }
     }
 
     // Update is called once per frame

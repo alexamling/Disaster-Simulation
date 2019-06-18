@@ -13,6 +13,7 @@ public class PlayerUnit : MonoBehaviour
     void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
+        cam = Camera.main;
     }
 
     // Update is called once per frame
