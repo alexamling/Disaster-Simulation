@@ -9,6 +9,7 @@ public class FireManager : Manager
     [Header("Shader Data")]
     #region Shader Variables
     public ComputeShader trackingShader;
+    Renderer renderer;
     int baseMapKernel;
     int heatMapKernel;
     int fireMapKernel;
@@ -41,6 +42,8 @@ public class FireManager : Manager
 
     void Start()
     {
+        renderer = gameObject.GetComponent<Renderer>();
+
         texturesLoading = 1;
 
         locationArray = new float[128];
@@ -67,7 +70,6 @@ public class FireManager : Manager
     public override IEnumerator Load()
     {
         texturesLoading = 0;
-        Debug.Log(texturesLoading);
 
         // populate the data maps with provided data, or generate random data
         if (!heightMap)
@@ -92,8 +94,7 @@ public class FireManager : Manager
             Debug.Log(texturesLoading);
             yield return StartCoroutine(GeneratePerlinNoise(mapWidth, mapHeight, MapType.WaterMap));
         }
-
-        Debug.Log(texturesLoading);
+        
         Graphics.Blit(baseWaterMap, waterMap);
 
         while (texturesLoading > 0)
@@ -145,8 +146,6 @@ public class FireManager : Manager
 
         trackingShader.Dispatch(heatMapKernel, mapWidth / 8, mapHeight / 8, 1); // update the heatmap
         trackingShader.Dispatch(fireMapKernel, mapWidth / 8, mapHeight / 8, 1); // update the firemap
-
-        targetMat.SetTexture("_MainTex", output); // assign the firemap render texture to the material
     }
 
     /// <summary>
@@ -202,7 +201,7 @@ public class FireManager : Manager
                 if (value < minValue) minValue = value;
 
             }
-            if(y % 8 == 0)
+            if (y % 16 == 0)
             {
                 yield return null;
             }
@@ -218,7 +217,7 @@ public class FireManager : Manager
                 colors[y * width + x] = new Color(value, value, value, 0);
 
             }
-            if (y % 64 == 0)
+            if (y % 128 == 0)
             {
                 yield return null;
             }
@@ -226,8 +225,6 @@ public class FireManager : Manager
 
         texture.SetPixels(colors);
         texture.Apply();
-
-        Debug.Log("texture created");
 
         if (type == MapType.HeightMap)
             heightMap = texture;

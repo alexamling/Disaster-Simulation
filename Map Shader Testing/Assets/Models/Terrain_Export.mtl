@@ -1,0 +1,12 @@
+newmtl CityEngineTerrainMaterial
+illum 3
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+Ns 0
+d 1
+Tf 1.0 1.0 1.0
+Ni 1.0
+map_Kd SampleElevationMap_Resampled_x2.png
+map_d SampleElevationMap_Resampled_x2.png
+

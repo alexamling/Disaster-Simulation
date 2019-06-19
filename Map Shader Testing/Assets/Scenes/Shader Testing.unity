@@ -999,7 +999,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.33333334
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
 --- !u!4 &1772925714
@@ -1170,3 +1170,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 4453358853605719248, guid: 89eaaf1df1fd4d84d82862ef9618e923, type: 3}
+  mapMaterial: {fileID: 2100000, guid: 5b736594a27a27d44a372692247a6c8a, type: 2}
