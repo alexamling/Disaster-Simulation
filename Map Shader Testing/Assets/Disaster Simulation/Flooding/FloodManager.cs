@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FloodManager : Manager
 {
-    public GameObject WaterQuad;
+    public GameObject waterQuad;
 
-    private float waterLevel;
+    public float waterLevel;
 
     public Material mat;
 
@@ -38,8 +38,7 @@ public class FloodManager : Manager
     void Update()
     {
         waterLevel = 2.5f * Mathf.Sin(Time.time * .1f);
-        WaterQuad.transform.position += new Vector3(0, waterLevel, 0) * Time.deltaTime;
-        mat.SetFloat("_WaterLevel", WaterQuad.transform.position.y);
+        waterQuad.transform.position += new Vector3(0, waterLevel, 0) * Time.deltaTime;
     }
 
     public override IEnumerator Load()

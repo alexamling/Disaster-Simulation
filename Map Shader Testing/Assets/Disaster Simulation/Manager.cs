@@ -14,8 +14,6 @@ public abstract class Manager : MonoBehaviour
 
     public RenderTexture output;
 
-    public Material targetMat;
-
     public bool isLoaded;
 
     public abstract IEnumerator Load();

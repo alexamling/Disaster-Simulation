@@ -17,7 +17,7 @@ public class MapController : MonoBehaviour
     public int mapWidth = 4096;
     [Range(64, 8192)]
     public int mapHeight = 4096;
-    [Range(0,10)]
+    [Range(1,10)]
     public int LOD;
     [Space(5)]
     public bool floodEnabled;
@@ -25,6 +25,7 @@ public class MapController : MonoBehaviour
     [Space(5)]
     public MapData dataMaps;
     [Space(5)]
+    public GameObject waterQuadPrefab;
 
     // map display
     private TerrainGenerator terrainGenerator;
@@ -40,11 +41,11 @@ public class MapController : MonoBehaviour
     private Material mat;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         if (floodEnabled)
         {
-            floodManager = new FloodManager();
+            floodManager = gameObject.AddComponent<FloodManager>();
 
             floodManager.mapWidth = mapWidth;
             floodManager.mapHeight = mapHeight;
@@ -52,11 +53,13 @@ public class MapController : MonoBehaviour
             // load availible data maps
             if (dataMaps.heightMap)
                 floodManager.heightMap = dataMaps.heightMap;
+
+            floodManager.waterQuad = Instantiate(waterQuadPrefab);
         }
 
         if (fireEnabled)
         {
-            fireManager = new FireManager();
+            fireManager = gameObject.AddComponent<FireManager>();
 
             fireManager.mapWidth = mapWidth;
             fireManager.mapHeight = mapHeight;
@@ -71,11 +74,21 @@ public class MapController : MonoBehaviour
             if (dataMaps.waterBodyMap)
                 fireManager.heightMap = dataMaps.waterBodyMap;
         }
+
+        terrainGenerator = gameObject.AddComponent<TerrainGenerator>();
+        terrainGenerator.mapController = this;
+        terrainGenerator.LOD = LOD;
+        terrainGenerator.heightMap = dataMaps.heightMap;
+        StartCoroutine(Load());
+    }
+
+    IEnumerator Load()
+    {
+        yield return StartCoroutine(terrainGenerator.Load());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

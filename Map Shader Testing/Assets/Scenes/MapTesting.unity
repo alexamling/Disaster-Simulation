@@ -242,14 +242,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapWidth: 4096
   mapHeight: 4096
-  LOD: 0
+  LOD: 8
   floodEnabled: 0
   fireEnabled: 0
   dataMaps:
-    heightMap: {fileID: 0}
+    heightMap: {fileID: 2800000, guid: ebc203d803c494744ae56e51cd51fee0, type: 3}
     baseFuelMap: {fileID: 0}
     baseWaterMap: {fileID: 0}
-    waterBodyMap: {fileID: 0}
+    waterBodyMap: {fileID: 2800000, guid: de8077b22eb5ce8438b2228499a56838, type: 3}
+  waterQuadPrefab: {fileID: 6068430364975272131, guid: 4506748250dbdce44b7767007834142e,
+    type: 3}
 --- !u!4 &1679284159
 Transform:
   m_ObjectHideFlags: 0

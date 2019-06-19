@@ -5,22 +5,22 @@ using UnityEngine.AI;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    private Manager manager;
-    private Material material;
+    public MapController mapController;
 
-    public NavMeshSurface surface;
+    private NavMeshSurface surface;
 
     [Range(0,250)]
     public float scale = 35;
 
     public int LOD = 32;
-    private int detailModifier;
-    private float scaleDif;
+    private int spaceBetweenPoints = 1;
+    private float worldToMapScale;
 
     #region Mesh Variables
     private Mesh mesh;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
+    private MeshCollider collider;
 
     private Vector3[] vertecies;
     private int[] triangles;
@@ -28,49 +28,33 @@ public class TerrainGenerator : MonoBehaviour
 
     private int triangleIndex;
 
-    private Texture2D heightMap;
-    private int width;
-    private int height;
-
-    private RenderTexture texture;
+    public Texture2D heightMap;
+    private int gridWidth;
+    private int gridHeight;
     #endregion
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        detailModifier = (int)Mathf.Pow(2, LOD);
+        surface = gameObject.AddComponent<NavMeshSurface>();
 
-        meshFilter = gameObject.GetComponent<MeshFilter>();
-        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        spaceBetweenPoints = (int)Mathf.Pow(2, LOD);
 
-        manager = gameObject.GetComponent<Manager>();
-
-        material = gameObject.GetComponent<Renderer>().material;
-
-        Debug.Log("Awake");
-        StartCoroutine(Load());
+        meshFilter = gameObject.AddComponent<MeshFilter>();
+        meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        collider = gameObject.AddComponent<MeshCollider>();
     }
 
-    IEnumerator Load()
+    public IEnumerator Load()
     {
-        yield return StartCoroutine(manager.Load());
+        gridWidth = mapController.mapWidth / spaceBetweenPoints;
+        gridHeight = mapController.mapHeight / spaceBetweenPoints;
 
-        Debug.Log("loaded");
+        worldToMapScale = (float)mapController.mapWidth / heightMap.width;
 
-        heightMap = manager.heightMap;
-        texture = manager.output;
-
-        manager.targetMat = meshRenderer.material;
-
-
-        width = manager.mapWidth / detailModifier;
-        height = manager.mapHeight / detailModifier;
-
-        scaleDif = (float)manager.mapWidth / heightMap.width;
-
-        vertecies = new Vector3[width * height];
-        uvs = new Vector2[width * height];
-        triangles = new int[(width - 1) * (height - 1) * 6];
+        vertecies = new Vector3[gridWidth * gridHeight];
+        uvs = new Vector2[gridWidth * gridHeight];
+        triangles = new int[(gridWidth - 1) * (gridHeight - 1) * 6];
 
         yield return StartCoroutine(GenerateMesh());
     }
@@ -85,27 +69,32 @@ public class TerrainGenerator : MonoBehaviour
 
     IEnumerator GenerateMesh()
     {
-        for (int y = 0; y < this.height; y++)
+        for (int y = 0; y < this.gridHeight; y++)
         {
-            for (int x = 0; x < this.width; x++)
+            for (int x = 0; x < this.gridWidth; x++)
             {
-                int index = y * this.width + x;
+                int index = y * this.gridWidth + x;
 
-                vertecies[index] = new Vector3(-x, heightMap.GetPixel(Mathf.FloorToInt(x * detailModifier / scaleDif), Mathf.FloorToInt(y * detailModifier / scaleDif)).r * scale + Random.Range(.0f,.01f), y);
+                vertecies[index] = new Vector3(
+                    -x, 
+                    heightMap.GetPixel(
+                        Mathf.FloorToInt(x * spaceBetweenPoints / worldToMapScale), 
+                        Mathf.FloorToInt(y * spaceBetweenPoints / worldToMapScale)
+                        ).r * scale + Random.Range(.0f,.01f),
+                    y
+                );
 
-                uvs[index] = new Vector2((float)x / this.width, (float)y / this.height);
+                uvs[index] = new Vector2((float)x / this.gridWidth, (float)y / this.gridHeight);
 
-                if (x < this.width - 1 && y < this.height - 1)
+                if (x < this.gridWidth - 1 && y < this.gridHeight - 1)
                 {
-                    AddTriangle(index, index + this.width + 1, index + this.width);
-                    AddTriangle(index + this.width + 1, index, index + 1);
+                    AddTriangle(index, index + this.gridWidth + 1, index + this.gridWidth);
+                    AddTriangle(index + this.gridWidth + 1, index, index + 1);
                 }
             }
-            if (y % 64 == 0)
-            {
-                yield return null;
-            }
+            yield return null;
         }
+
         mesh = new Mesh();
         mesh.vertices = vertecies;
         mesh.triangles = triangles;
@@ -113,21 +102,8 @@ public class TerrainGenerator : MonoBehaviour
         mesh.RecalculateNormals();
 
         meshFilter.mesh = mesh;
-        gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
+        //collider.sharedMesh = mesh;
 
-        surface.BuildNavMesh();
-
-        if (gameObject.GetComponent<UnitController>())
-        {
-            for (int i = 0; i < 50; i++)
-                gameObject.GetComponent<UnitController>().SpawnUnit();
-        }
+        //surface.BuildNavMesh();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    
 }
