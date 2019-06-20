@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 1679284159}
   - component: {fileID: 1679284158}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: MapController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,11 +240,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687061adf9a64d1498e208e7e5e9fcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapWidth: 4096
-  mapHeight: 4096
+  mapWidth: 1024
+  mapHeight: 1024
   LOD: 8
   floodEnabled: 0
-  fireEnabled: 0
+  fireEnabled: 1
   dataMaps:
     heightMap: {fileID: 2800000, guid: ebc203d803c494744ae56e51cd51fee0, type: 3}
     baseFuelMap: {fileID: 0}
@@ -252,6 +252,7 @@ MonoBehaviour:
     waterBodyMap: {fileID: 2800000, guid: de8077b22eb5ce8438b2228499a56838, type: 3}
   waterQuadPrefab: {fileID: 6068430364975272131, guid: 4506748250dbdce44b7767007834142e,
     type: 3}
+  mapMaterial: {fileID: 2100000, guid: d5e8e820743856e4198b06830c974a7a, type: 2}
 --- !u!4 &1679284159
 Transform:
   m_ObjectHideFlags: 0
@@ -260,7 +261,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679284157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -125.2665, y: 16.516378, z: 95.66177}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -316,7 +317,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 5000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -342,10 +343,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1903306892}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.43051103, y: 0, z: 0, w: 0.9025853}
+  m_LocalPosition: {x: 0, y: 713, z: -643}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 51, y: 0, z: 0}

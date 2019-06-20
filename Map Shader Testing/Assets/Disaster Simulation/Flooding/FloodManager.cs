@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FloodManager : Manager
 {
-    public GameObject waterQuad;
+    public GameObject waterObject;
 
     public float waterLevel;
 
@@ -27,18 +27,22 @@ public class FloodManager : Manager
         mat = gameObject.GetComponent<Renderer>().material;
         maxHeight = gameObject.GetComponent<TerrainGenerator>().scale;
 
+        /* 
+         
         mat.SetFloat("maxHeight", maxHeight);
 
         mat.SetInt("colorCount", colors.Length);
         mat.SetColorArray("colors", colors);
         mat.SetFloatArray("colorStartHeights", colorStartHeights);
+         */
     }
 
     // Update is called once per frame
     void Update()
     {
-        waterLevel = 2.5f * Mathf.Sin(Time.time * .1f);
-        waterQuad.transform.position += new Vector3(0, waterLevel, 0) * Time.deltaTime;
+        waterLevel += 10f * Mathf.Sin(Time.time * .1f) * Time.deltaTime;
+        waterObject.transform.position = new Vector3(0, waterLevel * .5f, 0);
+        waterObject.transform.localScale = new Vector3(mapWidth, waterLevel, mapHeight);
     }
 
     public override IEnumerator Load()

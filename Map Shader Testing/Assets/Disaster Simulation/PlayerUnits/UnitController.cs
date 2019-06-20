@@ -10,7 +10,7 @@ public class UnitController : MonoBehaviour
 
     private Manager manager;
     private TerrainGenerator terrainGenerator;
-    private Renderer renderer;
+    private new Renderer renderer;
 
     private List<PlayerUnit> units;
     private float[] values;
@@ -34,22 +34,22 @@ public class UnitController : MonoBehaviour
         cam = Camera.main;
     }
 
-    public void SpawnUnit(Vector3 position)
+    public void SpawnUnit(GameObject GO, Vector3 position)
     {
-        units.Add(Instantiate(unit, position, Quaternion.identity));
+        units.Add(Instantiate(GO, position, Quaternion.identity).GetComponent<PlayerUnit>());
     }
 
-    public void SpawnUnit()
+    public void SpawnUnit(GameObject GO)
     {
-        float xPos = -Random.Range(0, manager.mapWidth * Mathf.Pow(.5f, terrainGenerator.LOD)) * manager.mapWidth / manager.heightMap.width;
-        float zPos = Random.Range(0, manager.mapHeight * Mathf.Pow(.5f, terrainGenerator.LOD)) * manager.mapWidth / manager.heightMap.width;
+        float xPos = -Random.Range(0, manager.mapWidth) * manager.mapWidth / manager.heightMap.width;
+        float zPos = Random.Range(0, manager.mapHeight) * manager.mapWidth / manager.heightMap.width;
 
         RaycastHit hit;
 
         if(Physics.Raycast(new Ray(new Vector3(xPos, 10000.0f, zPos), Vector3.down), out hit))
         {
             float yPos = hit.point.y;
-            SpawnUnit(new Vector3(xPos, yPos, zPos));
+            SpawnUnit(GO, new Vector3(xPos, yPos, zPos));
         }
         else
         {

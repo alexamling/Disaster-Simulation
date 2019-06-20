@@ -11,13 +11,19 @@ public struct MapData
     public Texture2D waterBodyMap;
 }
 
+public struct ShaderCollection
+{
+    public ComputeShader fireTrackingShader;
+    public ComputeShader floodTrackingShader;
+}
+
 public class MapController : MonoBehaviour
 {
     [Range(64, 8192)]
     public int mapWidth = 4096;
     [Range(64, 8192)]
     public int mapHeight = 4096;
-    [Range(0,10)]
+    [Range(0,32)]
     public int LOD;
     [Space(5)]
     public bool floodEnabled;
@@ -25,7 +31,17 @@ public class MapController : MonoBehaviour
     [Space(5)]
     public MapData dataMaps;
     [Space(5)]
-    public GameObject waterQuadPrefab;
+    public ShaderCollection shaders;
+    [Space(5)]
+    public GameObject waterPrefab;
+    [Space(5)]
+    public Material mapMaterial;
+    [Space(10)]
+    public List<GameObject> BuildingsOfInterest;
+    [Space(5)]
+    public AnimationCurve OutlineColorCurve;
+    [Space(10)]
+    public List<GameObject> playerUnits;
 
     // map display
     private TerrainGenerator terrainGenerator;
@@ -54,11 +70,13 @@ public class MapController : MonoBehaviour
             if (dataMaps.heightMap)
                 floodManager.heightMap = dataMaps.heightMap;
 
-            floodManager.waterQuad = Instantiate(waterQuadPrefab);
+            floodManager.waterObject = Instantiate(waterPrefab);
         }
 
         if (fireEnabled)
         {
+            fireManager.trackingShader = shaders.fireTrackingShader;
+
             fireManager = gameObject.AddComponent<FireManager>();
 
             fireManager.mapWidth = mapWidth;
@@ -79,17 +97,56 @@ public class MapController : MonoBehaviour
         terrainGenerator.mapController = this;
         terrainGenerator.LOD = LOD;
         terrainGenerator.heightMap = dataMaps.heightMap;
-        terrainGenerator.scale = 35;
+        terrainGenerator.scale = 200;
         StartCoroutine(Load());
+
+        unitController = gameObject.AddComponent<UnitController>();
     }
 
     IEnumerator Load()
     {
         yield return StartCoroutine(terrainGenerator.Load());
+        gameObject.GetComponent<Renderer>().material = mapMaterial;
+        if (fireEnabled)
+            yield return StartCoroutine(fireManager.Load());
+        if (floodEnabled)
+            yield return StartCoroutine(floodManager.Load());
+
+        for (int i = 0; i < 10; i++)
+        {
+            unitController.SpawnUnit(playerUnits[0]);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (floodEnabled)
+        {
+            float mix;
+            float value;
+            for (int i = 0; i < BuildingsOfInterest.Count; i++)
+            {
+                value = Mathf.InverseLerp(0,150,BuildingsOfInterest[i].transform.position.y - floodManager.waterLevel);
+
+                if (value > .5)
+                    continue;
+                else if(value > .1)
+                {
+                    mix = Mathf.InverseLerp(.1f, .5f, value);
+                    BuildingsOfInterest[i].GetComponent<Outline>().OutlineColor = mix * Color.green + (1 - mix) * Color.yellow;
+                }
+                else if (value > .05)
+                {
+                    mix = Mathf.InverseLerp(.05f, .1f, value);
+                    BuildingsOfInterest[i].GetComponent<Outline>().OutlineColor = mix * Color.yellow + (1 - mix) * new Color(1, .5f, 0);
+                }
+                else
+                {
+                    mix = Mathf.InverseLerp(.0f, .05f, value);
+                    BuildingsOfInterest[i].GetComponent<Outline>().OutlineColor = mix * new Color(1, .5f, 0) + (1 - mix) * Color.red;
+                }
+            }
+        }
     }
 }

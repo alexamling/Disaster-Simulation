@@ -20,7 +20,7 @@ public class TerrainGenerator : MonoBehaviour
     private Mesh mesh;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
-    private MeshCollider collider;
+    private new MeshCollider collider;
 
     private Vector3[] vertecies;
     private int[] triangles;
@@ -34,24 +34,18 @@ public class TerrainGenerator : MonoBehaviour
     private int verteciesPerLine;
     #endregion
 
-    // Start is called before the first frame update
-    void Start()
+    public IEnumerator Load()
     {
         surface = gameObject.AddComponent<NavMeshSurface>();
-
-
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         collider = gameObject.AddComponent<MeshCollider>();
-    }
 
-    public IEnumerator Load()
-    {
         width = mapController.mapWidth;
         height = mapController.mapHeight;
 
         spaceBetweenPoints = (LOD == 0) ? 1 : LOD * 2;
-        verteciesPerLine = (width / spaceBetweenPoints) + 1;
+        verteciesPerLine = ((width - 1) / spaceBetweenPoints) + 1;
 
         worldToMapScale = (float)heightMap.width / width;
 
@@ -73,19 +67,17 @@ public class TerrainGenerator : MonoBehaviour
     IEnumerator GenerateMesh()
     {
         int index = 0;
-        for (int y = 0; y < height - 1; y +=  spaceBetweenPoints)
+        for (int y = 0; y < height; y +=  spaceBetweenPoints)
         {
-            for (int x = 0; x < width - 1; x += spaceBetweenPoints)
+            for (int x = 0; x < width; x += spaceBetweenPoints)
             {
-
-                Debug.Log(x + ", " + y);
                 vertecies[index] = new Vector3(
                     -x + (width * .5f), 
                     heightMap.GetPixel(
                         Mathf.FloorToInt(x * worldToMapScale), 
                         Mathf.FloorToInt(y * worldToMapScale)
                         ).r * scale + Random.Range(.0f,.01f),
-                    y + (height * .5f)
+                    y - (height * .5f)
                 );
 
                 uvs[index] = new Vector2((float)x / width, (float)y / height);
@@ -96,8 +88,10 @@ public class TerrainGenerator : MonoBehaviour
                     AddTriangle(index + verteciesPerLine + 1, index, index + 1);
                 }
                 index++;
+
+                if(Time.frameCount % 256 == 0)
+                    yield return null;
             }
-            yield return null;
         }
 
         mesh = new Mesh();

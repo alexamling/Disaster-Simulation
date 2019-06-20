@@ -42,11 +42,16 @@ public class FireManager : Manager
 
     void Start()
     {
+    }
+    
+    public override IEnumerator Load()
+    {
         renderer = gameObject.GetComponent<Renderer>();
 
         texturesLoading = 1;
 
         locationArray = new float[128];
+        fireLocations = new List<Vector4>();
 
         output = new RenderTexture(mapWidth, mapHeight, 24);
         output.enableRandomWrite = true;
@@ -65,10 +70,7 @@ public class FireManager : Manager
         waterMap.Create();
 
         UpdateLocationArray();
-    }
-    
-    public override IEnumerator Load()
-    {
+
         texturesLoading = 0;
 
         // populate the data maps with provided data, or generate random data
