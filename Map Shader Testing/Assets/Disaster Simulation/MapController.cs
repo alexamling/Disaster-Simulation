@@ -17,7 +17,7 @@ public class MapController : MonoBehaviour
     public int mapWidth = 4096;
     [Range(64, 8192)]
     public int mapHeight = 4096;
-    [Range(1,10)]
+    [Range(0,10)]
     public int LOD;
     [Space(5)]
     public bool floodEnabled;
@@ -79,6 +79,7 @@ public class MapController : MonoBehaviour
         terrainGenerator.mapController = this;
         terrainGenerator.LOD = LOD;
         terrainGenerator.heightMap = dataMaps.heightMap;
+        terrainGenerator.scale = 35;
         StartCoroutine(Load());
     }
 

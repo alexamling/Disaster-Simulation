@@ -29,8 +29,9 @@ public class TerrainGenerator : MonoBehaviour
     private int triangleIndex;
 
     public Texture2D heightMap;
-    private int gridWidth;
-    private int gridHeight;
+    private int width;
+    private int height;
+    private int verteciesPerLine;
     #endregion
 
     // Start is called before the first frame update
@@ -38,7 +39,6 @@ public class TerrainGenerator : MonoBehaviour
     {
         surface = gameObject.AddComponent<NavMeshSurface>();
 
-        spaceBetweenPoints = (int)Mathf.Pow(2, LOD);
 
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
@@ -47,14 +47,17 @@ public class TerrainGenerator : MonoBehaviour
 
     public IEnumerator Load()
     {
-        gridWidth = mapController.mapWidth / spaceBetweenPoints;
-        gridHeight = mapController.mapHeight / spaceBetweenPoints;
+        width = mapController.mapWidth;
+        height = mapController.mapHeight;
 
-        worldToMapScale = (float)mapController.mapWidth / heightMap.width;
+        spaceBetweenPoints = (LOD == 0) ? 1 : LOD * 2;
+        verteciesPerLine = (width / spaceBetweenPoints) + 1;
 
-        vertecies = new Vector3[gridWidth * gridHeight];
-        uvs = new Vector2[gridWidth * gridHeight];
-        triangles = new int[(gridWidth - 1) * (gridHeight - 1) * 6];
+        worldToMapScale = (float)heightMap.width / width;
+
+        vertecies = new Vector3[verteciesPerLine * verteciesPerLine];
+        uvs = new Vector2[verteciesPerLine * verteciesPerLine];
+        triangles = new int[(verteciesPerLine - 1) * (verteciesPerLine - 1) * 6];
 
         yield return StartCoroutine(GenerateMesh());
     }
@@ -69,28 +72,30 @@ public class TerrainGenerator : MonoBehaviour
 
     IEnumerator GenerateMesh()
     {
-        for (int y = 0; y < this.gridHeight; y++)
+        int index = 0;
+        for (int y = 0; y < height - 1; y +=  spaceBetweenPoints)
         {
-            for (int x = 0; x < this.gridWidth; x++)
+            for (int x = 0; x < width - 1; x += spaceBetweenPoints)
             {
-                int index = y * this.gridWidth + x;
 
+                Debug.Log(x + ", " + y);
                 vertecies[index] = new Vector3(
-                    -x, 
+                    -x + (width * .5f), 
                     heightMap.GetPixel(
-                        Mathf.FloorToInt(x * spaceBetweenPoints / worldToMapScale), 
-                        Mathf.FloorToInt(y * spaceBetweenPoints / worldToMapScale)
+                        Mathf.FloorToInt(x * worldToMapScale), 
+                        Mathf.FloorToInt(y * worldToMapScale)
                         ).r * scale + Random.Range(.0f,.01f),
-                    y
+                    y + (height * .5f)
                 );
 
-                uvs[index] = new Vector2((float)x / this.gridWidth, (float)y / this.gridHeight);
+                uvs[index] = new Vector2((float)x / width, (float)y / height);
 
-                if (x < this.gridWidth - 1 && y < this.gridHeight - 1)
+                if (x < width - spaceBetweenPoints && y < height - spaceBetweenPoints)
                 {
-                    AddTriangle(index, index + this.gridWidth + 1, index + this.gridWidth);
-                    AddTriangle(index + this.gridWidth + 1, index, index + 1);
+                    AddTriangle(index, index + verteciesPerLine + 1, index + verteciesPerLine);
+                    AddTriangle(index + verteciesPerLine + 1, index, index + 1);
                 }
+                index++;
             }
             yield return null;
         }
@@ -102,8 +107,8 @@ public class TerrainGenerator : MonoBehaviour
         mesh.RecalculateNormals();
 
         meshFilter.mesh = mesh;
-        //collider.sharedMesh = mesh;
+        collider.sharedMesh = mesh;
 
-        //surface.BuildNavMesh();
+        surface.BuildNavMesh();
     }
 }
