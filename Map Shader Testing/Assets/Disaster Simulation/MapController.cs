@@ -127,23 +127,26 @@ public class MapController : MonoBehaviour
             float value;
             for (int i = 0; i < BuildingsOfInterest.Count; i++)
             {
-                value = Mathf.InverseLerp(0,150,BuildingsOfInterest[i].transform.position.y - floodManager.waterLevel);
-
-                if (value > .5)
+                if (BuildingsOfInterest[i].GetComponent<PlayerObjective>().status <= 0.001f)
                     continue;
-                else if(value > .1)
+
+                value = Mathf.InverseLerp(0,150,BuildingsOfInterest[i].transform.position.y - floodManager.waterLevel);
+                
+                BuildingsOfInterest[i].GetComponent<PlayerObjective>().status = Mathf.Clamp(value, 0, 1);
+
+                if(value > .5)
                 {
-                    mix = Mathf.InverseLerp(.1f, .5f, value);
+                    mix = Mathf.InverseLerp(.5f, 1, value);
                     BuildingsOfInterest[i].GetComponent<Outline>().OutlineColor = mix * Color.green + (1 - mix) * Color.yellow;
                 }
-                else if (value > .05)
+                else if (value > .25)
                 {
-                    mix = Mathf.InverseLerp(.05f, .1f, value);
+                    mix = Mathf.InverseLerp(.25f, .5f, value);
                     BuildingsOfInterest[i].GetComponent<Outline>().OutlineColor = mix * Color.yellow + (1 - mix) * new Color(1, .5f, 0);
                 }
                 else
                 {
-                    mix = Mathf.InverseLerp(.0f, .05f, value);
+                    mix = Mathf.InverseLerp(.0f, .25f, value);
                     BuildingsOfInterest[i].GetComponent<Outline>().OutlineColor = mix * new Color(1, .5f, 0) + (1 - mix) * Color.red;
                 }
             }
