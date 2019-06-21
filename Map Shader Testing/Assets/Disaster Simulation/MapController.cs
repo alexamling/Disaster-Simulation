@@ -9,12 +9,15 @@ public struct MapData
     public Texture2D baseFuelMap;
     public Texture2D baseWaterMap;
     public Texture2D waterBodyMap;
+    public Texture2D firePattern;
 }
 
+[System.Serializable]
 public struct ShaderCollection
 {
     public ComputeShader fireTrackingShader;
     public ComputeShader floodTrackingShader;
+    public ComputeShader viewMapShader;
 }
 
 public class MapController : MonoBehaviour
@@ -42,19 +45,19 @@ public class MapController : MonoBehaviour
     public AnimationCurve OutlineColorCurve;
     [Space(10)]
     public List<GameObject> playerUnits;
+    [Range(0, 1.1f)]
+    public float duration;
+    [Range(0, .005f)]
+    public float startTime;
 
     // map display
     private TerrainGenerator terrainGenerator;
     // managers
     private FloodManager floodManager;
     private FireManager fireManager;
-    private UnitController unitController;
+    private UnitManager unitManager;
 
-    // Map Compute Shader
-    // Shader Kernel
-    // Map Surface Shader
-
-    private Material mat;
+    private new Renderer renderer;
 
     // Start is called before the first frame update
     void Start()
@@ -75,10 +78,12 @@ public class MapController : MonoBehaviour
 
         if (fireEnabled)
         {
-            fireManager.trackingShader = shaders.fireTrackingShader;
-
             fireManager = gameObject.AddComponent<FireManager>();
 
+            fireManager.trackingShader = shaders.fireTrackingShader;
+
+            fireManager.fireEffect = dataMaps.firePattern;
+            
             fireManager.mapWidth = mapWidth;
             fireManager.mapHeight = mapHeight;
 
@@ -86,11 +91,11 @@ public class MapController : MonoBehaviour
             if (dataMaps.heightMap)
                 fireManager.heightMap = dataMaps.heightMap;
             if (dataMaps.baseFuelMap)
-                fireManager.heightMap = dataMaps.baseFuelMap;
+                fireManager.baseFuelMap = dataMaps.baseFuelMap;
             if (dataMaps.baseWaterMap)
-                fireManager.heightMap = dataMaps.baseWaterMap;
+                fireManager.baseWaterMap = dataMaps.baseWaterMap;
             if (dataMaps.waterBodyMap)
-                fireManager.heightMap = dataMaps.waterBodyMap;
+                fireManager.waterBodyMap = dataMaps.waterBodyMap;
         }
 
         terrainGenerator = gameObject.AddComponent<TerrainGenerator>();
@@ -98,9 +103,14 @@ public class MapController : MonoBehaviour
         terrainGenerator.LOD = LOD;
         terrainGenerator.heightMap = dataMaps.heightMap;
         terrainGenerator.scale = 200;
-        StartCoroutine(Load());
 
-        unitController = gameObject.AddComponent<UnitController>();
+        unitManager = gameObject.AddComponent<UnitManager>();
+        unitManager.mapWidth = mapWidth;
+        unitManager.mapHeight = mapHeight;
+        unitManager.heightMap = dataMaps.heightMap;
+        unitManager.viewMapShader = shaders.viewMapShader;
+
+        StartCoroutine(Load());
     }
 
     IEnumerator Load()
@@ -114,7 +124,13 @@ public class MapController : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            unitController.SpawnUnit(playerUnits[0]);
+            unitManager.SpawnUnit(playerUnits[0]);
+        }
+
+        if (fireEnabled)
+        for (int i = 0; i < 5; i++)
+        {
+            fireManager.StartFire();
         }
     }
 
@@ -151,5 +167,16 @@ public class MapController : MonoBehaviour
                 }
             }
         }
+        unitManager.viewMapShader.SetFloat("duration", duration);
+        unitManager.viewMapShader.SetFloat("startTime", startTime);
+
+        mapMaterial.SetTexture("_ViewMap", unitManager.output);
+        if (fireEnabled)
+            mapMaterial.SetTexture("_FireMap", fireManager.output);
+
+        if (renderer)
+            renderer.material = mapMaterial;
+        else
+            renderer = gameObject.GetComponent<Renderer>();
     }
 }

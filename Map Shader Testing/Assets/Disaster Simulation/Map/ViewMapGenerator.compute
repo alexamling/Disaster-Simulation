@@ -1,0 +1,47 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel GenerateTexture
+#pragma kernel GenerateViewMap
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+
+RWTexture2D<float4> Pattern;
+
+float radius;
+float falloff;
+
+float duration;
+float startTime;
+
+float2 center;
+
+int numViewPoints;
+float2 viewPointData[512];
+
+float val;
+
+[numthreads(8,8,1)]
+void GenerateTexture (uint3 id : SV_DispatchThreadID)
+{
+	uint w, h;
+	Pattern.GetDimensions(w, h);
+
+	float dist = distance(float3(id.x, id.y, 0), float3(w * .5f, h * .5f, 0));
+
+	val = saturate((dist - radius) / -falloff);
+
+	Pattern[id.xy] = float4(val, val, val, val);
+}
+
+[numthreads(8, 8, 1)]
+void GenerateViewMap(uint3 id : SV_DispatchThreadID)
+{
+	val = Result[id.xy].a - .002;
+	for (int i = 0; i < numViewPoints; i ++) {
+		val += Pattern[float2((int)id.x + viewPointData[i].x, (int)id.y - viewPointData[i].y)];
+	}
+	val = saturate(val);
+
+	Result[id.xy] = float4(val, val, val, val);
+}

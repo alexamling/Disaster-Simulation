@@ -9,7 +9,6 @@ public class FireManager : Manager
     [Header("Shader Data")]
     #region Shader Variables
     public ComputeShader trackingShader;
-    Renderer renderer;
     int baseMapKernel;
     int heatMapKernel;
     int fireMapKernel;
@@ -46,8 +45,6 @@ public class FireManager : Manager
     
     public override IEnumerator Load()
     {
-        renderer = gameObject.GetComponent<Renderer>();
-
         texturesLoading = 1;
 
         locationArray = new float[128];
@@ -236,6 +233,16 @@ public class FireManager : Manager
             baseWaterMap = texture;
 
         texturesLoading--;
+    }
+
+    public void StartFire(Vector2 pos)
+    {
+        fireLocations.Add(new Vector4(pos.x, pos.y, Random.Range(.5f, 3), Random.Range(0, 1)));
+    }
+
+    public void StartFire()
+    {
+        StartFire(new Vector2(Random.Range(0, mapWidth), Random.Range(0, mapWidth)));
     }
 }
 

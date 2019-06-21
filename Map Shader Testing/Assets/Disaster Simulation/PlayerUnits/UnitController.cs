@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitController : MonoBehaviour
+public class UnitManager : Manager
 {
+    public ComputeShader viewMapShader;
+    private int generateTextureKernel;
+    private int viewMapKernel;
+
+    public RenderTexture viewPattern;
+
+    public float radius = 75;
+    public float falloff = 50;
+
     public PlayerUnit unit;
-
-    public Material mapMaterial;
-
-    private Manager manager;
-    private TerrainGenerator terrainGenerator;
-    private new Renderer renderer;
 
     private List<PlayerUnit> units;
     private float[] values;
@@ -27,11 +30,27 @@ public class UnitController : MonoBehaviour
         values = new float[0];
 
         units = new List<PlayerUnit>();
-
-        manager = gameObject.GetComponent<Manager>();
-        terrainGenerator = gameObject.GetComponent<TerrainGenerator>();
-        renderer = gameObject.GetComponent<Renderer>();
+        
         cam = Camera.main;
+
+        output = new RenderTexture(mapWidth, mapHeight, 24);
+        output.enableRandomWrite = true;
+        output.Create();
+
+        viewPattern = new RenderTexture(mapWidth, mapHeight, 24);
+        viewPattern.enableRandomWrite = true;
+        viewPattern.Create();
+
+        generateTextureKernel = viewMapShader.FindKernel("GenerateTexture");
+        viewMapKernel = viewMapShader.FindKernel("GenerateViewMap");
+
+        viewMapShader.SetTexture(generateTextureKernel, "Pattern", viewPattern);
+        viewMapShader.SetFloat("radius", radius);
+        viewMapShader.SetFloat("falloff", falloff);
+        viewMapShader.SetTexture(viewMapKernel, "Pattern", viewPattern);
+        viewMapShader.SetTexture(viewMapKernel, "Result", output);
+
+        viewMapShader.Dispatch(generateTextureKernel, mapWidth / 8, mapHeight / 8, 1);
     }
 
     public void SpawnUnit(GameObject GO, Vector3 position)
@@ -41,8 +60,8 @@ public class UnitController : MonoBehaviour
 
     public void SpawnUnit(GameObject GO)
     {
-        float xPos = -Random.Range(0, manager.mapWidth) * manager.mapWidth / manager.heightMap.width;
-        float zPos = Random.Range(0, manager.mapHeight) * manager.mapWidth / manager.heightMap.width;
+        float xPos = -Random.Range(0, mapWidth) * mapWidth / heightMap.width;
+        float zPos = Random.Range(0, mapHeight) * mapWidth / heightMap.width;
 
         RaycastHit hit;
 
@@ -77,31 +96,30 @@ public class UnitController : MonoBehaviour
             }
         }
 
-        if (mapMaterial && units.Count > 0)
+        if (units.Count > 0)
         {
             Vector3 pos;
 
             for (int i = 0; i < units.Count; i++)
             {
                 pos = units[i].transform.position;
-                values[i * 5] = pos.x;
-                values[i * 5 + 1] = pos.y;
-                values[i * 5 + 2] = pos.z;
-                values[i * 5 + 3] = 5;
-                values[i * 5 + 4] = 2;
+                values[i * 4] = pos.x;
+                values[i * 4 + 1] = pos.z;
                 
                 if (newDest != Vector3.zero)
                     if(units[i].agent.isOnNavMesh)
                         units[i].agent.SetDestination(newDest);
             }
+            
+            viewMapShader.SetInt("numViewPoints", units.Count);
+            viewMapShader.SetFloats("viewPointData", values);
 
-
-            mapMaterial.SetInt("_NumInteractions", units.Count);
-            mapMaterial.SetFloatArray("_InteractionPoints", values);
-
-            mapMaterial.SetTexture("_FireMap", manager.output);
-
-            renderer.material = mapMaterial;
+            viewMapShader.Dispatch(viewMapKernel, mapWidth / 8, mapHeight / 8, 1);
         }
+    }
+
+    public override IEnumerator Load()
+    {
+        throw new System.NotImplementedException();
     }
 }
