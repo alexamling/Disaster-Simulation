@@ -20,6 +20,13 @@ public struct ShaderCollection
     public ComputeShader viewMapShader;
 }
 
+[System.Serializable]
+public struct DebuggingSetup
+{
+    public bool debugMode;
+    public Material renderTarget;
+}
+
 public class MapController : MonoBehaviour
 {
     [Range(64, 8192)]
@@ -50,6 +57,9 @@ public class MapController : MonoBehaviour
     [Range(0, .005f)]
     public float startTime;
 
+    [Header("Debugging")]
+    public DebuggingSetup debuggingVariables;
+
     // map display
     private TerrainGenerator terrainGenerator;
     // managers
@@ -57,11 +67,17 @@ public class MapController : MonoBehaviour
     private FireManager fireManager;
     private UnitManager unitManager;
 
+    private Texture2D fireSnapshot;
+    private Texture2D viewSnapshot;
+
     private new Renderer renderer;
 
     // Start is called before the first frame update
     void Start()
     {
+        fireSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.ARGB32, false, false);
+        viewSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.ARGB32, false, false);
+
         if (floodEnabled)
         {
             floodManager = gameObject.AddComponent<FloodManager>();
@@ -128,7 +144,7 @@ public class MapController : MonoBehaviour
         }
 
         if (fireEnabled)
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 25; i++)
         {
             fireManager.StartFire();
         }
@@ -167,12 +183,30 @@ public class MapController : MonoBehaviour
                 }
             }
         }
+        if (Time.frameCount % 360 == 0)
+        {
+            UpdateMap();
+        }
+        if (debuggingVariables.debugMode)
+        {
+            debuggingVariables.renderTarget.mainTexture = fireManager.output;
+        }
+    }
+
+    void UpdateMap()
+    {
+
         unitManager.viewMapShader.SetFloat("duration", duration);
         unitManager.viewMapShader.SetFloat("startTime", startTime);
+        
+        Graphics.CopyTexture(unitManager.output, viewSnapshot);
+        mapMaterial.SetTexture("_ViewMap", viewSnapshot);
 
-        mapMaterial.SetTexture("_ViewMap", unitManager.output);
         if (fireEnabled)
-            mapMaterial.SetTexture("_FireMap", fireManager.output);
+        {
+            Graphics.CopyTexture(fireManager.output, fireSnapshot);
+            mapMaterial.SetTexture("_FireMap", fireSnapshot);
+        }
 
         if (renderer)
             renderer.material = mapMaterial;

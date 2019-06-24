@@ -10,6 +10,7 @@ public class FireManager : Manager
     #region Shader Variables
     public ComputeShader trackingShader;
     int baseMapKernel;
+    int addFireKernel;
     int heatMapKernel;
     int fireMapKernel;
     
@@ -101,6 +102,7 @@ public class FireManager : Manager
 
         // load shader kernels
         baseMapKernel = trackingShader.FindKernel("LoadBaseMap");
+        heatMapKernel = trackingShader.FindKernel("AddFire");
         heatMapKernel = trackingShader.FindKernel("GenerateHeatMap");
         fireMapKernel = trackingShader.FindKernel("GenerateFireMap");
         
@@ -175,8 +177,8 @@ public class FireManager : Manager
     /// <returns>a grayscale texture with perlin noise values</returns>
     IEnumerator GeneratePerlinNoise(int width, int height, MapType type, int octaves = 3)
     {
-        float offsetX = Random.Range(0, 100f);
-        float offsetY = Random.Range(0, 100f);
+        float offsetX = Random.Range(0, 1000f);
+        float offsetY = Random.Range(0, 1000f);
 
         Texture2D texture = new Texture2D(width, height);
         Color[] colors = new Color[width * height];
@@ -237,7 +239,9 @@ public class FireManager : Manager
 
     public void StartFire(Vector2 pos)
     {
-        fireLocations.Add(new Vector4(pos.x, pos.y, Random.Range(.5f, 3), Random.Range(0, 1)));
+        fireLocations.Add(new Vector4(pos.x, pos.y, Random.Range(.5f, 3), Random.Range(0, 2.0f)));
+        UpdateLocationArray();
+        trackingShader.Dispatch(addFireKernel, mapWidth / 8, mapHeight / 8, 1);
     }
 
     public void StartFire()
