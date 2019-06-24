@@ -25,6 +25,7 @@ public struct DebuggingSetup
 {
     public bool debugMode;
     public Material renderTarget;
+    public Texture2D replacement;
 }
 
 public class MapController : MonoBehaviour
@@ -57,6 +58,9 @@ public class MapController : MonoBehaviour
     [Range(0, .005f)]
     public float startTime;
 
+    [Space(15)]
+    public ParticleSystem fireParticles;
+
     [Header("Debugging")]
     public DebuggingSetup debuggingVariables;
 
@@ -75,8 +79,8 @@ public class MapController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fireSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.ARGB32, false, false);
-        viewSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.ARGB32, false, false);
+        fireSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, true);
+        viewSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
 
         if (floodEnabled)
         {
@@ -189,7 +193,14 @@ public class MapController : MonoBehaviour
         }
         if (debuggingVariables.debugMode)
         {
+            RenderTexture.active = fireManager.output;
+            debuggingVariables.replacement.ReadPixels(new Rect(0, 0, mapWidth, mapHeight), 0, 0);
+            debuggingVariables.replacement.Apply();
+            RenderTexture.active = null;
+            mapMaterial.SetTexture("_FireMap", debuggingVariables.replacement);
             debuggingVariables.renderTarget.mainTexture = fireManager.output;
+            var shape = fireParticles.shape;
+            shape.texture = debuggingVariables.replacement;
         }
     }
 
@@ -198,14 +209,21 @@ public class MapController : MonoBehaviour
 
         unitManager.viewMapShader.SetFloat("duration", duration);
         unitManager.viewMapShader.SetFloat("startTime", startTime);
-        
+
+
         Graphics.CopyTexture(unitManager.output, viewSnapshot);
         mapMaterial.SetTexture("_ViewMap", viewSnapshot);
 
         if (fireEnabled)
         {
-            Graphics.CopyTexture(fireManager.output, fireSnapshot);
-            mapMaterial.SetTexture("_FireMap", fireSnapshot);
+            RenderTexture.active = fireManager.output;
+            debuggingVariables.replacement.ReadPixels(new Rect(0, 0, mapWidth, mapHeight), 0, 0);
+            debuggingVariables.replacement.Apply();
+            RenderTexture.active = null;
+            mapMaterial.SetTexture("_FireMap", debuggingVariables.replacement);
+            debuggingVariables.renderTarget.mainTexture = fireManager.output;
+            var shape = fireParticles.shape;
+            shape.texture = debuggingVariables.replacement;
         }
 
         if (renderer)
