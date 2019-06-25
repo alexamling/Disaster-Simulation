@@ -76,9 +76,13 @@ public class MapController : MonoBehaviour
 
     private new Renderer renderer;
 
+    private ParticleSystem.ShapeModule shapeModule;
+
     // Start is called before the first frame update
     void Start()
     {
+        shapeModule = fireParticles.shape;
+
         fireSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, true);
         viewSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
 
@@ -137,6 +141,7 @@ public class MapController : MonoBehaviour
     {
         yield return StartCoroutine(terrainGenerator.Load());
         gameObject.GetComponent<Renderer>().material = mapMaterial;
+        shapeModule.mesh = terrainGenerator.mesh;
         if (fireEnabled)
             yield return StartCoroutine(fireManager.Load());
         if (floodEnabled)
@@ -199,8 +204,7 @@ public class MapController : MonoBehaviour
             RenderTexture.active = null;
             mapMaterial.SetTexture("_FireMap", debuggingVariables.replacement);
             debuggingVariables.renderTarget.mainTexture = fireManager.output;
-            var shape = fireParticles.shape;
-            shape.texture = debuggingVariables.replacement;
+            shapeModule.texture = debuggingVariables.replacement;
         }
     }
 
@@ -222,8 +226,7 @@ public class MapController : MonoBehaviour
             RenderTexture.active = null;
             mapMaterial.SetTexture("_FireMap", debuggingVariables.replacement);
             debuggingVariables.renderTarget.mainTexture = fireManager.output;
-            var shape = fireParticles.shape;
-            shape.texture = debuggingVariables.replacement;
+            shapeModule.texture = debuggingVariables.replacement;
         }
 
         if (renderer)

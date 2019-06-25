@@ -17,7 +17,7 @@ public class TerrainGenerator : MonoBehaviour
     private float worldToMapScale;
 
     #region Mesh Variables
-    private Mesh mesh;
+    public Mesh mesh;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private new MeshCollider collider;
