@@ -160,7 +160,7 @@ public class MapController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void OnPostRender()
     {
         if (Time.frameCount % 360 == 0)
         {

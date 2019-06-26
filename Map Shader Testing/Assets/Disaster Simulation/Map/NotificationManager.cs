@@ -3,36 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Notification
-{
-    int severity;
-    string text;
-    GameObject objective;
-    float height;
-
-    Notification()
-    {
-
-    }
-
-}
-
 public class NotificationManager : MonoBehaviour
 {
     public GameObject notificationPanel;
 
-    public GameObject notificationPrefab;
+    public Notification notificationPrefab;
 
     public List<Notification> notifications;
 
     int numEvents;
     float spacingBetweenNotifications;
+    float lastNotificationPos;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        lastNotificationPos = 0;
+        spacingBetweenNotifications = 10;
     }
 
     // Update is called once per frame
@@ -41,8 +29,13 @@ public class NotificationManager : MonoBehaviour
         
     }
 
-    public void AddNotification(string message, int severity)
+    public void AddNotification(string message, int severity, PlayerObjective objective)
     {
-
+        Notification newNotification = Instantiate(notificationPrefab, notificationPanel.transform);
+        newNotification.text.text = message;
+        newNotification.severity = severity;
+        newNotification.objective = objective;
+        newNotification.rectTransform.SetTop(lastNotificationPos + newNotification.rectTransform.rect.height + spacingBetweenNotifications);
+        notifications.Add(newNotification);
     }
 }

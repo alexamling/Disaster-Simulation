@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -35,17 +36,23 @@ public class PlayerControls : MonoBehaviour
                 other.hover = true;
                 if (Input.GetMouseButtonDown(0))
                 {
-                    other.GetComponent<PlayerObjective>().selected = true;
-                    if (selectedObjective)
-                        selectedObjective.selected = false;
-                    selectedObjective = other;
+                    if (!EventSystem.current.IsPointerOverGameObject())
+                    {
+                        other.GetComponent<PlayerObjective>().selected = true;
+                        if (selectedObjective)
+                            selectedObjective.selected = false;
+                        selectedObjective = other;
+                    }
                 }
             }
             catch
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    CloseInfoMenu();
+                    if (!EventSystem.current.IsPointerOverGameObject())
+                    {
+                        CloseInfoMenu();
+                    }
                 }
                 Debug.Log("Catch");
             }
@@ -62,7 +69,10 @@ public class PlayerControls : MonoBehaviour
 
     public void CloseInfoMenu()
     {
-        selectedObjective.selected = false;
-        selectedObjective = null;
+        if (selectedObjective)
+        {
+            selectedObjective.selected = false;
+            selectedObjective = null;
+        }
     }
 }
