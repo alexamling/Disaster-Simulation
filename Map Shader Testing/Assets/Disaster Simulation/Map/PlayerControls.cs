@@ -8,7 +8,13 @@ public class PlayerControls : MonoBehaviour
 {
 
     public PlayerObjective selectedObjective;
-    public RectTransform infoOptions;
+    public RadialMenu radialMenu;
+
+    public List<Button> options;
+    public List<Button> taskForceOptions;
+    public List<Button> withdrawOptions;
+    public List<Button> updateOptions;
+    public List<Button> infoOptions;
 
     Ray ray;
     Camera cam;
@@ -20,12 +26,18 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
+        radialMenu.Display(options);
     }
 
     // Update is called once per frame
     void Update()
     {
         ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            radialMenu.Display(taskForceOptions);
+        }
 
         // update the highlighted objective
         if (Physics.Raycast(ray, out hit))
@@ -54,16 +66,15 @@ public class PlayerControls : MonoBehaviour
                         CloseInfoMenu();
                     }
                 }
-                Debug.Log("Catch");
             }
 
             if (selectedObjective)
             {
                 screenPos = cam.WorldToScreenPoint(selectedObjective.transform.position);
-                infoOptions.position = new Vector3(screenPos.x, screenPos.y, 100);
+                radialMenu.SetPosition(new Vector3(screenPos.x, screenPos.y, 100));
             }
             else
-                infoOptions.position = new Vector3(-1000, 0, 0);
+                radialMenu.SetPosition(new Vector3(-1000, 0, 0));
         }
     }
 

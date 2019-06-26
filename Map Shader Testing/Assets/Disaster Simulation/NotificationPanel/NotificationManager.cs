@@ -19,6 +19,7 @@ public class NotificationManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        notifications = new List<Notification>();
         lastNotificationPos = 0;
         spacingBetweenNotifications = 10;
     }
@@ -26,15 +27,18 @@ public class NotificationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            AddNotification("Test", 0);
+        }
     }
 
-    public void AddNotification(string message, int severity, PlayerObjective objective)
+    public void AddNotification(string message, int severity) //, PlayerObjective objective)
     {
         Notification newNotification = Instantiate(notificationPrefab, notificationPanel.transform);
         newNotification.text.text = message;
         newNotification.severity = severity;
-        newNotification.objective = objective;
+        //newNotification.objective = objective;
         newNotification.rectTransform.SetTop(lastNotificationPos + newNotification.rectTransform.rect.height + spacingBetweenNotifications);
         notifications.Add(newNotification);
     }
