@@ -2,25 +2,19 @@
 #pragma kernel GenerateTexture
 #pragma kernel GenerateViewMap
 
-// Create a RenderTexture with enableRandomWrite flag and set it
-// with cs.SetTexture
+// render textures will hold our data
 RWTexture2D<float4> Result;
-
-RWTexture2D<float4> Pattern;
+RWTexture2D<float4> Pattern; // used as the footprint of the 'view'
 
 float radius;
 float falloff;
-
-float duration;
-float startTime;
-
-float2 center;
 
 int numViewPoints;
 float2 viewPointData[512];
 
 float val;
 
+// this is used to generate the texture that will be placed as the footprint of each viewpoint
 [numthreads(8,8,1)]
 void GenerateTexture (uint3 id : SV_DispatchThreadID)
 {
@@ -34,6 +28,7 @@ void GenerateTexture (uint3 id : SV_DispatchThreadID)
 	Pattern[id.xy] = float4(val, val, val, val);
 }
 
+// this combines copies of the pattern to create a single texture with the added values of all viewpoints
 [numthreads(8, 8, 1)]
 void GenerateViewMap(uint3 id : SV_DispatchThreadID)
 {

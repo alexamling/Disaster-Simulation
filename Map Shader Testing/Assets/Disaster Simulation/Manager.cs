@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class that allows for more flexible use and implementation of managers as needed
+/// </summary>
+
 public abstract class Manager : MonoBehaviour
 {
 

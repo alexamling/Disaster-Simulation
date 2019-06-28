@@ -4,12 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// This class manages the player's ability to interact with the game
+/// </summary>
+
 public class PlayerControls : MonoBehaviour
 {
 
     public PlayerObjective selectedObjective;
     public RadialMenu radialMenu;
 
+
+    // lists of buttons for the radial menu
+    // TODO: improve on this/replace several lists with seperate menus
     public List<Button> options;
     public List<Button> taskForceOptions;
     public List<Button> withdrawOptions;
@@ -21,15 +28,13 @@ public class PlayerControls : MonoBehaviour
     RaycastHit hit;
     PlayerObjective other;
     Vector3 screenPos;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         cam = Camera.main;
         radialMenu.Display(options);
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         ray = cam.ScreenPointToRay(Input.mousePosition);

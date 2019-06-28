@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controlls the water level of flooding
+/// </summary>
+
 public class FloodManager : Manager
 {
     public GameObject waterObject;
@@ -16,8 +20,7 @@ public class FloodManager : Manager
     public float[] colorStartHeights;
     public float maxHeight;
     #endregion
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         output = new RenderTexture(mapWidth, mapHeight, 24);
@@ -26,18 +29,8 @@ public class FloodManager : Manager
 
         mat = gameObject.GetComponent<Renderer>().material;
         maxHeight = gameObject.GetComponent<TerrainGenerator>().scale;
-
-        /* 
-         
-        mat.SetFloat("maxHeight", maxHeight);
-
-        mat.SetInt("colorCount", colors.Length);
-        mat.SetColorArray("colors", colors);
-        mat.SetFloatArray("colorStartHeights", colorStartHeights);
-         */
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         waterLevel += 10f * Mathf.Sin(Time.time * .1f) * Time.deltaTime;

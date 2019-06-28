@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
+/// <summary>
+/// This class is used to simplify the process of displaying and modifying objective notifications
+/// The static class included is untility intended to make this process easier
+/// </summary>
 public class Notification : MonoBehaviour
 {
     public int severity;
@@ -12,14 +14,12 @@ public class Notification : MonoBehaviour
     public PlayerObjective objective;
 
     public RectTransform rectTransform;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         rectTransform = gameObject.GetComponent<RectTransform>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         

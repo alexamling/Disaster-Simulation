@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// This class is used to generate a custom terrain mesh from a heightmap
+/// Written by Alexander Amling
+/// </summary>
+
 public class TerrainGenerator : MonoBehaviour
 {
-    public MapController mapController;
-
     private NavMeshSurface surface;
 
     [Range(0,250)]
@@ -29,8 +32,8 @@ public class TerrainGenerator : MonoBehaviour
     private int triangleIndex;
 
     public Texture2D heightMap;
-    private int width;
-    private int height;
+    public int width;
+    public int height;
     private int verteciesPerLine;
     #endregion
 
@@ -40,9 +43,6 @@ public class TerrainGenerator : MonoBehaviour
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         collider = gameObject.AddComponent<MeshCollider>();
-
-        width = mapController.mapWidth;
-        height = mapController.mapHeight;
 
         spaceBetweenPoints = (LOD == 0) ? 1 : LOD * 2;
         verteciesPerLine = ((width - 1) / spaceBetweenPoints) + 1;

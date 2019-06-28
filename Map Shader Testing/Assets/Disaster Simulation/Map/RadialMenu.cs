@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class is used to display an arbitrary number of buttons in a half circle around the location of the menu
+/// The player controls class holds references to the different lists of buttons
+/// Written by Alexander Amling
+/// </summary>
+
 public class RadialMenu : MonoBehaviour
 {
     public List<Button> buttons;
 
     float radius = 100;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         buttons = new List<Button>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// This method updates the radial menu and displays the passed list of buttons
+    /// </summary>
+    /// <param name="btns">the buttons to be displayed</param>
     public void Display(List<Button> btns)
     {
-        // sent old buttons off screen
+        // send old buttons off screen
         for (int i = 0; i < buttons.Count; i++)
         {
             buttons[i].transform.localPosition = new Vector3(-10000, 0, 0);

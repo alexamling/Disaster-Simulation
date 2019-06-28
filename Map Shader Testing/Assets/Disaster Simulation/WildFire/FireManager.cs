@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class generates and manages the nessicary maps for the firetracking shader to run
+/// Written by Alexander Amling
+/// </summary>
+
+
 enum MapType { HeightMap, FuelMap, WaterMap};
 
 public class FireManager : Manager
@@ -39,11 +45,13 @@ public class FireManager : Manager
     #endregion
 
     int texturesLoading = 0;
-
-    void Start()
-    {
-    }
+    float lastTime;
+    float delay = .01f;
     
+    /// <summary>
+    /// Ensures that the nessicary textures are provided, or generated, before assigning them to the shader and running the shader setup
+    /// </summary>
+    /// <returns></returns>
     public override IEnumerator Load()
     {
         texturesLoading = 1;
@@ -75,14 +83,12 @@ public class FireManager : Manager
         if (!heightMap)
         {
             texturesLoading++;
-            Debug.Log(texturesLoading);
             yield return StartCoroutine(GeneratePerlinNoise(mapWidth, mapHeight, MapType.HeightMap));
         }
         
         if (!baseFuelMap)
         {
             texturesLoading++;
-            Debug.Log(texturesLoading);
             yield return StartCoroutine(GeneratePerlinNoise(mapWidth, mapHeight, MapType.FuelMap));
         }
 
@@ -91,7 +97,6 @@ public class FireManager : Manager
         if (!baseWaterMap)
         {
             texturesLoading++;
-            Debug.Log(texturesLoading);
             yield return StartCoroutine(GeneratePerlinNoise(mapWidth, mapHeight, MapType.WaterMap));
         }
         
@@ -134,6 +139,8 @@ public class FireManager : Manager
         // run the shader basemap setup
         trackingShader.Dispatch(baseMapKernel, mapWidth / 8, mapHeight / 8, 1);
 
+        lastTime = 0;
+        
         isLoaded = true;
     }
 
@@ -145,8 +152,15 @@ public class FireManager : Manager
         trackingShader.SetFloat("WindStrength", WindStrength);
         trackingShader.SetFloats("WindOffset", new float[] { WindDirection.x, WindDirection.y });
 
-        trackingShader.Dispatch(heatMapKernel, mapWidth / 8, mapHeight / 8, 1); // update the heatmap
-        trackingShader.Dispatch(fireMapKernel, mapWidth / 8, mapHeight / 8, 1); // update the firemap
+        lastTime += Time.deltaTime;
+
+        if(lastTime > delay)
+        {
+            lastTime -= delay;
+            trackingShader.Dispatch(heatMapKernel, mapWidth / 8, mapHeight / 8, 1); // update the heatmap
+            trackingShader.Dispatch(fireMapKernel, mapWidth / 8, mapHeight / 8, 1); // update the firemap
+        }
+
     }
 
     /// <summary>
@@ -237,6 +251,10 @@ public class FireManager : Manager
         texturesLoading--;
     }
 
+    /// <summary>
+    /// adds the nessicary data for the shader to modify the base fire map with a new fire
+    /// </summary>
+    /// <param name="pos">the position on the rendertexture to center the fire on</param>
     public void StartFire(Vector2 pos)
     {
         fireLocations.Add(new Vector4(pos.x, pos.y, Random.Range(.5f, 3), Random.Range(0, 2.0f)));
@@ -244,6 +262,9 @@ public class FireManager : Manager
         trackingShader.Dispatch(addFireKernel, mapWidth / 8, mapHeight / 8, 1);
     }
 
+    /// <summary>
+    /// overload that provides a random location to the base parameters
+    /// </summary>
     public void StartFire()
     {
         StartFire(new Vector2(Random.Range(0, mapWidth), Random.Range(0, mapWidth)));

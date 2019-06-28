@@ -2,6 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible for controlling all of the acitons nessicary for the map to run
+/// this includes all the behind the scenes data processing and tracking as well as organizing the presentation of data
+/// Writeen by Alexander Amling
+/// </summary>
+
+    /*NOTES:
+     * must be attatched to a camera object 
+     * requires heightmap
+     * generate data maps should be relocated from firemanager to here, or to the base manager class
+     */
+
+// struct to simplify the organization of data maps
 [System.Serializable]
 public struct MapData
 {
@@ -12,6 +25,7 @@ public struct MapData
     public Texture2D firePattern;
 }
 
+// struct to simplify the organization of compute shaders
 [System.Serializable]
 public struct ShaderCollection
 {
@@ -20,6 +34,7 @@ public struct ShaderCollection
     public ComputeShader viewMapShader;
 }
 
+// struct to hold all variables needed for debugging
 [System.Serializable]
 public struct DebuggingSetup
 {
@@ -30,6 +45,7 @@ public struct DebuggingSetup
 
 public class MapController : MonoBehaviour
 {
+    public GameObject mapLocation; 
     [Range(64, 8192)]
     public int mapWidth = 4096;
     [Range(64, 8192)]
@@ -66,6 +82,7 @@ public class MapController : MonoBehaviour
 
     // map display
     private TerrainGenerator terrainGenerator;
+
     // managers
     private FloodManager floodManager;
     private FireManager fireManager;
@@ -78,10 +95,12 @@ public class MapController : MonoBehaviour
 
     private ParticleSystem.ShapeModule shapeModule;
 
-    // Start is called before the first frame update
+    // Adds managers and passes values to them
     void Start()
     {
         shapeModule = fireParticles.shape;
+
+        debuggingVariables.replacement = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
 
         fireSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, true);
         viewSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
@@ -122,8 +141,9 @@ public class MapController : MonoBehaviour
                 fireManager.waterBodyMap = dataMaps.waterBodyMap;
         }
 
-        terrainGenerator = gameObject.AddComponent<TerrainGenerator>();
-        terrainGenerator.mapController = this;
+        terrainGenerator = mapLocation.AddComponent<TerrainGenerator>();
+        terrainGenerator.width = mapWidth;
+        terrainGenerator.height = mapHeight;
         terrainGenerator.LOD = LOD;
         terrainGenerator.heightMap = dataMaps.heightMap;
         terrainGenerator.scale = 200;
@@ -140,7 +160,7 @@ public class MapController : MonoBehaviour
     IEnumerator Load()
     {
         yield return StartCoroutine(terrainGenerator.Load());
-        gameObject.GetComponent<Renderer>().material = mapMaterial;
+        mapLocation.GetComponent<Renderer>().material = mapMaterial;
         shapeModule.mesh = terrainGenerator.mesh;
         if (fireEnabled)
             yield return StartCoroutine(fireManager.Load());
@@ -158,8 +178,10 @@ public class MapController : MonoBehaviour
             fireManager.StartFire();
         }
     }
-
-    // Update is called once per frame
+    
+    /// <summary>
+    /// Used to pass data from the fire rendertexture to a texture2D, so that it can be used as a texture for particle effect emmision
+    /// </summary>
     void OnPostRender()
     {
         if (Time.frameCount % 360 == 0)
@@ -180,7 +202,6 @@ public class MapController : MonoBehaviour
 
     void UpdateMap()
     {
-
         unitManager.viewMapShader.SetFloat("duration", duration);
         unitManager.viewMapShader.SetFloat("startTime", startTime);
 

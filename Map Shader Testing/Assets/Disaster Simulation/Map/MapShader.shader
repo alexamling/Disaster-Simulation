@@ -1,4 +1,6 @@
-﻿Shader "Custom/MapShader"
+﻿// This shader combines the outputs of all active managers to present the player with a complete view of the map
+
+Shader "Custom/MapShader"
 {
     Properties
     {
@@ -23,7 +25,6 @@
         sampler2D _MainTex;
 		sampler2D _ViewMap;
 		sampler2D _FireMap;
-		sampler2D _PreviousFireMap;
 
         struct Input
         {

@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controls the (now obsolete) player units, as well as the the view that they provide of the map
+/// Written by Alexander Amling
+/// </summary>
+
 public class UnitManager : Manager
 {
     public ComputeShader viewMapShader;
@@ -23,8 +28,7 @@ public class UnitManager : Manager
     private Ray ray;
     private RaycastHit hit;
     #endregion
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         values = new float[0];
@@ -76,7 +80,10 @@ public class UnitManager : Manager
         }
 
     }
-    // Update is called once per frame
+
+    /// <summary>
+    /// Currently, the units move towards the last location clicked on by the player, and pass their positions to the shader
+    /// </summary>
     void Update()
     {
         Vector3 newDest = Vector3.zero;

@@ -91,7 +91,7 @@ MonoBehaviour:
   severity: 0
   text: {fileID: 6024355518102311910}
   objective: {fileID: 0}
-  rectTransform: {fileID: 0}
+  rectTransform: {fileID: 6024355517635963938}
 --- !u!1 &6024355518102311904
 GameObject:
   m_ObjectHideFlags: 0
