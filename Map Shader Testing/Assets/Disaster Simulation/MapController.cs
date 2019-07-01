@@ -52,6 +52,8 @@ public class MapController : MonoBehaviour
     public int mapHeight = 4096;
     [Range(0,32)]
     public int LOD;
+    [Range(1, 50)]
+    public float heightScale;
     [Space(5)]
     public bool floodEnabled;
     public bool fireEnabled;
@@ -158,7 +160,7 @@ public class MapController : MonoBehaviour
         terrainGenerator.height = mapHeight;
         terrainGenerator.LOD = LOD;
         terrainGenerator.heightMap = dataMaps.heightMap;
-        terrainGenerator.scale = 200;
+        terrainGenerator.scale = heightScale;
 
         unitManager = gameObject.AddComponent<UnitManager>();
         unitManager.mapWidth = mapWidth;

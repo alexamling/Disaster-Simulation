@@ -18,18 +18,22 @@ public class PlayerObjective : MonoBehaviour
     public bool selected;
     public bool hover;
 
+    public float[] responseModifiers;
+
+    private float response;
+
     private bool active;
 
     private float mix;
     
-    void Start()
+    protected void Start()
     {
         selected = false;
         active = true;
-        outline = gameObject.GetComponent<Outline>();
+        outline = gameObject.AddComponent<Outline>();
     }
     
-    void Update()
+    protected void Update()
     { 
         if (active) // shift the color based on status green -> yellow -> orange -> red
         {

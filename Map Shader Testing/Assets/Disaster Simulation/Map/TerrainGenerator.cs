@@ -13,7 +13,7 @@ public class TerrainGenerator : MonoBehaviour
     private NavMeshSurface surface;
 
     [Range(0,250)]
-    public float scale = 35;
+    public float scale = 5;
 
     public int LOD = 32;
     private int spaceBetweenPoints = 1;
