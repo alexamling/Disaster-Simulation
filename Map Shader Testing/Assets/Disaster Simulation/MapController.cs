@@ -60,13 +60,11 @@ public class MapController : MonoBehaviour
     [Space(5)]
     public ShaderCollection shaders;
     [Space(5)]
-    public GameObject waterPrefab;
-    [Space(5)]
     public Material mapMaterial;
     [Space(10)]
-    public List<GameObject> BuildingsOfInterest;
+    public List<GameObject> objectives;
     [Space(5)]
-    public AnimationCurve OutlineColorCurve;
+    public AnimationCurve outlineColorCurve;
     [Space(10)]
     public List<GameObject> playerUnits;
     [Range(0, 1.1f)]
@@ -74,8 +72,18 @@ public class MapController : MonoBehaviour
     [Range(0, .005f)]
     public float startTime;
 
-    [Space(15)]
+    [Header("Flood Variables")]
+    public GameObject waterPrefab;
+    public AnimationCurve floodCurve;
+    public float maxFloodHeight;
+
+    [Space(5)]
+
+    [Header("Fire Variables")]
     public ParticleSystem fireParticles;
+    public ParticleSystem explosionParticles;
+
+    [Space(15)]
 
     [Header("Debugging")]
     public DebuggingSetup debuggingVariables;
@@ -111,6 +119,10 @@ public class MapController : MonoBehaviour
 
             floodManager.mapWidth = mapWidth;
             floodManager.mapHeight = mapHeight;
+
+            floodManager.floodCurve = floodCurve;
+
+            floodManager.maxHeight = maxFloodHeight;
 
             // load availible data maps
             if (dataMaps.heightMap)
@@ -167,7 +179,7 @@ public class MapController : MonoBehaviour
         if (floodEnabled)
             yield return StartCoroutine(floodManager.Load());
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 0; i++)
         {
             unitManager.SpawnUnit(playerUnits[0]);
         }
@@ -224,5 +236,25 @@ public class MapController : MonoBehaviour
             renderer.material = mapMaterial;
         else
             renderer = gameObject.GetComponent<Renderer>();
+    }
+
+    void Explosion(Vector2 pos)
+    {
+        // particle effect
+
+        //  sound effect
+
+        // add fire
+        fireManager.StartFire(pos);
+        // add damage
+
+        // add notification
+    }
+
+    void FuelSpill(Vector2 pos)
+    {
+        // add to fuel map
+
+        // add notification
     }
 }

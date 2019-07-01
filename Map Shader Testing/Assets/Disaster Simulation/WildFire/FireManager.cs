@@ -257,7 +257,7 @@ public class FireManager : Manager
     /// <param name="pos">the position on the rendertexture to center the fire on</param>
     public void StartFire(Vector2 pos)
     {
-        fireLocations.Add(new Vector4(pos.x, pos.y, Random.Range(.5f, 3), Random.Range(0, 2.0f)));
+        fireLocations.Add(new Vector4(pos.x, pos.y, Random.Range(.5f, 2), Random.Range(0.5f, 2.0f)));
         UpdateLocationArray();
         trackingShader.Dispatch(addFireKernel, mapWidth / 8, mapHeight / 8, 1);
     }

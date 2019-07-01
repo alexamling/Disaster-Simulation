@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class DamageManager : MonoBehaviour
 {
-    Texture2D basePopulationMap;
+    public MapController mapController;
+
+    public Texture2D basePopulationMap;
 
     public RenderTexture populationMap;
 
+    // TODO: get an understanding of how evacuation moves populations
 
     // Start is called before the first frame update
     void Start()

@@ -11,6 +11,9 @@ public class FloodManager : Manager
     public GameObject waterObject;
 
     public float waterLevel;
+    public float maxHeight = 50;
+
+    public AnimationCurve floodCurve;
 
     public Material mat;
 
@@ -18,7 +21,6 @@ public class FloodManager : Manager
     #region Shader Variables
     public Color[] colors;
     public float[] colorStartHeights;
-    public float maxHeight;
     #endregion
     
     void Start()
@@ -26,14 +28,12 @@ public class FloodManager : Manager
         output = new RenderTexture(mapWidth, mapHeight, 24);
         output.enableRandomWrite = true;
         output.Create();
-
-        mat = gameObject.GetComponent<Renderer>().material;
-        maxHeight = gameObject.GetComponent<TerrainGenerator>().scale;
     }
     
     void Update()
     {
-        waterLevel += 10f * Mathf.Sin(Time.time * .1f) * Time.deltaTime;
+        waterLevel = Time.time;
+        waterLevel = floodCurve.Evaluate(waterLevel / 100.0f) * maxHeight;
         waterObject.transform.position = new Vector3(0, waterLevel * .5f, 0);
         waterObject.transform.localScale = new Vector3(mapWidth, waterLevel, mapHeight);
     }

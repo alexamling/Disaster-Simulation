@@ -8,7 +8,6 @@ using UnityEngine;
 
 public abstract class Manager : MonoBehaviour
 {
-
     [Range(64, 8192)]
     public int mapWidth = 4096;
     [Range(64, 8192)]
