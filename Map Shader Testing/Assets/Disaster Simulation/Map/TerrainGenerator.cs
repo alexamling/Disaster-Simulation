@@ -76,7 +76,7 @@ public class TerrainGenerator : MonoBehaviour
                     heightMap.GetPixel(
                         Mathf.FloorToInt(x * worldToMapScale), 
                         Mathf.FloorToInt(y * worldToMapScale)
-                        ).r * scale + Random.Range(.0f,.01f),
+                        ).grayscale * scale + Random.Range(.0f,.01f),
                     y - (height * .5f)
                 );
 

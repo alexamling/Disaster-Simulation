@@ -11807,11 +11807,11 @@ RectTransform:
   m_Father: {fileID: 2079627197}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 728.9, y: 334}
-  m_SizeDelta: {x: 450, y: 400}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 451, y: 399}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1499469081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13914,7 +13914,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 994049178}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.8888889
+  m_Size: 0.88666666
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14828,11 +14828,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapLocation: {fileID: 1679284157}
-  mapWidth: 4096
-  mapHeight: 4096
-  LOD: 8
-  heightScale: 20
-  floodEnabled: 1
+  mapWidth: 1024
+  mapHeight: 1024
+  LOD: 1
+  heightScale: 15
+  floodEnabled: 0
   fireEnabled: 0
   dataMaps:
     heightMap: {fileID: 2800000, guid: a6c3afd7fc504ee439ea02cac8f7a6fa, type: 3}
