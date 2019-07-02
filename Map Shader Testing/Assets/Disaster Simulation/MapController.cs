@@ -91,12 +91,16 @@ public class MapController : MonoBehaviour
     public DebuggingSetup debuggingVariables;
 
     // map display
-    private TerrainGenerator terrainGenerator;
+    [HideInInspector]
+    public TerrainGenerator terrainGenerator;
 
     // managers
-    private FloodManager floodManager;
-    private FireManager fireManager;
-    private UnitManager unitManager;
+    [HideInInspector]
+    public FloodManager floodManager;
+    [HideInInspector]
+    public FireManager fireManager;
+    [HideInInspector]
+    public UnitManager unitManager;
 
     private Texture2D fireSnapshot;
     private Texture2D viewSnapshot;
@@ -176,8 +180,8 @@ public class MapController : MonoBehaviour
 
     IEnumerator Load()
     {
-        //yield return StartCoroutine(terrainGenerator.Load());
-        //shapeModule.mesh = terrainGenerator.mesh;
+        yield return StartCoroutine(terrainGenerator.Load());
+        shapeModule.mesh = terrainGenerator.mesh;
         if (fireEnabled)
             yield return StartCoroutine(fireManager.Load());
         if (floodEnabled)
@@ -200,10 +204,9 @@ public class MapController : MonoBehaviour
     /// </summary>
     void OnPostRender()
     {
-        if (Time.frameCount % 360 == 0)
-        {
+        if (Time.frameCount % 20 == 0)
             UpdateMap();
-        }
+
         if (debuggingVariables.debugMode)
         {
             RenderTexture.active = fireManager.output;

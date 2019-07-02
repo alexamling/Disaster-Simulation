@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerControls : MonoBehaviour
 {
-
+    public MapController manager;
     public PlayerObjective selectedObjective;
     public RadialMenu radialMenu;
 
@@ -42,6 +42,11 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             radialMenu.Display(taskForceOptions);
+        }
+
+        if (Input.GetKeyDown(KeyCode.G) && manager.terrainGenerator)
+        {
+            StartCoroutine(manager.terrainGenerator.Load());
         }
 
         // update the highlighted objective

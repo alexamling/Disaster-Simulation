@@ -16,6 +16,8 @@ public class NotificationManager : MonoBehaviour
 
     public List<Notification> notifications;
 
+    public PlayerObjective objective;
+
     int numEvents;
     float spacingBetweenNotifications;
     float lastNotificationPos;
@@ -36,16 +38,16 @@ public class NotificationManager : MonoBehaviour
     // TODO: remove this
         if (Input.GetKeyDown(KeyCode.N))
         {
-            AddNotification("Test", 0);
+            AddNotification("Test", 0, objective);
         }
     }
 
-    public void AddNotification(string message, int severity) //, PlayerObjective objective)
+    public void AddNotification(string message, int severity, PlayerObjective objective)
     {
         Notification newNotification = Instantiate(notificationPrefab, notificationPanel.transform);
         newNotification.text.text = message;
         newNotification.severity = severity;
-        //newNotification.objective = objective;
+        newNotification.objective = objective;
         newNotification.rectTransform.SetTop(lastNotificationPos);
         newNotification.rectTransform.SetBottom(notificationPanel.GetComponent<RectTransform>().rect.height - (lastNotificationPos + notificationHeight));
         lastNotificationPos = lastNotificationPos + notificationHeight + spacingBetweenNotifications;

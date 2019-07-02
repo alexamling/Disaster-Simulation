@@ -21,13 +21,11 @@ public class TerrainGenerator : MonoBehaviour
 
     #region Mesh Variables
     public TerrainData terrainData;
-
-    /*
+    
     public Mesh mesh;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private new MeshCollider collider;
-     */
 
     private Vector3[] vertecies;
     private int[] triangles;
@@ -43,12 +41,11 @@ public class TerrainGenerator : MonoBehaviour
 
     public IEnumerator Load()
     {
-        /*
         surface = gameObject.AddComponent<NavMeshSurface>();
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         collider = gameObject.AddComponent<MeshCollider>();
-        */
+        
         
         spaceBetweenPoints = (LOD == 0) ? 1 : LOD * 2;
         verteciesPerLine = ((width - 1) / spaceBetweenPoints) + 1;
@@ -72,6 +69,7 @@ public class TerrainGenerator : MonoBehaviour
 
     IEnumerator GenerateMesh()
     {
+        // generate the terrain
         terrainData.heightmapResolution = width;
         float[,] heights = new float[width, height];
 
@@ -80,19 +78,15 @@ public class TerrainGenerator : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 heights[x, y] = heightMap.GetPixel(
-                        Mathf.FloorToInt(x * worldToMapScale),
-                        Mathf.FloorToInt(y * worldToMapScale)
+                        Mathf.FloorToInt(y * worldToMapScale),
+                        Mathf.FloorToInt(x * worldToMapScale)
                         ).grayscale + Random.Range(-0.01f, .01f);
-
-                if (Time.frameCount % 256 == 0)
-                    yield return null;
             }
             yield return null;
         }
-
+        
         terrainData.SetHeights(0, 0, heights);
-        // old code
-        /*
+
         int index = 0;
         for (int y = 0; y < height; y +=  spaceBetweenPoints)
         {
@@ -100,12 +94,12 @@ public class TerrainGenerator : MonoBehaviour
             {
 
                 vertecies[index] = new Vector3(
-                    -x + (width * .5f), 
+                    (-x + (width * .5f)) / (worldToMapScale * 2), 
                     heightMap.GetPixel(
                         Mathf.FloorToInt(x * worldToMapScale), 
                         Mathf.FloorToInt(y * worldToMapScale)
                         ).grayscale * scale + Random.Range(.0f,.01f),
-                    y - (height * .5f)
+                    (y - (height * .5f)) / (worldToMapScale * 2)
                 );
 
                 uvs[index] = new Vector2((float)x / width, (float)y / height);
@@ -130,10 +124,9 @@ public class TerrainGenerator : MonoBehaviour
         mesh.uv = uvs;
         mesh.RecalculateNormals();
 
-        meshFilter.mesh = mesh;
+        //meshFilter.mesh = mesh;
         collider.sharedMesh = mesh;
 
-        surface.BuildNavMesh();
-        */
+        //surface.BuildNavMesh();
     }
 }
