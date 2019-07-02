@@ -20,10 +20,14 @@ public class TerrainGenerator : MonoBehaviour
     private float worldToMapScale;
 
     #region Mesh Variables
+    public TerrainData terrainData;
+
+    /*
     public Mesh mesh;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private new MeshCollider collider;
+     */
 
     private Vector3[] vertecies;
     private int[] triangles;
@@ -39,11 +43,13 @@ public class TerrainGenerator : MonoBehaviour
 
     public IEnumerator Load()
     {
+        /*
         surface = gameObject.AddComponent<NavMeshSurface>();
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         collider = gameObject.AddComponent<MeshCollider>();
-
+        */
+        
         spaceBetweenPoints = (LOD == 0) ? 1 : LOD * 2;
         verteciesPerLine = ((width - 1) / spaceBetweenPoints) + 1;
 
@@ -66,11 +72,33 @@ public class TerrainGenerator : MonoBehaviour
 
     IEnumerator GenerateMesh()
     {
+        terrainData.heightmapResolution = width;
+        float[,] heights = new float[width, height];
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                heights[x, y] = heightMap.GetPixel(
+                        Mathf.FloorToInt(x * worldToMapScale),
+                        Mathf.FloorToInt(y * worldToMapScale)
+                        ).grayscale + Random.Range(-0.01f, .01f);
+
+                if (Time.frameCount % 256 == 0)
+                    yield return null;
+            }
+            yield return null;
+        }
+
+        terrainData.SetHeights(0, 0, heights);
+        // old code
+        /*
         int index = 0;
         for (int y = 0; y < height; y +=  spaceBetweenPoints)
         {
             for (int x = 0; x < width; x += spaceBetweenPoints)
             {
+
                 vertecies[index] = new Vector3(
                     -x + (width * .5f), 
                     heightMap.GetPixel(
@@ -92,7 +120,9 @@ public class TerrainGenerator : MonoBehaviour
                 if(Time.frameCount % 256 == 0)
                     yield return null;
             }
+            yield return null;
         }
+
 
         mesh = new Mesh();
         mesh.vertices = vertecies;
@@ -104,5 +134,6 @@ public class TerrainGenerator : MonoBehaviour
         collider.sharedMesh = mesh;
 
         surface.BuildNavMesh();
+        */
     }
 }

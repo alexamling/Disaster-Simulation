@@ -24,6 +24,7 @@ public class TerrainChunk : MonoBehaviour
     private int triangleIndex;
 
     public Texture2D heightMap;
+    public Vector2 offset;
     public int width;
     public int height;
     private int verteciesPerLine;

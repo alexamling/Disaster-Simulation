@@ -12,6 +12,7 @@ public class FloodManager : Manager
 
     public float waterLevel;
     public float maxHeight = 50;
+    public float baseHeight;
 
     public AnimationCurve floodCurve;
 
@@ -34,7 +35,7 @@ public class FloodManager : Manager
     {
         waterLevel = Time.time;
         waterLevel = floodCurve.Evaluate(waterLevel / 100.0f) * maxHeight;
-        waterObject.transform.position = new Vector3(0, waterLevel * .5f, 0);
+        waterObject.transform.position = new Vector3(0, waterLevel * .5f + baseHeight, 0);
         waterObject.transform.localScale = new Vector3(mapWidth, waterLevel, mapHeight);
     }
 

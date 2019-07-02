@@ -45,13 +45,12 @@ public struct DebuggingSetup
 
 public class MapController : MonoBehaviour
 {
-    public GameObject mapLocation; 
+    public Terrain terrain;
+    private TerrainData terrainData;
     [Range(64, 8192)]
     public int mapWidth = 4096;
     [Range(64, 8192)]
     public int mapHeight = 4096;
-    [Range(0,32)]
-    public int LOD;
     [Range(1, 50)]
     public float heightScale;
     [Space(5)]
@@ -77,6 +76,7 @@ public class MapController : MonoBehaviour
     [Header("Flood Variables")]
     public GameObject waterPrefab;
     public AnimationCurve floodCurve;
+    public float baseFloodHeight;
     public float maxFloodHeight;
 
     [Space(5)]
@@ -109,6 +109,7 @@ public class MapController : MonoBehaviour
     void Start()
     {
         shapeModule = fireParticles.shape;
+        terrainData = terrain.terrainData;
 
         debuggingVariables.replacement = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
 
@@ -124,6 +125,7 @@ public class MapController : MonoBehaviour
 
             floodManager.floodCurve = floodCurve;
 
+            floodManager.baseHeight = baseFloodHeight;
             floodManager.maxHeight = maxFloodHeight;
 
             // load availible data maps
@@ -155,12 +157,13 @@ public class MapController : MonoBehaviour
                 fireManager.waterBodyMap = dataMaps.waterBodyMap;
         }
 
-        terrainGenerator = mapLocation.AddComponent<TerrainGenerator>();
+        terrainGenerator = gameObject.AddComponent<TerrainGenerator>();
         terrainGenerator.width = mapWidth;
         terrainGenerator.height = mapHeight;
-        terrainGenerator.LOD = LOD;
+        //terrainGenerator.LOD = LOD;
         terrainGenerator.heightMap = dataMaps.heightMap;
         terrainGenerator.scale = heightScale;
+        terrainGenerator.terrainData = terrainData;
 
         unitManager = gameObject.AddComponent<UnitManager>();
         unitManager.mapWidth = mapWidth;
@@ -173,9 +176,8 @@ public class MapController : MonoBehaviour
 
     IEnumerator Load()
     {
-        yield return StartCoroutine(terrainGenerator.Load());
-        mapLocation.GetComponent<Renderer>().material = mapMaterial;
-        shapeModule.mesh = terrainGenerator.mesh;
+        //yield return StartCoroutine(terrainGenerator.Load());
+        //shapeModule.mesh = terrainGenerator.mesh;
         if (fireEnabled)
             yield return StartCoroutine(fireManager.Load());
         if (floodEnabled)
