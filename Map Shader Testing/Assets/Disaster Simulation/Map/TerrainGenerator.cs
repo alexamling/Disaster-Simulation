@@ -82,7 +82,8 @@ public class TerrainGenerator : MonoBehaviour
                         Mathf.FloorToInt(x * worldToMapScale)
                         ).grayscale + Random.Range(-0.01f, .01f);
             }
-            yield return null;
+            if(y%2 == 0)
+                yield return null;
         }
         
         terrainData.SetHeights(0, 0, heights);

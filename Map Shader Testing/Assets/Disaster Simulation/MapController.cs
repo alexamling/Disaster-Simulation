@@ -141,6 +141,7 @@ public class MapController : MonoBehaviour
 
         if (fireEnabled)
         {
+            fireParticles.gameObject.SetActive(true);
             fireManager = gameObject.AddComponent<FireManager>();
 
             fireManager.trackingShader = shaders.fireTrackingShader;
@@ -159,6 +160,10 @@ public class MapController : MonoBehaviour
                 fireManager.baseWaterMap = dataMaps.baseWaterMap;
             if (dataMaps.waterBodyMap)
                 fireManager.waterBodyMap = dataMaps.waterBodyMap;
+        }
+        else
+        {
+            fireParticles.gameObject.SetActive(false);
         }
 
         terrainGenerator = gameObject.AddComponent<TerrainGenerator>();
@@ -206,25 +211,13 @@ public class MapController : MonoBehaviour
     {
         if (Time.frameCount % 20 == 0)
             UpdateMap();
-
-        if (debuggingVariables.debugMode)
-        {
-            RenderTexture.active = fireManager.output;
-            debuggingVariables.replacement.ReadPixels(new Rect(0, 0, mapWidth, mapHeight), 0, 0);
-            debuggingVariables.replacement.Apply();
-            RenderTexture.active = null;
-            mapMaterial.SetTexture("_FireMap", debuggingVariables.replacement);
-            debuggingVariables.renderTarget.mainTexture = fireManager.output;
-            shapeModule.texture = debuggingVariables.replacement;
-        }
     }
 
     void UpdateMap()
     {
         unitManager.viewMapShader.SetFloat("duration", duration);
         unitManager.viewMapShader.SetFloat("startTime", startTime);
-
-
+        
         Graphics.CopyTexture(unitManager.output, viewSnapshot);
         mapMaterial.SetTexture("_ViewMap", viewSnapshot);
 

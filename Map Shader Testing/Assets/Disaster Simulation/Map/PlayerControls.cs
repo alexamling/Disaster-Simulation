@@ -28,10 +28,16 @@ public class PlayerControls : MonoBehaviour
     RaycastHit hit;
     PlayerObjective other;
     Vector3 screenPos;
+
+    GraphicRaycaster rayCaster;
+    PointerEventData pointerEventData;
+    EventSystem eventSystem;
     
     void Start()
     {
         cam = Camera.main;
+        rayCaster = GetComponent<GraphicRaycaster>();
+        eventSystem = GetComponent<EventSystem>();
         radialMenu.Display(options);
     }
     
@@ -52,6 +58,7 @@ public class PlayerControls : MonoBehaviour
         // update the highlighted objective
         if (Physics.Raycast(ray, out hit))
         {
+            #region Set Radial Menu Position
             try
             {
                 other = hit.collider.gameObject.GetComponent<PlayerObjective>();
@@ -85,6 +92,11 @@ public class PlayerControls : MonoBehaviour
             }
             else
                 radialMenu.SetPosition(new Vector3(-1000, 0, 0));
+            #endregion
+
+            #region Select Notification
+            //
+            #endregion
         }
     }
 

@@ -71,3 +71,11 @@ The following packages were removed:
   com.unity.postprocessing@2.1.4
   com.unity.progrids@3.0.3-preview.0
   com.unity.xr.legacyinputhelpers@2.0.2
+
+=== Wed Jul  3 14:11:26 2019
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.progrids@3.0.3-preview.4

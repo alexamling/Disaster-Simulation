@@ -216,7 +216,7 @@ public class FireManager : Manager
                 if (value < minValue) minValue = value;
 
             }
-            if (y % 16 == 0)
+            if (y % 8 == 0)
             {
                 yield return null;
             }
@@ -232,7 +232,7 @@ public class FireManager : Manager
                 colors[y * width + x] = new Color(value, value, value, 0);
 
             }
-            if (y % 128 == 0)
+            if (y % 64 == 0)
             {
                 yield return null;
             }
