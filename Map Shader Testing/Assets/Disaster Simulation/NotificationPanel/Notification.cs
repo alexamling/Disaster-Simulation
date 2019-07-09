@@ -22,23 +22,18 @@ public class Notification : MonoBehaviour
         objective.revealed = false;
         rectTransform = gameObject.GetComponent<RectTransform>();
     }
-    
-    void Update()
-    {
-        
-    }
 
     public void Clicked()
     {
         if (objective.revealed)
         {
-            manager.currentObjectivePanel.SetActive(false);
+            manager.currentObjectivePanel.panel.SetActive(false);
             FocusOnObjective();
         }
         else
         {
-            manager.currentObjectivePanel.SetActive(true);
-            manager.currentObjectivePanel.GetComponentInChildren<Text>().text = text.text;
+            manager.currentObjectivePanel.panel.SetActive(true);
+            manager.currentObjectivePanel.text.text = text.text;
             manager.playerControls.FocusOn(new Vector2(0, 0), 60);
         }
     }

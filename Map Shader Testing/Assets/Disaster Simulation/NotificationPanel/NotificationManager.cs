@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public struct InfoPanel
+{
+    public GameObject panel;
+    public Text text;
+}
+
 /// <summary>
 /// This manager tracks the generation and manipulation of the notification panel
 /// Written by Alexander Amling
@@ -10,9 +17,9 @@ using UnityEngine.UI;
 
 public class NotificationManager : Manager
 {
-    public GameObject notificationPanel;
+    public InfoPanel notificationPanel;
 
-    public GameObject currentObjectivePanel;
+    public InfoPanel currentObjectivePanel;
 
     public Notification notificationPrefab;
 
@@ -31,7 +38,7 @@ public class NotificationManager : Manager
     {
         playerControls = FindObjectOfType<PlayerControls>();
         notifications = new List<Notification>();
-        currentObjectivePanel.SetActive(false);
+        currentObjectivePanel.panel.SetActive(false);
 
         spacingBetweenNotifications = 5;
         lastNotificationPos = 10;
@@ -57,7 +64,7 @@ public class NotificationManager : Manager
 
     public void AddNotification(string message, int severity, PlayerObjective objective)
     {
-        Notification newNotification = Instantiate(notificationPrefab, notificationPanel.transform);
+        Notification newNotification = Instantiate(notificationPrefab, notificationPanel.panel.transform);
         newNotification.text.text = message;
         newNotification.severity = severity;
         newNotification.objective = objective;

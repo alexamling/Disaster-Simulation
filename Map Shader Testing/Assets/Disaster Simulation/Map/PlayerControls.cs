@@ -24,12 +24,14 @@ public class PlayerControls : MonoBehaviour
     RaycastHit hit;
     GameObject other;
     bool clicked;
+    bool dontZoom;
     float newFov;
     Vector3 screenPos;
     Vector3 newCamPos;
     float panningBorderWidth;
 
     GraphicRaycaster rayCaster;
+    List<RaycastResult> raycastResults;
     PointerEventData pointerEventData;
     EventSystem eventSystem;
 
@@ -43,8 +45,9 @@ public class PlayerControls : MonoBehaviour
         panningBorderWidth = 32;
         newCamPos = cameraPos.transform.position;
 
+        raycastResults = new List<RaycastResult>();
         rayCaster = GetComponent<GraphicRaycaster>();
-        eventSystem = GetComponent<EventSystem>();
+        eventSystem = GetComponentInChildren<EventSystem>();
         radialMenu.Display(options);
     }
     
@@ -54,16 +57,8 @@ public class PlayerControls : MonoBehaviour
         {
             StartCoroutine(manager.terrainGenerator.Load());
         }
-
-        #region Zoom with Scroll Wheel
-        newFov -= Input.GetAxis("Mouse ScrollWheel") * 10;
-        newFov = Mathf.Clamp(newFov, 10, 65);
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newFov, .2f);
-        #endregion
-
+        
         screenPos = Input.mousePosition;
-
-        Debug.Log(Input.mousePosition);
 
         #region Camera Panning
         if(screenPos.x > cam.scaledPixelWidth - panningBorderWidth)
@@ -85,11 +80,38 @@ public class PlayerControls : MonoBehaviour
         #endregion
 
         // lerp the camera towards the new location
+        newCamPos = Vector3.ClampMagnitude(newCamPos,750);
         cameraPos.transform.position = Vector3.Lerp(cameraPos.transform.position, newCamPos, .2f);
         
-        // Raycast from screen to world
+        // raycast to UI
+        pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = Input.mousePosition;
+        raycastResults.Clear();
+        rayCaster.Raycast(pointerEventData, raycastResults);
+
+        // check if you're hovering over the notification panel
+        dontZoom = false;
+        foreach (RaycastResult r in raycastResults)
+        {
+            if (r.gameObject.GetComponent<NotificationManager>())
+            {
+                dontZoom = true;
+            }
+        }
+
+        #region Zoom with Scroll Wheel
+        if (!dontZoom)
+        {
+            newFov -= Input.GetAxis("Mouse ScrollWheel") * 10;
+            newFov = Mathf.Clamp(newFov, 10, 65);
+        }
+        #endregion
+
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newFov, .2f);
+        
+        
         ray = cam.ScreenPointToRay(Input.mousePosition);
-        // update the highlighted objective
+        
         if (Physics.Raycast(ray, out hit))
         {
             other = hit.collider.gameObject;
