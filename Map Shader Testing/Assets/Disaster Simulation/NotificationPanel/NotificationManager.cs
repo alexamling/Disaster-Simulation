@@ -12,23 +12,27 @@ public class NotificationManager : Manager
 {
     public GameObject notificationPanel;
 
+    public GameObject currentObjectivePanel;
+
     public Notification notificationPrefab;
 
     public List<Notification> notifications;
 
     public PlayerObjective objectivePrefab;
 
-    int numEvents;
+    int numNotifications;
     float spacingBetweenNotifications;
     float lastNotificationPos;
     float notificationHeight;
-    PlayerControls playerControls;
+    public PlayerControls playerControls;
 
     // Start is called before the first frame update
     void Start()
     {
         playerControls = FindObjectOfType<PlayerControls>();
         notifications = new List<Notification>();
+        currentObjectivePanel.SetActive(false);
+
         spacingBetweenNotifications = 5;
         lastNotificationPos = 10;
         notificationHeight = 65;
@@ -46,8 +50,8 @@ public class NotificationManager : Manager
             newPos.z = Random.Range(-512, 512);
             newPos.y = heightMap.GetPixel((int)newPos.x, (int)newPos.z).r;
             newObjective.transform.position = newPos;
-
-            AddNotification("Test", 0, newObjective);
+            
+            AddNotification("Test " + ++numNotifications , 0, newObjective);
         }
     }
 
@@ -58,7 +62,7 @@ public class NotificationManager : Manager
         newNotification.severity = severity;
         newNotification.objective = objective;
         objective.notification = newNotification;
-        newNotification.playerControls = playerControls;
+        newNotification.manager = this;
         notifications.Add(newNotification);
     }
 

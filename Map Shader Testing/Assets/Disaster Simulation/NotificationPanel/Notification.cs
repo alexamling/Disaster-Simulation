@@ -15,7 +15,7 @@ public class Notification : MonoBehaviour
 
     public RectTransform rectTransform;
 
-    public PlayerControls playerControls;
+    public NotificationManager manager;
     
     void Start()
     {
@@ -28,12 +28,27 @@ public class Notification : MonoBehaviour
         
     }
 
+    public void Clicked()
+    {
+        if (objective.revealed)
+        {
+            manager.currentObjectivePanel.SetActive(false);
+            FocusOnObjective();
+        }
+        else
+        {
+            manager.currentObjectivePanel.SetActive(true);
+            manager.currentObjectivePanel.GetComponentInChildren<Text>().text = text.text;
+            manager.playerControls.FocusOn(new Vector2(0, 0), 60);
+        }
+    }
+
     public void FocusOnObjective()
     {
         if (objective.revealed)
         {
             Vector3 objectivePos = objective.transform.position;
-            playerControls.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
+            manager.playerControls.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
         }
     }
 }

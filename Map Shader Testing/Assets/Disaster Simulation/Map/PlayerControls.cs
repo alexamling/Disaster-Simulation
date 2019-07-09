@@ -63,6 +63,8 @@ public class PlayerControls : MonoBehaviour
 
         screenPos = Input.mousePosition;
 
+        Debug.Log(Input.mousePosition);
+
         #region Camera Panning
         if(screenPos.x > cam.scaledPixelWidth - panningBorderWidth)
         {
