@@ -63,6 +63,7 @@ public class MapController : MonoBehaviour
     [Space(5)]
     public Material mapMaterial;
     [Space(10)]
+    public NotificationManager notificationManager;
     public List<GameObject> objectives;
     [Space(5)]
     public AnimationCurve outlineColorCurve;
@@ -164,6 +165,13 @@ public class MapController : MonoBehaviour
         else
         {
             fireParticles.gameObject.SetActive(false);
+        }
+        
+        if (notificationManager)
+        {
+            notificationManager.mapWidth = mapWidth;
+            notificationManager.mapHeight = mapHeight;
+            notificationManager.heightMap = dataMaps.heightMap;
         }
 
         terrainGenerator = gameObject.AddComponent<TerrainGenerator>();

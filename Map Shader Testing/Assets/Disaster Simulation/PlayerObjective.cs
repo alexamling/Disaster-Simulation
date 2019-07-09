@@ -17,8 +17,11 @@ public class PlayerObjective : MonoBehaviour
 
     public bool selected;
     public bool hover;
+    public bool revealed;
 
     public float[] responseModifiers;
+
+    public Notification notification;
 
     private float response;
 
@@ -35,7 +38,7 @@ public class PlayerObjective : MonoBehaviour
     
     protected void Update()
     { 
-        if (active) // shift the color based on status green -> yellow -> orange -> red
+        if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
             outline.OutlineWidth = 2.5f * Mathf.Sin(Time.time * (25f * (1.0f - status))) + 2.5f;
             if (status > .5)

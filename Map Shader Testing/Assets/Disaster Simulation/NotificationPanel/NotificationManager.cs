@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// Written by Alexander Amling
 /// </summary>
 
-public class NotificationManager : MonoBehaviour
+public class NotificationManager : Manager
 {
     public GameObject notificationPanel;
 
@@ -16,16 +16,18 @@ public class NotificationManager : MonoBehaviour
 
     public List<Notification> notifications;
 
-    public PlayerObjective objective;
+    public PlayerObjective objectivePrefab;
 
     int numEvents;
     float spacingBetweenNotifications;
     float lastNotificationPos;
     float notificationHeight;
+    PlayerControls playerControls;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerControls = FindObjectOfType<PlayerControls>();
         notifications = new List<Notification>();
         spacingBetweenNotifications = 5;
         lastNotificationPos = 10;
@@ -38,7 +40,14 @@ public class NotificationManager : MonoBehaviour
     // TODO: remove this
         if (Input.GetKeyDown(KeyCode.N))
         {
-            AddNotification("Test", 0, objective);
+            PlayerObjective newObjective = Instantiate(objectivePrefab);
+            Vector3 newPos; 
+            newPos.x = Random.Range(-512, 512);
+            newPos.z = Random.Range(-512, 512);
+            newPos.y = heightMap.GetPixel((int)newPos.x, (int)newPos.z).r;
+            newObjective.transform.position = newPos;
+
+            AddNotification("Test", 0, newObjective);
         }
     }
 
@@ -48,10 +57,13 @@ public class NotificationManager : MonoBehaviour
         newNotification.text.text = message;
         newNotification.severity = severity;
         newNotification.objective = objective;
-        newNotification.rectTransform.SetTop(lastNotificationPos);
-        newNotification.rectTransform.SetBottom(notificationPanel.GetComponent<RectTransform>().rect.height - (lastNotificationPos + notificationHeight));
-        lastNotificationPos = lastNotificationPos + notificationHeight + spacingBetweenNotifications;
-        Debug.Log(lastNotificationPos);
+        objective.notification = newNotification;
+        newNotification.playerControls = playerControls;
         notifications.Add(newNotification);
+    }
+
+    public override IEnumerator Load()
+    {
+        throw new System.NotImplementedException();
     }
 }

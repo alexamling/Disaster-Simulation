@@ -14,15 +14,27 @@ public class Notification : MonoBehaviour
     public PlayerObjective objective;
 
     public RectTransform rectTransform;
+
+    public PlayerControls playerControls;
     
     void Start()
     {
+        objective.revealed = false;
         rectTransform = gameObject.GetComponent<RectTransform>();
     }
     
     void Update()
     {
         
+    }
+
+    public void FocusOnObjective()
+    {
+        if (objective.revealed)
+        {
+            Vector3 objectivePos = objective.transform.position;
+            playerControls.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
+        }
     }
 }
 

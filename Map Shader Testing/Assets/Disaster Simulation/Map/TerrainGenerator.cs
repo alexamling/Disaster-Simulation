@@ -126,7 +126,7 @@ public class TerrainGenerator : MonoBehaviour
         mesh.RecalculateNormals();
 
         //meshFilter.mesh = mesh;
-        collider.sharedMesh = mesh;
+        //collider.sharedMesh = mesh;
 
         //surface.BuildNavMesh();
     }
