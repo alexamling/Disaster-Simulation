@@ -18,6 +18,7 @@ public struct InfoPanel
 public class PlayerControls : MonoBehaviour
 {
     public MapController manager;
+    [HideInInspector]
     public PlayerObjective selectedObjective;
     public RadialMenu radialMenu;
     public GameObject cameraPos;
@@ -31,6 +32,7 @@ public class PlayerControls : MonoBehaviour
     int numNotifications;
     public InfoPanel notificationPanel;
     public InfoPanel currentObjectivePanel;
+    public InfoPanel objectiveMessage;
     public Notification notificationPrefab;
     public PlayerObjective objectivePrefab;
     public List<Notification> notifications;
@@ -41,6 +43,7 @@ public class PlayerControls : MonoBehaviour
     Camera cam;
     RaycastHit hit;
     GameObject other;
+    PlayerObjective playerObjective;
     GraphicRaycaster rayCaster;
     List<RaycastResult> raycastResults;
     PointerEventData pointerEventData;
@@ -62,17 +65,21 @@ public class PlayerControls : MonoBehaviour
 
     void Start()
     {
-        cam = Camera.main;
         newFov = 60;
         panningBorderWidth = 32;
         numNotifications = 0;
         newCamPos = cameraPos.transform.position;
 
-        raycastResults = new List<RaycastResult>();
+        cam = Camera.main;
         rayCaster = FindObjectOfType<GraphicRaycaster>();
         eventSystem = FindObjectOfType<EventSystem>();
+
         notifications = new List<Notification>();
+        raycastResults = new List<RaycastResult>();
+
         currentObjectivePanel.panel.SetActive(false);
+        objectiveMessage.panel.SetActive(false);
+
         radialMenu.Display(options);
     }
     
@@ -134,7 +141,7 @@ public class PlayerControls : MonoBehaviour
         dontZoom = false;
         foreach (RaycastResult r in raycastResults)
         {
-            if (r.gameObject.GetComponent<NotificationManager>())
+            if (r.gameObject.GetComponent<ScrollRect>())
             {
                 dontZoom = true;
             }
@@ -162,9 +169,7 @@ public class PlayerControls : MonoBehaviour
             #region Set Radial Menu Position
             try
             {
-                Debug.Log("Hit");
                 other.GetComponent<PlayerObjective>().hover = true;
-                Debug.Log("Objective");
                 if (clicked)
                 {
                     if (!EventSystem.current.IsPointerOverGameObject())
@@ -178,7 +183,6 @@ public class PlayerControls : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Catch");
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (!EventSystem.current.IsPointerOverGameObject())
@@ -204,7 +208,7 @@ public class PlayerControls : MonoBehaviour
 
                 for(int i = 0; i < colliders.Length; i++)
                 {
-                    PlayerObjective playerObjective = colliders[i].GetComponent<PlayerObjective>();
+                    playerObjective = colliders[i].GetComponent<PlayerObjective>();
 
                     if (playerObjective)
                     {
