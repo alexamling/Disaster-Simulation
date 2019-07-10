@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
+public struct InfoPanel
+{
+    public GameObject panel;
+    public Text text;
+}
+
 /// <summary>
 /// This class manages the player's ability to interact with the game
 /// </summary>
@@ -19,21 +26,36 @@ public class PlayerControls : MonoBehaviour
     // TODO: improve on this/replace several lists with seperate menus
     public List<Button> options;
 
+    [Header("UI Variables")]
+    #region UI Variables
+    int numNotifications;
+    public InfoPanel notificationPanel;
+    public InfoPanel currentObjectivePanel;
+    public Notification notificationPrefab;
+    public PlayerObjective objectivePrefab;
+    public List<Notification> notifications;
+    #endregion
+
+    #region Raycasting Variables
     Ray ray;
     Camera cam;
     RaycastHit hit;
     GameObject other;
+    GraphicRaycaster rayCaster;
+    List<RaycastResult> raycastResults;
+    PointerEventData pointerEventData;
+    EventSystem eventSystem;
+    #endregion
+
+    #region Camera Variables
     bool clicked;
     bool dontZoom;
     float newFov;
     Vector3 screenPos;
     Vector3 newCamPos;
     float panningBorderWidth;
+    #endregion
 
-    GraphicRaycaster rayCaster;
-    List<RaycastResult> raycastResults;
-    PointerEventData pointerEventData;
-    EventSystem eventSystem;
 
     [Space(10)]
     public ParticleSystem pingParticle;
@@ -43,16 +65,35 @@ public class PlayerControls : MonoBehaviour
         cam = Camera.main;
         newFov = 60;
         panningBorderWidth = 32;
+        numNotifications = 0;
         newCamPos = cameraPos.transform.position;
 
         raycastResults = new List<RaycastResult>();
-        rayCaster = GetComponent<GraphicRaycaster>();
-        eventSystem = GetComponentInChildren<EventSystem>();
+        rayCaster = FindObjectOfType<GraphicRaycaster>();
+        eventSystem = FindObjectOfType<EventSystem>();
+        notifications = new List<Notification>();
+        currentObjectivePanel.panel.SetActive(false);
         radialMenu.Display(options);
     }
     
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && selectedObjective)
+        {
+            ResetFocus();
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            PlayerObjective newObjective = Instantiate(objectivePrefab);
+            Vector3 newPos;
+            newPos.x = Random.Range(-512, 512);
+            newPos.z = Random.Range(-512, 512);
+            newPos.y = 5; // heightMap.GetPixel((int)newPos.x, (int)newPos.z).r;
+            newObjective.transform.position = newPos;
+            AddNotification("Test " + ++numNotifications, 0, newObjective);
+        }
+
         if (Input.GetKeyDown(KeyCode.G) && manager.terrainGenerator)
         {
             StartCoroutine(manager.terrainGenerator.Load());
@@ -81,7 +122,7 @@ public class PlayerControls : MonoBehaviour
 
         // lerp the camera towards the new location
         newCamPos = Vector3.ClampMagnitude(newCamPos,750);
-        cameraPos.transform.position = Vector3.Lerp(cameraPos.transform.position, newCamPos, .2f);
+        cameraPos.transform.position = Vector3.Lerp(cameraPos.transform.position, newCamPos, .1f);
         
         // raycast to UI
         pointerEventData = new PointerEventData(eventSystem);
@@ -121,7 +162,9 @@ public class PlayerControls : MonoBehaviour
             #region Set Radial Menu Position
             try
             {
+                Debug.Log("Hit");
                 other.GetComponent<PlayerObjective>().hover = true;
+                Debug.Log("Objective");
                 if (clicked)
                 {
                     if (!EventSystem.current.IsPointerOverGameObject())
@@ -135,6 +178,7 @@ public class PlayerControls : MonoBehaviour
             }
             catch
             {
+                Debug.Log("Catch");
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (!EventSystem.current.IsPointerOverGameObject())
@@ -166,6 +210,8 @@ public class PlayerControls : MonoBehaviour
                     {
                         playerObjective.revealed = true;
                         playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
+                        playerObjective.notification.FocusOnObjective();
+                        selectedObjective = playerObjective;
                     }
                 }
 
@@ -174,6 +220,17 @@ public class PlayerControls : MonoBehaviour
             }
 
         }
+    }
+
+    public void AddNotification(string message, int severity, PlayerObjective objective)
+    {
+        Notification newNotification = Instantiate(notificationPrefab, notificationPanel.panel.transform);
+        newNotification.text.text = message;
+        newNotification.severity = severity;
+        newNotification.objective = objective;
+        objective.notification = newNotification;
+        newNotification.manager = this;
+        notifications.Add(newNotification);
     }
 
     public void CloseInfoMenu()
@@ -189,5 +246,11 @@ public class PlayerControls : MonoBehaviour
     {
         newCamPos = new Vector3(pos.x, 0, pos.y);
         newFov = fov;
+    }
+
+    public void ResetFocus()
+    {
+        selectedObjective = null;
+        FocusOn(Vector2.zero, 60);
     }
 }

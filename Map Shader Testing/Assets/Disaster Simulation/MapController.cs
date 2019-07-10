@@ -167,12 +167,14 @@ public class MapController : MonoBehaviour
             fireParticles.gameObject.SetActive(false);
         }
         
+        /*
         if (notificationManager)
         {
             notificationManager.mapWidth = mapWidth;
             notificationManager.mapHeight = mapHeight;
             notificationManager.heightMap = dataMaps.heightMap;
         }
+        */
 
         terrainGenerator = gameObject.AddComponent<TerrainGenerator>();
         terrainGenerator.width = mapWidth;

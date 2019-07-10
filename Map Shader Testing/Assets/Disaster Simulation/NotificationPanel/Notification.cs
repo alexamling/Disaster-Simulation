@@ -15,7 +15,7 @@ public class Notification : MonoBehaviour
 
     public RectTransform rectTransform;
 
-    public NotificationManager manager;
+    public PlayerControls manager;
     
     void Start()
     {
@@ -34,17 +34,15 @@ public class Notification : MonoBehaviour
         {
             manager.currentObjectivePanel.panel.SetActive(true);
             manager.currentObjectivePanel.text.text = text.text;
-            manager.playerControls.FocusOn(new Vector2(0, 0), 60);
+            manager.FocusOn(new Vector2(0, 0), 60);
         }
     }
 
     public void FocusOnObjective()
     {
-        if (objective.revealed)
-        {
-            Vector3 objectivePos = objective.transform.position;
-            manager.playerControls.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
-        }
+        Vector3 objectivePos = objective.transform.position;
+        manager.selectedObjective = objective;
+        manager.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
     }
 }
 

@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public struct InfoPanel
-{
-    public GameObject panel;
-    public Text text;
-}
-
 /// <summary>
 /// This manager tracks the generation and manipulation of the notification panel
 /// Written by Alexander Amling
 /// </summary>
 
-public class NotificationManager : Manager
+public class NotificationManager : MonoBehaviour
 {
     public InfoPanel notificationPanel;
 
@@ -26,11 +19,7 @@ public class NotificationManager : Manager
     public List<Notification> notifications;
 
     public PlayerObjective objectivePrefab;
-
-    int numNotifications;
-    float spacingBetweenNotifications;
-    float lastNotificationPos;
-    float notificationHeight;
+    
     public PlayerControls playerControls;
 
     // Start is called before the first frame update
@@ -39,10 +28,6 @@ public class NotificationManager : Manager
         playerControls = FindObjectOfType<PlayerControls>();
         notifications = new List<Notification>();
         currentObjectivePanel.panel.SetActive(false);
-
-        spacingBetweenNotifications = 5;
-        lastNotificationPos = 10;
-        notificationHeight = 65;
     }
     
     void Update()
@@ -55,10 +40,8 @@ public class NotificationManager : Manager
             Vector3 newPos; 
             newPos.x = Random.Range(-512, 512);
             newPos.z = Random.Range(-512, 512);
-            newPos.y = heightMap.GetPixel((int)newPos.x, (int)newPos.z).r;
+            newPos.y = 5; // heightMap.GetPixel((int)newPos.x, (int)newPos.z).r;
             newObjective.transform.position = newPos;
-            
-            AddNotification("Test " + ++numNotifications , 0, newObjective);
         }
     }
 
@@ -69,12 +52,7 @@ public class NotificationManager : Manager
         newNotification.severity = severity;
         newNotification.objective = objective;
         objective.notification = newNotification;
-        newNotification.manager = this;
+        //newNotification.manager = this;
         notifications.Add(newNotification);
-    }
-
-    public override IEnumerator Load()
-    {
-        throw new System.NotImplementedException();
     }
 }

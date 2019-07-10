@@ -68,12 +68,12 @@ public class PlayerObjective : MonoBehaviour
 
         if (selected)
         {
-            outline.OutlineWidth = 15.0f;
+            outline.OutlineWidth = 5.0f;
             outline.OutlineColor = new Color(1, .5f, 0);
         }
         else if (hover)
         {
-            outline.OutlineWidth = 10.0f;
+            outline.OutlineWidth = 7.5f;
             outline.OutlineColor = Color.yellow;
             hover = false;
         }
