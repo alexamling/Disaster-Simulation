@@ -112,7 +112,7 @@ public class MapController : MonoBehaviour
 
     public static Vector2 ToUSNG(Vector3 pos)
     {
-        return new Vector2(pos.x * 4.25f + 1788, pos.z * 4.90f + 4735);
+        return new Vector2(pos.x / .425f + 1788, pos.z / .490f + 4735);
     }
 
     // Adds managers and passes values to them
