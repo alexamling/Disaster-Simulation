@@ -67,7 +67,7 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         newFov = 60;
-        panningBorderWidth = 32;
+        //panningBorderWidth = 10;
         numNotifications = 0;
         newCamPos = cameraPos.transform.position;
 
@@ -109,6 +109,7 @@ public class PlayerControls : MonoBehaviour
         
         screenPos = Input.mousePosition;
 
+        /*
         #region Camera Panning
         if(screenPos.x > cam.scaledPixelWidth - panningBorderWidth)
         {
@@ -127,6 +128,7 @@ public class PlayerControls : MonoBehaviour
             newCamPos += Vector3.back * 3;
         }
         #endregion
+        */
 
         // lerp the camera towards the new location
         newCamPos = Vector3.ClampMagnitude(newCamPos,750);
@@ -205,7 +207,7 @@ public class PlayerControls : MonoBehaviour
             if (clicked)
             {
                 #region Ping Map
-                Collider[] colliders = Physics.OverlapSphere(hit.point, 15);
+                Collider[] colliders = Physics.OverlapSphere(hit.point, 45);
 
                 for(int i = 0; i < colliders.Length; i++)
                 {
