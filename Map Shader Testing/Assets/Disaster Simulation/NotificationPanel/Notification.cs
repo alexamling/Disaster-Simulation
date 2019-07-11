@@ -34,6 +34,9 @@ public class Notification : MonoBehaviour
         {
             manager.currentObjectivePanel.panel.SetActive(true);
             manager.currentObjectivePanel.text.text = text.text;
+            Vector2 objectivePos = MapController.ToUSNG(objective.transform.position);
+            Debug.Log(objectivePos);
+            manager.objectiveLocationPanel.text.text = "Located at: " + (int)objectivePos.x + ", " + (int)objectivePos.y;
             manager.FocusOn(new Vector2(0, 0), 60);
         }
     }

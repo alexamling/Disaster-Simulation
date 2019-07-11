@@ -32,6 +32,7 @@ public class PlayerControls : MonoBehaviour
     int numNotifications;
     public InfoPanel notificationPanel;
     public InfoPanel currentObjectivePanel;
+    public InfoPanel objectiveLocationPanel;
     public InfoPanel objectiveMessage;
     public Notification notificationPrefab;
     public PlayerObjective objectivePrefab;
