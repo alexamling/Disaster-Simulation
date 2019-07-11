@@ -56,6 +56,8 @@ public class PlayerControls : MonoBehaviour
     bool dontZoom;
     float newFov;
     Vector3 screenPos;
+    Vector3 clickedPos;
+    Vector3 swapPos;
     Vector3 newCamPos;
     float panningBorderWidth;
     #endregion
@@ -108,6 +110,19 @@ public class PlayerControls : MonoBehaviour
         }
         
         screenPos = Input.mousePosition;
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            clickedPos = screenPos;
+
+        }
+        else if (Input.GetMouseButton(1))
+        {
+            swapPos = (clickedPos - screenPos) * newFov * .02f;
+            clickedPos = screenPos;
+            newCamPos.x += swapPos.x;
+            newCamPos.z += swapPos.y;
+        }
 
         /*
         #region Camera Panning
