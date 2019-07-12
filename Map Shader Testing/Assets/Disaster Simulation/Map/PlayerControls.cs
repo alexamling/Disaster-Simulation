@@ -168,8 +168,8 @@ public class PlayerControls : MonoBehaviour
         #region Zoom with Scroll Wheel
         if (!dontZoom)
         {
-            newFov -= Input.GetAxis("Mouse ScrollWheel") * 10;
-            newFov = Mathf.Clamp(newFov, 10, 65);
+            newFov -= Input.GetAxis("Mouse ScrollWheel") * 20;
+            newFov = Mathf.Clamp(newFov, 2.5f, 65);
         }
         #endregion
 

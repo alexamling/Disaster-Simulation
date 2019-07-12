@@ -41,6 +41,12 @@ public class Notification : MonoBehaviour
         }
     }
 
+    public void Close()
+    {
+        Destroy(objective);
+        Destroy(gameObject);
+    }
+
     public void FocusOnObjective()
     {
         Vector3 objectivePos = objective.transform.position;

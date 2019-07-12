@@ -39,7 +39,7 @@ public class NotificationManager : MonoBehaviour
             PlayerObjective newObjective = Instantiate(objectivePrefab);
             Vector3 newPos; 
             newPos.x = Random.Range(-512, 512);
-            newPos.z = Random.Range(-512, 512);
+            newPos.z = Random.Range(-450, 450);
             newPos.y = 5; // heightMap.GetPixel((int)newPos.x, (int)newPos.z).r;
             newObjective.transform.position = newPos;
         }
