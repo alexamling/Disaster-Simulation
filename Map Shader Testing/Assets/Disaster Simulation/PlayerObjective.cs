@@ -14,7 +14,6 @@ public class PlayerObjective : MonoBehaviour
 {
     [Range(0,1)]
     public float status = 1;
-    public float objectiveCondition = 1;
     public float score;
     [HideInInspector]
     public Outline outline;
@@ -23,7 +22,11 @@ public class PlayerObjective : MonoBehaviour
     public bool hover;
     public bool revealed;
 
-    public float[] responseModifiers;
+    public float[] immediateResponseModifiers;
+    public float[] delayedResponseModifiers;
+
+    public string notificationTitle;
+    public string fullMessage;
 
     public Notification notification;
 
