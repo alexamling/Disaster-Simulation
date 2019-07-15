@@ -53,7 +53,7 @@ public class PlayerControls : MonoBehaviour
 
     #region Camera Variables
     bool clicked;
-    bool dontZoom;
+    bool offMap;
     float newFov;
     Vector3 screenPos;
     Vector3 clickedPos;
@@ -91,6 +91,7 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && selectedObjective)
         {
             ResetFocus();
+            CloseInfoMenu();
         }
 
         if (Input.GetKeyDown(KeyCode.N))
@@ -118,7 +119,7 @@ public class PlayerControls : MonoBehaviour
         }
         else if (Input.GetMouseButton(1))
         {
-            swapPos = (clickedPos - screenPos) * newFov * .02f;
+            swapPos = (clickedPos - screenPos) * newFov * .015f;
             clickedPos = screenPos;
             newCamPos.x += swapPos.x;
             newCamPos.z += swapPos.y;
@@ -156,17 +157,17 @@ public class PlayerControls : MonoBehaviour
         rayCaster.Raycast(pointerEventData, raycastResults);
 
         // check if you're hovering over the notification panel
-        dontZoom = false;
+        offMap = false;
         foreach (RaycastResult r in raycastResults)
         {
             if (r.gameObject.GetComponent<ScrollRect>())
             {
-                dontZoom = true;
+                offMap = true;
             }
         }
 
         #region Zoom with Scroll Wheel
-        if (!dontZoom)
+        if (!offMap)
         {
             newFov -= Input.GetAxis("Mouse ScrollWheel") * 20;
             newFov = Mathf.Clamp(newFov, 2.5f, 65);
@@ -219,7 +220,7 @@ public class PlayerControls : MonoBehaviour
                 radialMenu.SetPosition(new Vector3(-1000, 0, 0));
             #endregion
 
-            if (clicked)
+            if (clicked && !offMap)
             {
                 #region Ping Map
                 Collider[] colliders = Physics.OverlapSphere(hit.point, 45);
@@ -232,7 +233,7 @@ public class PlayerControls : MonoBehaviour
                     {
                         playerObjective.revealed = true;
                         playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
-                        playerObjective.notification.FocusOnObjective();
+                        playerObjective.notification.Display();
                         selectedObjective = playerObjective;
                     }
                 }
@@ -262,6 +263,8 @@ public class PlayerControls : MonoBehaviour
             selectedObjective.selected = false;
             selectedObjective = null;
         }
+
+        objectiveMessage.panel.SetActive(false);
     }
 
     public void FocusOn(Vector2 pos, float fov)

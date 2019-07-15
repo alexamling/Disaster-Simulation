@@ -28,13 +28,13 @@ public class Notification : MonoBehaviour
         if (objective.revealed)
         {
             manager.currentObjectivePanel.panel.SetActive(false);
-            FocusOnObjective();
+            Display();
         }
         else
         {
             manager.currentObjectivePanel.panel.SetActive(true);
             manager.currentObjectivePanel.text.text = text.text;
-            Vector2 objectivePos = MapController.ToUSNG(objective.transform.position);
+            Vector2 objectivePos = USNGGrid.ToUSNG(objective.transform.position);
             Debug.Log(objectivePos);
             manager.objectiveLocationPanel.text.text = "Located at: " + (int)objectivePos.x + ", " + (int)objectivePos.y;
             manager.FocusOn(new Vector2(0, 0), 60);
@@ -52,6 +52,15 @@ public class Notification : MonoBehaviour
         Vector3 objectivePos = objective.transform.position;
         manager.selectedObjective = objective;
         manager.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
+    }
+
+    public void Display()
+    {
+        FocusOnObjective();
+        if(objective.objectiveState == ObjectiveState.Requesting)
+        {
+            manager.objectiveMessage.panel.SetActive(true);
+        }
     }
 }
 

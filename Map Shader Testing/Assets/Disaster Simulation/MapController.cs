@@ -110,11 +110,6 @@ public class MapController : MonoBehaviour
 
     private ParticleSystem.ShapeModule shapeModule;
 
-    public static Vector2 ToUSNG(Vector3 pos)
-    {
-        return new Vector2(pos.x / .425f + 1738, pos.z / .425f + 4735);
-    }
-
     // Adds managers and passes values to them
     void Start()
     {

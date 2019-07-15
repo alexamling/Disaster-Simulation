@@ -23,6 +23,10 @@ public class USNGGrid : MonoBehaviour
     RectTransform[] xMarkers;
     RectTransform[] yMarkers;
 
+    public static Vector2 ToUSNG(Vector3 pos)
+    {
+        return new Vector2(pos.x / .425f + 1738, pos.z / .425f + 4735);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -40,20 +44,18 @@ public class USNGGrid : MonoBehaviour
                 yElements.Add(element);
         }
 
-        Debug.Log(xElements.Count + " " + yElements.Count);
-
         xMarkers = new RectTransform[(xElements.Count - 1) * 9];
         for(int i = 0; i < xMarkers.Length; i++)
         {
             xMarkers[i] = Instantiate(markerPrefab);
-            xMarkers[i].parent = parent;
+            xMarkers[i].SetParent(parent);
         }
 
         yMarkers = new RectTransform[(yElements.Count - 1) * 9];
         for (int i = 0; i < yMarkers.Length; i++)
         {
             yMarkers[i] = Instantiate(markerPrefab);
-            yMarkers[i].parent = parent;
+            yMarkers[i].SetParent(parent);
         }
     }
 

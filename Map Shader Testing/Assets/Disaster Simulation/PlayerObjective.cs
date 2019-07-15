@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ObjectiveState { Inactive, Requesting, Active, Resolved };
+
 /// <summary>
 /// This class is for each of the objects that the player will directly interact with during the game
 /// the objects manage their own outline based on their status
@@ -12,6 +14,8 @@ public class PlayerObjective : MonoBehaviour
 {
     [Range(0,1)]
     public float status = 1;
+    public float objectiveCondition = 1;
+    public float score;
     [HideInInspector]
     public Outline outline;
 
@@ -23,6 +27,10 @@ public class PlayerObjective : MonoBehaviour
 
     public Notification notification;
 
+    public ObjectiveState objectiveState;
+
+    public List<PlayerObjective> relatedObjectives;
+
     private float response;
 
     private bool active;
@@ -31,6 +39,7 @@ public class PlayerObjective : MonoBehaviour
     
     protected void Start()
     {
+        objectiveState = ObjectiveState.Inactive;
         selected = false;
         active = true;
         outline = gameObject.AddComponent<Outline>();
@@ -77,5 +86,10 @@ public class PlayerObjective : MonoBehaviour
             outline.OutlineColor = Color.yellow;
             hover = false;
         }
+    }
+
+    public void Display()
+    {
+
     }
 }
