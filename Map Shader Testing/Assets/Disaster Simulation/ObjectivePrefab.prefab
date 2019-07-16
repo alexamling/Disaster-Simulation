@@ -46,12 +46,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status: 1
+  score: 0
   outline: {fileID: 0}
   selected: 0
   hover: 0
   revealed: 0
-  responseModifiers: []
+  location: {x: 0, y: 0}
+  immediateResponseModifiers: []
+  delayedResponseModifiers: []
+  units: 
+  notificationTitle: 
+  fullMessage: 
   notification: {fileID: 0}
+  objectiveState: 0
+  relatedObjectives: []
+  scoreDeprecator: 0
+  StatusDeprecator: 0
+  timeLimit: 0
 --- !u!135 &368604323784812621
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -112,7 +123,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5741467259814000001}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
