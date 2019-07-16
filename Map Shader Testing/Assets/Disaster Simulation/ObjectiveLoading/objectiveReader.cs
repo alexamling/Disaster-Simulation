@@ -22,7 +22,6 @@ public class objectiveReader : MonoBehaviour
     {
         readFile(testObjectivesFire, fireList);
         readFile(testObjectivesFlood, floodList);
-
     }
 
     public void readFile(TextAsset textFile, List<PlayerObjective> list)
