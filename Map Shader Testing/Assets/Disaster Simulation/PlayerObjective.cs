@@ -130,13 +130,13 @@ public class PlayerObjective: MonoBehaviour
                     for (int i = 0; i < units.Length; i++)
                     {
                         //score += immediateResponseModifiers[units[i]] / 10.0f;
-                        status += 0 + ((immediateResponseModifiers[units[i]] / 10.0f) - 0) * (1 - 0) / (10.0f - 0);
+                        status += (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
                     }
                 }
                 for (int i = 0; i < units.Length; i++)
                 {
                     //score += delayedResponseModifiers[units[i]] / 100.0f;
-                    status += 0 + ((delayedResponseModifiers[units[i]] / 100.0f) - 0) * (1 - 0) / (100.0f - 0);
+                    status += (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
                 }
             }
         }
