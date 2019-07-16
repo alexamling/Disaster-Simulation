@@ -91,7 +91,7 @@ public class PlayerObjective: MonoBehaviour
         }
             
 
-        if (status <= 0.001f && active) // turn the outline solid black when the status is low enough
+        if (status <= 0.001f) // turn the outline solid black when the status is low enough
         {
             /*outline.OutlineWidth = 5.0f;
             outline.OutlineColor = Color.black;
@@ -113,7 +113,7 @@ public class PlayerObjective: MonoBehaviour
 
     void FixedUpdate()
     {
-        if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
+        if (objectiveState != ObjectiveState.Inactive && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
             if (score >= 0)
             {
