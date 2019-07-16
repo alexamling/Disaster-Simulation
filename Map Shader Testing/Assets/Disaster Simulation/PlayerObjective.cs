@@ -28,6 +28,7 @@ public class PlayerObjective: MonoBehaviour
 
     public float[] immediateResponseModifiers;
     public float[] delayedResponseModifiers;
+    public int[] units;
 
     public string notificationTitle;
     public string fullMessage;
