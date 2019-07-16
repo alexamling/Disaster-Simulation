@@ -45,6 +45,8 @@ public class PlayerObjective: MonoBehaviour
 
     public float timeLimit;
 
+    public bool hasImmediateResponded = false;
+
     private float response;
 
     private bool active;
@@ -63,6 +65,7 @@ public class PlayerObjective: MonoBehaviour
 
         //DEBUG
         revealed = true;
+        //units = new int[] { 1, 3};
     }
     
     protected void Update()
@@ -115,13 +118,27 @@ public class PlayerObjective: MonoBehaviour
             if (score >= 0)
             {
                 score -= scoreDeprecator;
-                Debug.Log(score);
 
                 status -= StatusDeprecator;
-                Debug.Log(status);
             }
 
-
+            if (units.Length > 0 && status < 1) //if units have been assigned
+            {
+                if (!hasImmediateResponded)
+                {
+                    hasImmediateResponded = true;
+                    for (int i = 0; i < units.Length; i++)
+                    {
+                        //score += immediateResponseModifiers[units[i]] / 10.0f;
+                        status += 0 + ((immediateResponseModifiers[units[i]] / 10.0f) - 0) * (1 - 0) / (10.0f - 0);
+                    }
+                }
+                for (int i = 0; i < units.Length; i++)
+                {
+                    //score += delayedResponseModifiers[units[i]] / 100.0f;
+                    status += 0 + ((delayedResponseModifiers[units[i]] / 100.0f) - 0) * (1 - 0) / (100.0f - 0);
+                }
+            }
         }
     }
 }
