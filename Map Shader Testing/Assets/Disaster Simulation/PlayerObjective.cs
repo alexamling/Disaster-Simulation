@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ public enum ObjectiveState { Inactive, Requesting, Active, Resolved };
 /// Written by Alexander Amling
 /// </summary>
 
-public class PlayerObjective : MonoBehaviour
+[Serializable]
+public class PlayerObjective: MonoBehaviour
 {
     [Range(0,1)]
     public float status = 1;

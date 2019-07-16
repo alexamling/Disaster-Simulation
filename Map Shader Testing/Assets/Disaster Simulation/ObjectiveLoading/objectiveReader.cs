@@ -19,11 +19,11 @@ public class objectiveReader : MonoBehaviour
         readFile(testObjectivesFire, fireList);
         readFile(testObjectivesFlood, floodList);
 
-        /*Debug.Log("FIRE EVENTS");
+        Debug.Log("FIRE EVENTS");
         foreach (PlayerObjective obj in fireList)
         {
-            Debug.Log(obj.score);
-            Debug.Log(obj.location);
+            Debug.Log("score " + obj.score);
+            Debug.Log("location " + obj.location);
             Debug.Log(obj.immediateResponseModifiers.Length);
             Debug.Log(obj.delayedResponseModifiers.Length);
             Debug.Log(obj.notificationTitle);
@@ -38,16 +38,22 @@ public class objectiveReader : MonoBehaviour
             Debug.Log(obj.delayedResponseModifiers.Length);
             Debug.Log(obj.notificationTitle);
             Debug.Log(obj.fullMessage);
-        }*/
+        }
+
+        //Instantiate<PlayerObjective>(fireList[0]);
     }
 
     public void readFile(TextAsset textFile, List<PlayerObjective> list)
     {
+        string[] newStrings = textFile.text.Split(new String[] { "Score: ", "Location: ", "ImmediateResponseModifiers: ", "DelayedResponseModifiers: ", "NotificationTitle: ", "FullMeassage: ", "\n", "  " }, StringSplitOptions.RemoveEmptyEntries);
+        string newString = String.Join("", newStrings);
+
         PlayerObjective objective = new PlayerObjective();
-        string[] mainObjectives = textFile.text.Split(new string[] {" /n " }, StringSplitOptions.RemoveEmptyEntries);
+        //string[] mainObjectives = textFile.text.Split(new string[] {"|" }, StringSplitOptions.RemoveEmptyEntries);
+        string[] mainObjectives = newString.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
         foreach (string mainObjective in mainObjectives)
         {
-            string[] subObjectives = mainObjective.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+            string[] subObjectives = mainObjective.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
             //objective.score = float.Parse(subObjectives[0]);
             for (int i = 0; i < subObjectives.Length; i++)
             {
