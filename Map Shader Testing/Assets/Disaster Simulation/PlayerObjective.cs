@@ -105,7 +105,6 @@ public class PlayerObjective: MonoBehaviour
             if (score != 0)
             {
                 score -= 0.001f;
-                Debug.Log(score);
             }
         }
     }

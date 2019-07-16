@@ -241,6 +241,7 @@ public class MapController : MonoBehaviour
         newNotification.text.text = objective.notificationTitle;
         newNotification.severity = 0;
         newNotification.objective = objective;
+        newNotification.manager = playerControls;
         objective.notification = newNotification;
         playerControls.notifications.Add(newNotification);
 

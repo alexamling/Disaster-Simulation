@@ -22,32 +22,11 @@ public class objectiveReader : MonoBehaviour
     {
         readFile(testObjectivesFire, fireList);
         readFile(testObjectivesFlood, floodList);
-
-        Debug.Log("FIRE EVENTS");
-        foreach (PlayerObjective obj in fireList)
-        {
-            Debug.Log("score " + obj.score);
-            Debug.Log("location " + obj.location);
-            Debug.Log(obj.immediateResponseModifiers.Length);
-            Debug.Log(obj.delayedResponseModifiers.Length);
-            Debug.Log(obj.notificationTitle);
-            Debug.Log(obj.fullMessage);
-        }
-        Debug.Log("FLOOD EVENTS");
-        foreach (PlayerObjective obj in floodList)
-        {
-            Debug.Log(obj.score);
-            Debug.Log(obj.location);
-            Debug.Log(obj.immediateResponseModifiers.Length);
-            Debug.Log(obj.delayedResponseModifiers.Length);
-            Debug.Log(obj.notificationTitle);
-            Debug.Log(obj.fullMessage);
-        }
     }
 
     public void readFile(TextAsset textFile, List<PlayerObjective> list)
     {
-        string[] newStrings = textFile.text.Split(new String[] { "Score: ", "Location: ", "ImmediateResponseModifiers: ", "DelayedResponseModifiers: ", "NotificationTitle: ", "FullMeassage: ", "\n", "  " }, StringSplitOptions.RemoveEmptyEntries);
+        string[] newStrings = textFile.text.Split(new String[] { "Score: ", "Location: ", "ImmediateResponseModifiers: ", "DelayedResponseModifiers: ", "NotificationTitle: ", "FullMessage: ", "\n", "  " }, StringSplitOptions.RemoveEmptyEntries);
         string newString = String.Join("", newStrings);
 
        

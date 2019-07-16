@@ -36,7 +36,6 @@ public class Notification : MonoBehaviour
             manager.currentObjectivePanel.panel.SetActive(true);
             manager.currentObjectivePanel.text.text = text.text;
             Vector2 objectivePos = USNGGrid.ToUSNG(objective.transform.position);
-            Debug.Log(objectivePos);
             manager.objectiveLocationPanel.text.text = "Located at: " + (int)objectivePos.x + ", " + (int)objectivePos.y;
             manager.FocusOn(new Vector2(0, 0), 60);
         }
@@ -61,6 +60,7 @@ public class Notification : MonoBehaviour
         if(objective.objectiveState == ObjectiveState.Requesting)
         {
             manager.objectiveMessage.panel.SetActive(true);
+            manager.objectiveMessage.text.text = objective.fullMessage;
         }
     }
 }
