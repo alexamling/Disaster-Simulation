@@ -28,7 +28,7 @@ public class PlayerObjective: MonoBehaviour
 
     public float[] immediateResponseModifiers;
     public float[] delayedResponseModifiers;
-    public int[] units;
+    public int[] units; //0EMS, 1Fire Department, 2Military, 3Police, 4Volunteers
 
     public string notificationTitle;
     public string fullMessage;
