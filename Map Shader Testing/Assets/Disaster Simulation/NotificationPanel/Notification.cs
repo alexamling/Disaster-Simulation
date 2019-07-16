@@ -21,6 +21,7 @@ public class Notification : MonoBehaviour
     {
         objective.revealed = false;
         rectTransform = gameObject.GetComponent<RectTransform>();
+        manager = FindObjectOfType<PlayerControls>();
     }
 
     public void Clicked()
