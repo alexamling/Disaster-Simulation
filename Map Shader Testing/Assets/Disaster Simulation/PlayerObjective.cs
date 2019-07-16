@@ -108,9 +108,4 @@ public class PlayerObjective: MonoBehaviour
             }
         }
     }
-
-    public void Display()
-    {
-
-    }
 }

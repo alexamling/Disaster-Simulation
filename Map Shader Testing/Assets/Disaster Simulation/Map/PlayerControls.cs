@@ -94,6 +94,7 @@ public class PlayerControls : MonoBehaviour
             CloseInfoMenu();
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.N))
         {
             PlayerObjective newObjective = Instantiate(objectivePrefab);
@@ -104,6 +105,7 @@ public class PlayerControls : MonoBehaviour
             newObjective.transform.position = newPos;
             AddNotification("Test " + ++numNotifications, 0, newObjective);
         }
+        */
 
         if (Input.GetKeyDown(KeyCode.G) && manager.terrainGenerator)
         {
@@ -252,7 +254,6 @@ public class PlayerControls : MonoBehaviour
         newNotification.severity = severity;
         newNotification.objective = objective;
         objective.notification = newNotification;
-        newNotification.manager = this;
         notifications.Add(newNotification);
     }
 

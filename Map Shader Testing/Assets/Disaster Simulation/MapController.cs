@@ -34,15 +34,6 @@ public struct ShaderCollection
     public ComputeShader viewMapShader;
 }
 
-// struct to hold all variables needed for debugging
-[System.Serializable]
-public struct DebuggingSetup
-{
-    public bool debugMode;
-    public Material renderTarget;
-    public Texture2D replacement;
-}
-
 public class MapController : MonoBehaviour
 {
     public Terrain terrain;
@@ -63,33 +54,33 @@ public class MapController : MonoBehaviour
     [Space(5)]
     public Material mapMaterial;
     [Space(10)]
-    public NotificationManager notificationManager;
     public List<GameObject> objectives;
-    [Space(5)]
-    public AnimationCurve outlineColorCurve;
-    [Space(10)]
-    public List<GameObject> playerUnits;
-    [Range(0, 1.1f)]
-    public float duration;
-    [Range(0, .005f)]
-    public float startTime;
 
     [Header("Flood Variables")]
     public GameObject waterPrefab;
     public AnimationCurve floodCurve;
     public float baseFloodHeight;
     public float maxFloodHeight;
+    public GameObject floodlocationRoot;
+    private Transform[] floodLocations;
+    [HideInInspector]
+    public FloodManager floodManager;
 
     [Space(5)]
 
     [Header("Fire Variables")]
     public ParticleSystem fireParticles;
     public ParticleSystem explosionParticles;
+    public GameObject fireLocationRoot;
+    private Transform[] fireLocations;
+    [HideInInspector]
+    public FireManager fireManager;
+    
 
-    [Space(15)]
 
-    [Header("Debugging")]
-    public DebuggingSetup debuggingVariables;
+    private Texture2D fireSnapshot;
+    private Texture2D viewSnapshot;
+    private Texture2D replacement;
 
     // map display
     [HideInInspector]
@@ -97,26 +88,21 @@ public class MapController : MonoBehaviour
 
     // managers
     [HideInInspector]
-    public FloodManager floodManager;
-    [HideInInspector]
-    public FireManager fireManager;
-    [HideInInspector]
-    public UnitManager unitManager;
+    public objectiveReader objectiveReader;
 
-    private Texture2D fireSnapshot;
-    private Texture2D viewSnapshot;
 
     private new Renderer renderer;
 
     private ParticleSystem.ShapeModule shapeModule;
+
+    private PlayerControls playerControls;
+    
 
     // Adds managers and passes values to them
     void Start()
     {
         shapeModule = fireParticles.shape;
         terrainData = terrain.terrainData;
-
-        debuggingVariables.replacement = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
 
         fireSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, true);
         viewSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
@@ -132,6 +118,8 @@ public class MapController : MonoBehaviour
 
             floodManager.baseHeight = baseFloodHeight;
             floodManager.maxHeight = maxFloodHeight;
+
+            floodLocations = floodlocationRoot.GetComponentsInChildren<Transform>();
 
             // load availible data maps
             if (dataMaps.heightMap)
@@ -152,6 +140,8 @@ public class MapController : MonoBehaviour
             fireManager.mapWidth = mapWidth;
             fireManager.mapHeight = mapHeight;
 
+            fireLocations = fireLocationRoot.GetComponentsInChildren<Transform>();
+
             // load availible data maps
             if (dataMaps.heightMap)
                 fireManager.heightMap = dataMaps.heightMap;
@@ -166,15 +156,6 @@ public class MapController : MonoBehaviour
         {
             fireParticles.gameObject.SetActive(false);
         }
-        
-        /*
-        if (notificationManager)
-        {
-            notificationManager.mapWidth = mapWidth;
-            notificationManager.mapHeight = mapHeight;
-            notificationManager.heightMap = dataMaps.heightMap;
-        }
-        */
 
         terrainGenerator = gameObject.AddComponent<TerrainGenerator>();
         terrainGenerator.width = mapWidth;
@@ -183,12 +164,10 @@ public class MapController : MonoBehaviour
         terrainGenerator.heightMap = dataMaps.heightMap;
         terrainGenerator.scale = heightScale;
         terrainGenerator.terrainData = terrainData;
+        
+        playerControls = FindObjectOfType<PlayerControls>();
 
-        unitManager = gameObject.AddComponent<UnitManager>();
-        unitManager.mapWidth = mapWidth;
-        unitManager.mapHeight = mapHeight;
-        unitManager.heightMap = dataMaps.heightMap;
-        unitManager.viewMapShader = shaders.viewMapShader;
+        objectiveReader = FindObjectOfType<objectiveReader>();
 
         StartCoroutine(Load());
     }
@@ -202,11 +181,6 @@ public class MapController : MonoBehaviour
         if (floodEnabled)
             yield return StartCoroutine(floodManager.Load());
 
-        for (int i = 0; i < 0; i++)
-        {
-            unitManager.SpawnUnit(playerUnits[0]);
-        }
-
         if (fireEnabled)
         for (int i = 0; i < 25; i++)
         {
@@ -214,6 +188,14 @@ public class MapController : MonoBehaviour
         }
     }
     
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            SpawnFloodObjective();
+        }
+    }
+
     /// <summary>
     /// Used to pass data from the fire rendertexture to a texture2D, so that it can be used as a texture for particle effect emmision
     /// </summary>
@@ -225,27 +207,44 @@ public class MapController : MonoBehaviour
 
     void UpdateMap()
     {
-        unitManager.viewMapShader.SetFloat("duration", duration);
-        unitManager.viewMapShader.SetFloat("startTime", startTime);
-        
-        Graphics.CopyTexture(unitManager.output, viewSnapshot);
         mapMaterial.SetTexture("_ViewMap", viewSnapshot);
+
+        
 
         if (fireEnabled)
         {
             RenderTexture.active = fireManager.output;
-            debuggingVariables.replacement.ReadPixels(new Rect(0, 0, mapWidth, mapHeight), 0, 0);
-            debuggingVariables.replacement.Apply();
+            replacement.ReadPixels(new Rect(0, 0, mapWidth, mapHeight), 0, 0);
+            replacement.Apply();
             RenderTexture.active = null;
-            mapMaterial.SetTexture("_FireMap", debuggingVariables.replacement);
-            debuggingVariables.renderTarget.mainTexture = fireManager.output;
-            shapeModule.texture = debuggingVariables.replacement;
+            mapMaterial.SetTexture("_FireMap", replacement);
+            shapeModule.texture = replacement;
         }
 
         if (renderer)
             renderer.material = mapMaterial;
         else
             renderer = gameObject.GetComponent<Renderer>();
+    }
+
+    void SpawnFloodObjective()
+    {
+        PlayerObjective objective = objectiveReader.floodList[Random.Range(0, objectiveReader.floodList.Count)];
+
+        Transform placementValues = floodLocations[Random.Range(0, floodLocations.Length)].transform;
+
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+
+        objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
+        
+        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
+        newNotification.text.text = objective.notificationTitle;
+        newNotification.severity = 0;
+        newNotification.objective = objective;
+        objective.notification = newNotification;
+        playerControls.notifications.Add(newNotification);
+
+        objective.objectiveState = ObjectiveState.Requesting;
     }
 
     void Explosion(Vector2 pos)

@@ -23,7 +23,7 @@ public class FloodManager : Manager
     public Color[] colors;
     public float[] colorStartHeights;
     #endregion
-    
+
     void Start()
     {
         output = new RenderTexture(mapWidth, mapHeight, 24);
