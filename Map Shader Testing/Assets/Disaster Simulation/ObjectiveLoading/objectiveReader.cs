@@ -13,6 +13,8 @@ public class objectiveReader : MonoBehaviour
     public List<PlayerObjective> fireList;
     public List<PlayerObjective> floodList;
 
+    public GameObject objectivePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,8 +41,6 @@ public class objectiveReader : MonoBehaviour
             Debug.Log(obj.notificationTitle);
             Debug.Log(obj.fullMessage);
         }
-
-        //Instantiate<PlayerObjective>(fireList[0]);
     }
 
     public void readFile(TextAsset textFile, List<PlayerObjective> list)
@@ -48,11 +48,13 @@ public class objectiveReader : MonoBehaviour
         string[] newStrings = textFile.text.Split(new String[] { "Score: ", "Location: ", "ImmediateResponseModifiers: ", "DelayedResponseModifiers: ", "NotificationTitle: ", "FullMeassage: ", "\n", "  " }, StringSplitOptions.RemoveEmptyEntries);
         string newString = String.Join("", newStrings);
 
-        PlayerObjective objective = new PlayerObjective();
+       
         //string[] mainObjectives = textFile.text.Split(new string[] {"|" }, StringSplitOptions.RemoveEmptyEntries);
         string[] mainObjectives = newString.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
         foreach (string mainObjective in mainObjectives)
         {
+            PlayerObjective objective = Instantiate(objectivePrefab).GetComponent<PlayerObjective>();
+            objective.transform.parent = GameObject.Find("gameObjectives").transform;
             string[] subObjectives = mainObjective.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
             //objective.score = float.Parse(subObjectives[0]);
             for (int i = 0; i < subObjectives.Length; i++)
