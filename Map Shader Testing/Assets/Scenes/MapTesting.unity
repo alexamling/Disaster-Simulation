@@ -3667,7 +3667,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unit Name
+  m_Text: Military
 --- !u!222 &537992285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6487,7 +6487,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unit Name
+  m_Text: EMS
 --- !u!222 &1267289914
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8220,7 +8220,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unit Name
+  m_Text: Fire Dept.
 --- !u!222 &1562299315
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10363,6 +10363,7 @@ GameObject:
   - component: {fileID: 1903306893}
   - component: {fileID: 1903306896}
   - component: {fileID: 1903306897}
+  - component: {fileID: 1903306899}
   - component: {fileID: 1903306898}
   m_Layer: 0
   m_Name: Main Camera
@@ -10581,6 +10582,24 @@ MonoBehaviour:
   objectivePrefab: {fileID: 39305521758710688, guid: c7c221325da700c4c934a7527837bc5f,
     type: 3}
   parent: {fileID: 94631552}
+--- !u!114 &1903306899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903306892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2c902ca320c65459fb82e49ac23c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsCount1: {fileID: 1486156255}
+  unitsCount2: {fileID: 120974223}
+  unitsCount3: {fileID: 216080645}
+  unitsCount4: {fileID: 888600855}
+  unitsCount5: {fileID: 5206967}
+  objReader: {fileID: 1903306898}
 --- !u!1 &1923934028
 GameObject:
   m_ObjectHideFlags: 0
@@ -10811,7 +10830,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unit Name
+  m_Text: Police
 --- !u!222 &1971357174
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11123,7 +11142,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unit Name
+  m_Text: Volunteers
 --- !u!222 &1998947975
 CanvasRenderer:
   m_ObjectHideFlags: 0
