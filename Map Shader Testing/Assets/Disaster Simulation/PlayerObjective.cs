@@ -39,6 +39,12 @@ public class PlayerObjective: MonoBehaviour
 
     public List<PlayerObjective> relatedObjectives;
 
+    public float scoreDeprecator;
+
+    public float StatusDeprecator;
+
+    public float timeLimit = 30;
+
     private float response;
 
     private bool active;
@@ -52,6 +58,10 @@ public class PlayerObjective: MonoBehaviour
         active = true;
         outline = gameObject.AddComponent<Outline>();
 
+        scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
+        StatusDeprecator = 0 + (scoreDeprecator - 0) * (1 - 0) / (score - 0);
+
+        //DEBUG
         revealed = true;
     }
     
@@ -102,11 +112,16 @@ public class PlayerObjective: MonoBehaviour
     {
         if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
-            if (score != 0)
+            if (score >= 0)
             {
-                score -= 0.001f;
+                score -= scoreDeprecator;
                 Debug.Log(score);
+
+                status -= StatusDeprecator;
+                Debug.Log(status);
             }
+
+
         }
     }
 }
