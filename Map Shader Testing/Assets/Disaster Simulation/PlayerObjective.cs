@@ -43,7 +43,7 @@ public class PlayerObjective: MonoBehaviour
 
     public float StatusDeprecator;
 
-    public float timeLimit = 30;
+    public float timeLimit;
 
     private float response;
 

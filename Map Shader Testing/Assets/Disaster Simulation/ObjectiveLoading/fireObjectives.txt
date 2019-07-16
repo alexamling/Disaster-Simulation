@@ -3,11 +3,13 @@ Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 NotificationTitle: Shit's gone WHACK/
-FullMessage: Bad stuff. Do thing. Much halp.
+FullMessage: Bad stuff. Do thing. Much halp./
+TimeLimit: 30
 |
 Score: 100/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 NotificationTitle: Shit's gone WHACK/
-FullMessage: Bad stuff. Do thing. Much halp.
+FullMessage: Bad stuff. Do thing. Much halp./
+TimeLimit: 30
