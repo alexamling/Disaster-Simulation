@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ObjectiveState { Inactive, Requesting, Active, Resolved };
 
@@ -23,6 +24,11 @@ public class PlayerObjective: MonoBehaviour
     public bool selected;
     public bool hover;
     public bool revealed;
+
+    public GameObject iconPrefab;
+    private GameObject iconImage;
+    private Canvas canvas;
+    private Camera cam;
 
     public Vector2 location;
 
@@ -62,6 +68,10 @@ public class PlayerObjective: MonoBehaviour
 
         scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
         StatusDeprecator = 0 + (scoreDeprecator - 0) * (1 - 0) / (score - 0);
+
+        canvas = FindObjectOfType<Canvas>();
+        cam = FindObjectOfType<Camera>();
+        iconImage = Instantiate(iconPrefab, canvas.transform);
 
         //DEBUG
         revealed = true;
@@ -109,6 +119,8 @@ public class PlayerObjective: MonoBehaviour
             //outline.OutlineColor = Color.yellow;
             //hover = false;
         }
+
+        iconImage.transform.position = cam.WorldToScreenPoint(transform.position);
     }
 
     void FixedUpdate()
