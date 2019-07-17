@@ -105,7 +105,7 @@ public class PlayerObjective: MonoBehaviour
             }
             c.a = 1.0f;
             iconImage.color = c;
-            status -= .001f;
+            //status -= .001f;
         }
             
 
