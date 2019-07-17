@@ -1,16 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ManageUnits : MonoBehaviour
 {
-    public GameObject unitsCount1;
-    public GameObject unitsCount2;
-    public GameObject unitsCount3;
-    public GameObject unitsCount4;
-    public GameObject unitsCount5;
+    public GameObject[] unitCounts = new GameObject[5];
 
-    public objectiveReader objReader;
+    public PlayerControls controller;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +25,11 @@ public class ManageUnits : MonoBehaviour
 
     public void sendTeam()
     {
-        //find the currrent objective
-        //use the unitsCounts to update the int value of the playerObjective class associated with that objective
+        for (int i = 0; i < unitCounts.Length; i++)
+        {
+            controller.selectedObjective.units[i] = Int32.Parse(unitCounts[i].GetComponent<Text>().text, CultureInfo.InvariantCulture.NumberFormat);
+            
+        }
     }
 
 }

@@ -47,6 +47,7 @@ public class objectiveReader : MonoBehaviour
                 objective.notificationTitle = subObjectives[13];
                 objective.fullMessage = subObjectives[14];
                 objective.timeLimit = float.Parse(subObjectives[15], CultureInfo.InvariantCulture.NumberFormat);
+                objective.units = new int[] { 0, 0, 0, 0, 0 };
             }
             list.Add(objective);
         }
