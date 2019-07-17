@@ -10,7 +10,7 @@ public class ManageUnits : MonoBehaviour
     public GameObject[] unitCounts = new GameObject[5];
     public int[] availibleUnits = new int[5];
     public GameObject resourceBar;
-    private Text[] resourceValues;
+    private Text[] resourceValues = new Text[5];
 
     public PlayerControls controller;
 
@@ -18,9 +18,10 @@ public class ManageUnits : MonoBehaviour
     void Start()
     {
         resourceValues = resourceBar.GetComponentsInChildren<Text>();
+        GameObject[] children = new GameObject[5]; 
         for (int i = 0; i < availibleUnits.Length; i++)
         {
-            resourceValues[i].text = "" + availibleUnits[i];
+            resourceValues[i] = resourceBar.transform.GetChild(i).GetComponentInChildren<Text>(); ;
         }
         
     }
