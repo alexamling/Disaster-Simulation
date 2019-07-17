@@ -18,8 +18,8 @@ public struct InfoPanel
 public class PlayerControls : MonoBehaviour
 {
     public MapController manager;
-    [HideInInspector]
     public PlayerObjective selectedObjective;
+    [HideInInspector]
     public RadialMenu radialMenu;
     public GameObject cameraPos;
 
