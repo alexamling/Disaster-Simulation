@@ -9,12 +9,19 @@ public class ManageUnits : MonoBehaviour
 {
     public GameObject[] unitCounts = new GameObject[5];
     public int[] availibleUnits = new int[5];
+    public GameObject resourceBar;
+    private Text[] resourceValues;
 
     public PlayerControls controller;
 
     // Start is called before the first frame update
     void Start()
     {
+        resourceValues = resourceBar.GetComponentsInChildren<Text>();
+        for (int i = 0; i < availibleUnits.Length; i++)
+        {
+            resourceValues[i].text = "" + availibleUnits[i];
+        }
         
     }
 
@@ -32,6 +39,7 @@ public class ManageUnits : MonoBehaviour
             val = Int32.Parse(unitCounts[i].GetComponent<Text>().text, CultureInfo.InvariantCulture.NumberFormat);
             controller.selectedObjective.units[i] = val;
             availibleUnits[i] -= val;
+            resourceValues[i].text = "" + val;
         }
     }
 
