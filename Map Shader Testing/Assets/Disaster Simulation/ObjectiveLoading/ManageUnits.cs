@@ -21,7 +21,7 @@ public class ManageUnits : MonoBehaviour
         GameObject[] children = new GameObject[5]; 
         for (int i = 0; i < availibleUnits.Length; i++)
         {
-            resourceValues[i] = resourceBar.transform.GetChild(i).GetComponentInChildren<Text>();
+            resourceValues[i] = resourceBar.transform.GetChild(i).GetChild(i).GetComponent<Text>();
             resourceValues[i].text = "" + availibleUnits[i];
         }
         
