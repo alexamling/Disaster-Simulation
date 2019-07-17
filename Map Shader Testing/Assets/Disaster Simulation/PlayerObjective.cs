@@ -84,7 +84,6 @@ public class PlayerObjective: MonoBehaviour
         if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
             float value = .5f * Mathf.Sin(Time.time * (10f * (1.0f - status) - .01f)) + .5f;
-            Debug.Log(value);
             Color c = new Color();
             if (status > .5)
             {
