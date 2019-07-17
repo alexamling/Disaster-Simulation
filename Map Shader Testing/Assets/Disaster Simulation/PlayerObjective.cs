@@ -25,7 +25,8 @@ public class PlayerObjective: MonoBehaviour
     public bool revealed;
 
     public GameObject iconPrefab;
-    private GameObject iconImage;
+    private GameObject icon;
+    private Image iconImage;
     private Canvas canvas;
     private Camera cam;
 
@@ -63,14 +64,15 @@ public class PlayerObjective: MonoBehaviour
         objectiveState = ObjectiveState.Inactive;
         selected = false;
         active = true;
-        outline = gameObject.AddComponent<Outline>();
+        //outline = gameObject.AddComponent<Outline>();
 
         scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
         StatusDeprecator = 0 + (scoreDeprecator - 0) * (1 - 0) / (score - 0);
         
         canvas = FindObjectOfType<Canvas>();
         cam = FindObjectOfType<Camera>();
-        iconImage = Instantiate(iconPrefab, canvas.transform);
+        icon = Instantiate(iconPrefab, canvas.transform);
+        iconImage = icon.GetComponentInChildren<Image>();
 
         //DEBUG
         revealed = true;
@@ -81,30 +83,38 @@ public class PlayerObjective: MonoBehaviour
     { 
         if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
-            /*outline.OutlineWidth = 2.5f * Mathf.Sin(Time.time * (25f * (1.0f - status))) + 2.5f;
+            float value = .5f * Mathf.Sin(Time.time * (10f * (1.0f - status) - .01f)) + .5f;
+            Debug.Log(value);
+            Color c = new Color();
             if (status > .5)
             {
                 mix = Mathf.InverseLerp(.5f, 1, status);
-                outline.OutlineColor = mix * Color.green + (1 - mix) * Color.yellow;
+                //outline.OutlineColor = mix * Color.green + (1 - mix) * Color.yellow;
+                c = value * (mix * Color.green + (1 - mix) * Color.yellow);
             }
             else if (status > .25)
             {
                 mix = Mathf.InverseLerp(.25f, .5f, status);
-                outline.OutlineColor = mix * Color.yellow + (1 - mix) * new Color(1, .5f, 0);
+                //outline.OutlineColor = mix * Color.yellow + (1 - mix) * new Color(1, .5f, 0);
+                c = value * (mix * Color.yellow + (1 - mix) * new Color(1, .5f, 0));
             }
             else
             {
                 mix = Mathf.InverseLerp(.0f, .25f, status);
-                outline.OutlineColor = mix * new Color(1, .5f, 0) + (1 - mix) * Color.red;
-            }*/
+                //outline.OutlineColor = mix * new Color(1, .5f, 0) + (1 - mix) * Color.red;
+                c = value * (mix * new Color(1, .5f, 0) + (1 - mix) * Color.red);
+            }
+            c.a = 1.0f;
+            iconImage.color = c;
+            status -= .001f;
         }
             
 
         if (status <= 0.001f) // turn the outline solid black when the status is low enough
         {
-            /*outline.OutlineWidth = 5.0f;
-            outline.OutlineColor = Color.black;
-            active = false;*/
+            /*outline.OutlineWidth = 5.0f;*/
+            iconImage.color = Color.black;
+            active = false;
         }
 
         if (selected)
@@ -119,7 +129,7 @@ public class PlayerObjective: MonoBehaviour
             //hover = false;
         }
 
-        iconImage.transform.position = cam.WorldToScreenPoint(transform.position);
+        icon.transform.position = cam.WorldToScreenPoint(transform.position);
     }
 
     void FixedUpdate()
