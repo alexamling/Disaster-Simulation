@@ -163,10 +163,7 @@ public class PlayerControls : MonoBehaviour
         offMap = false;
         foreach (RaycastResult r in raycastResults)
         {
-            if (r.gameObject.GetComponent<ScrollRect>())
-            {
-                offMap = true;
-            }
+            offMap = true;
         }
 
         #region Zoom with Scroll Wheel

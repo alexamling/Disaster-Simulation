@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    private NavMeshSurface surface;
+    //private NavMeshSurface surface;
 
     [Range(0,250)]
     public float scale = 5;
@@ -41,7 +41,7 @@ public class TerrainGenerator : MonoBehaviour
 
     public IEnumerator Load()
     {
-        surface = gameObject.AddComponent<NavMeshSurface>();
+        //surface = gameObject.AddComponent<NavMeshSurface>();
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         collider = gameObject.AddComponent<MeshCollider>();
