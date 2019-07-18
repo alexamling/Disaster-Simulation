@@ -55,7 +55,7 @@ public class PlayerObjective: MonoBehaviour
 
     private float response;
 
-    private bool active;
+    public bool active { get { return objectiveState == ObjectiveState.Active || objectiveState == ObjectiveState.Requesting; } }
 
     private float mix;
     
@@ -63,7 +63,6 @@ public class PlayerObjective: MonoBehaviour
     {
         objectiveState = ObjectiveState.Inactive;
         selected = false;
-        active = true;
         //outline = gameObject.AddComponent<Outline>();
 
         scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
@@ -113,7 +112,7 @@ public class PlayerObjective: MonoBehaviour
         {
             /*outline.OutlineWidth = 5.0f;*/
             iconImage.color = Color.black;
-            active = false;
+            objectiveState = ObjectiveState.Resolved;
         }
 
         if (selected)

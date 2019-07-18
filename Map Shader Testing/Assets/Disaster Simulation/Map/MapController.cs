@@ -229,7 +229,7 @@ public class MapController : MonoBehaviour
 
     void SpawnFloodObjective()
     {
-        PlayerObjective objective = objectiveReader.floodList[Random.Range(0, objectiveReader.floodList.Count)];
+        PlayerObjective objective = Instantiate(objectiveReader.floodList[Random.Range(0, objectiveReader.floodList.Count)]);
 
         Transform placementValues = floodLocations[Random.Range(0, floodLocations.Length)].transform;
 

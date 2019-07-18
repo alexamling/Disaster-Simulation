@@ -57,7 +57,7 @@ public class Notification : MonoBehaviour
     public void Display()
     {
         FocusOnObjective();
-        if(objective.objectiveState == ObjectiveState.Requesting)
+        if(objective.active)
         {
             manager.objectiveMessage.panel.SetActive(true);
             manager.objectiveMessage.text.text = objective.fullMessage;
