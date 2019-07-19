@@ -15,7 +15,7 @@ public enum ObjectiveState { Inactive, Requesting, Active, Resolved };
 public class PlayerObjective: MonoBehaviour
 {
     [Range(0,1)]
-    public float status = 1;
+    public float status = 0.99f;
     public float score;
     [HideInInspector]
     public Outline outline;
