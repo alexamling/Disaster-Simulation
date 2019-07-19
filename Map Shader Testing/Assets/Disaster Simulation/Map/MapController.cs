@@ -96,7 +96,9 @@ public class MapController : MonoBehaviour
     private ParticleSystem.ShapeModule shapeModule;
 
     private PlayerControls playerControls;
-    
+
+    [HideInInspector]
+    public float score;
 
     // Adds managers and passes values to them
     void Start()

@@ -43,6 +43,7 @@ public class Notification : MonoBehaviour
 
     public void Close()
     {
+        manager.manager.score += objective.score;
         Destroy(objective);
         Destroy(gameObject);
         Destroy(objective.icon);

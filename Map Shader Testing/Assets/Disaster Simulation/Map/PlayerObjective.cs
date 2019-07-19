@@ -75,14 +75,16 @@ public class PlayerObjective: MonoBehaviour
         revealed = true;
         //units = new int[] { 1, 3};
     }
-    
+
+    private float value;
+
     protected void Update()
     { 
         icon.transform.position = cam.WorldToScreenPoint(transform.position);
 
         if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
-            float value = .5f * Mathf.Sin(Time.time * (10f * (1.0f - status) - .01f)) + .5f;
+            value = Mathf.Abs(Mathf.Sin(Time.time / (status)));
             Color c = new Color();
             if (status > .5)
             {
@@ -126,6 +128,8 @@ public class PlayerObjective: MonoBehaviour
     {
         if (active)
         {
+            float incrimentorImm;
+            float incrimentorDel;
             if (score >= 0)
             {
                 score -= scoreDeprecator;
@@ -141,7 +145,7 @@ public class PlayerObjective: MonoBehaviour
                     for (int i = 0; i < units.Length; i++)
                     {
                         //score += immediateResponseModifiers[units[i]] / 10.0f;
-                        float incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
+                        incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
                         status += incrimentorImm;
                         score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, scoreDeprecator);
                         
@@ -150,10 +154,9 @@ public class PlayerObjective: MonoBehaviour
                 for (int i = 0; i < units.Length; i++)
                 {
                     //score += delayedResponseModifiers[units[i]] / 100.0f;
-                    float incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
+                    incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
                     status += incrimentorDel;
                     score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator);
-                    Debug.Log(Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator));
                 }
             }
 
