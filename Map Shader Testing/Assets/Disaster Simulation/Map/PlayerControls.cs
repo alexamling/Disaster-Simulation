@@ -232,7 +232,6 @@ public class PlayerControls : MonoBehaviour
                     if (playerObjective)
                     {
                         playerObjective.revealed = true;
-                        playerObjective.objectiveState = ObjectiveState.Requesting;
                         playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
                         playerObjective.notification.Display();
                         selectedObjective = playerObjective;

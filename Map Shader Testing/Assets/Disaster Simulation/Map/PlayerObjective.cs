@@ -41,7 +41,7 @@ public class PlayerObjective: MonoBehaviour
 
     public Notification notification;
 
-    public ObjectiveState objectiveState;
+    public ObjectiveState objectiveState = ObjectiveState.Inactive;
 
     public List<PlayerObjective> relatedObjectives;
 
@@ -53,15 +53,12 @@ public class PlayerObjective: MonoBehaviour
 
     public bool hasImmediateResponded = false;
 
-    private float response;
-
     public bool active { get { return objectiveState == ObjectiveState.Active || objectiveState == ObjectiveState.Requesting; } }
 
     private float mix;
     
     protected void Start()
     {
-        objectiveState = ObjectiveState.Inactive;
         selected = false;
         //outline = gameObject.AddComponent<Outline>();
 
@@ -82,6 +79,7 @@ public class PlayerObjective: MonoBehaviour
     { 
         if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
+            icon.transform.position = cam.WorldToScreenPoint(transform.position);
             float value = .5f * Mathf.Sin(Time.time * (10f * (1.0f - status) - .01f)) + .5f;
             Color c = new Color();
             if (status > .5)
@@ -115,6 +113,12 @@ public class PlayerObjective: MonoBehaviour
             objectiveState = ObjectiveState.Resolved;
         }
 
+        if (status >= 1)
+        {
+            iconImage.color = Color.green;
+            objectiveState = ObjectiveState.Resolved;
+        }
+
         if (selected)
         {
             //outline.OutlineWidth = 5.0f;
@@ -127,12 +131,11 @@ public class PlayerObjective: MonoBehaviour
             //hover = false;
         }
 
-        icon.transform.position = cam.WorldToScreenPoint(transform.position);
     }
 
     void FixedUpdate()
     {
-        if (objectiveState != ObjectiveState.Inactive && revealed) // shift the color based on status green -> yellow -> orange -> red
+        if (active) // shift the color based on status green -> yellow -> orange -> red
         {
             if (score >= 0)
             {
@@ -162,6 +165,12 @@ public class PlayerObjective: MonoBehaviour
                     status += incrimentorDel;
                     score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator);
                     Debug.Log(Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator));
+                }
+
+                if (status >= 1)
+                {
+                    status = 1;
+                    objectiveState = ObjectiveState.Resolved;
                 }
             }
         }
