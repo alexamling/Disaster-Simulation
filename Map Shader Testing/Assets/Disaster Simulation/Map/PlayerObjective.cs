@@ -128,9 +128,16 @@ public class PlayerObjective: MonoBehaviour
         {
             if (score >= 0)
             {
-                score -= scoreDeprecator;
-
-                status -= StatusDeprecator;
+                if (objectiveState == ObjectiveState.Requesting)
+                {
+                    status -= StatusDeprecator;
+                    score -= scoreDeprecator;
+                }
+                else if (objectiveState == ObjectiveState.Responding)
+                {
+                    //slow deprecation if responding
+                    score -= scoreDeprecator * 0.125f ;
+                }
             }
 
             if (units.Length > 0 && status < 1) //if units have been assigned
@@ -141,7 +148,7 @@ public class PlayerObjective: MonoBehaviour
                     for (int i = 0; i < units.Length; i++)
                     {
                         //score += immediateResponseModifiers[units[i]] / 10.0f;
-                        float incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
+                        float incrimentorImm = (0 + ((immediateResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
                         status += incrimentorImm;
                         score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, scoreDeprecator);
                         
@@ -150,10 +157,9 @@ public class PlayerObjective: MonoBehaviour
                 for (int i = 0; i < units.Length; i++)
                 {
                     //score += delayedResponseModifiers[units[i]] / 100.0f;
-                    float incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
+                    float incrimentorDel = (0 + ((delayedResponseModifiers[i] / 1000.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
                     status += incrimentorDel;
                     score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator);
-                    Debug.Log(Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator));
                 }
             }
 
