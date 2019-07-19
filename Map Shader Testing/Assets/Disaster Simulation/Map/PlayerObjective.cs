@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ObjectiveState { Inactive, Requesting, Active, Resolved };
+public enum ObjectiveState { Inactive, Requesting, Responding, Resolved };
 
 /// <summary>
 /// This class is for each of the objects that the player will directly interact with during the game
@@ -54,7 +54,7 @@ public class PlayerObjective: MonoBehaviour
 
     public bool hasImmediateResponded = false;
 
-    public bool active { get { return objectiveState == ObjectiveState.Active || objectiveState == ObjectiveState.Requesting; } }
+    public bool active { get { return objectiveState == ObjectiveState.Responding || objectiveState == ObjectiveState.Requesting; } }
 
     private float mix;
     

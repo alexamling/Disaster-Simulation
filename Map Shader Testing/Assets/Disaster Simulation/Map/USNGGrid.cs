@@ -98,6 +98,8 @@ public class USNGGrid : MonoBehaviour
                 newPos.y = 1080;
                 newPos.z = 0;
                 xMarkers[e * 9 + l].position = newPos;
+                if (l == 4)
+                    xMarkers[e * 9 + l].localScale = Vector3.up * 1.5f + Vector3.one;
             }
         }
 
@@ -116,6 +118,8 @@ public class USNGGrid : MonoBehaviour
                 newPos.x = 0;
                 newPos.z = 0;
                 yMarkers[e * 9 + l].position = newPos;
+                if (l == 4)
+                    yMarkers[e * 9 + l].localScale = Vector3.right * 1.5f + Vector3.one;
             }
         }
     }
