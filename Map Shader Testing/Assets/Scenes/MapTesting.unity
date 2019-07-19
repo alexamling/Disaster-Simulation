@@ -12788,6 +12788,7 @@ MonoBehaviour:
   - {fileID: 1828215113}
   - {fileID: 945475991}
   - {fileID: 914604054}
+  unitManager: {fileID: 1903306899}
   radialMenu: {fileID: 594467939}
   cameraPos: {fileID: 2065187806}
   options:
@@ -12865,6 +12866,7 @@ MonoBehaviour:
   - {fileID: 617772258}
   - {fileID: 427350878}
   - {fileID: 1091600685}
+  - {fileID: 383316517}
   controller: {fileID: 1903306897}
 --- !u!114 &1903306900
 MonoBehaviour:

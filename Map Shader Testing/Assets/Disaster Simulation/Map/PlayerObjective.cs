@@ -132,9 +132,16 @@ public class PlayerObjective: MonoBehaviour
             float incrimentorDel;
             if (score >= 0)
             {
-                score -= scoreDeprecator;
-
-                status -= StatusDeprecator;
+                if (objectiveState == ObjectiveState.Requesting)
+                {
+                    status -= StatusDeprecator;
+                    score -= scoreDeprecator;
+                }
+                else if (objectiveState == ObjectiveState.Responding)
+                {
+                    //slow deprecation if responding
+                    score -= scoreDeprecator * 0.125f ;
+                }
             }
 
             if (units.Length > 0 && status < 1) //if units have been assigned
