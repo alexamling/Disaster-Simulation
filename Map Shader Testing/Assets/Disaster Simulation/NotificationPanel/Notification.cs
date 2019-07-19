@@ -45,6 +45,7 @@ public class Notification : MonoBehaviour
     {
         Destroy(objective);
         Destroy(gameObject);
+        Destroy(objective.icon);
     }
 
     public void FocusOnObjective()

@@ -26,7 +26,7 @@ public class PlayerObjective: MonoBehaviour
     public bool revealed;
 
     public GameObject iconPrefab;
-    private GameObject icon;
+    public GameObject icon;
     private Image iconImage;
     private Canvas canvas;
     private Camera cam;
@@ -78,9 +78,10 @@ public class PlayerObjective: MonoBehaviour
     
     protected void Update()
     { 
+        icon.transform.position = cam.WorldToScreenPoint(transform.position);
+
         if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
-            icon.transform.position = cam.WorldToScreenPoint(transform.position);
             float value = .5f * Mathf.Sin(Time.time * (10f * (1.0f - status) - .01f)) + .5f;
             Color c = new Color();
             if (status > .5)
@@ -106,20 +107,7 @@ public class PlayerObjective: MonoBehaviour
             //status -= .001f;
         }
             
-
-        if (status <= 0.001f) // turn the outline solid black when the status is low enough
-        {
-            /*outline.OutlineWidth = 5.0f;*/
-            iconImage.color = Color.black;
-            objectiveState = ObjectiveState.Resolved;
-        }
-
-        if (status >= 1)
-        {
-            iconImage.color = Color.green;
-            objectiveState = ObjectiveState.Resolved;
-        }
-
+        
         if (selected)
         {
             //outline.OutlineWidth = 5.0f;
@@ -136,7 +124,7 @@ public class PlayerObjective: MonoBehaviour
 
     void FixedUpdate()
     {
-        if (active) // shift the color based on status green -> yellow -> orange -> red
+        if (active)
         {
             if (score >= 0)
             {
@@ -167,12 +155,19 @@ public class PlayerObjective: MonoBehaviour
                     score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator);
                     Debug.Log(Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator));
                 }
+            }
 
-                if (status >= 1)
-                {
-                    status = 1;
-                    objectiveState = ObjectiveState.Resolved;
-                }
+            if (status >= 1)
+            {
+                iconImage.color = Color.green;
+                status = 1;
+                objectiveState = ObjectiveState.Resolved;
+            }
+
+            if (status <= 0.001f) // turn the outline solid black when the status is low enough
+            {
+                iconImage.color = Color.black;
+                objectiveState = ObjectiveState.Resolved;
             }
         }
     }
