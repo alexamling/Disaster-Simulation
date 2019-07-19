@@ -19,6 +19,7 @@ public class PlayerObjective: MonoBehaviour
     public float score;
     [HideInInspector]
     public Outline outline;
+    public string[] tipString = new string[] { "Nothing to report", "Nothing to report", "Nothing to report" }; //Plan, Log, Ops
 
     public bool selected;
     public bool hover;
