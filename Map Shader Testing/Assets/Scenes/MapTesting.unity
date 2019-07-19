@@ -7861,8 +7861,8 @@ RectTransform:
   m_Father: {fileID: 161621499}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.95}
-  m_AnchorMax: {x: 1, y: 0.95}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 204, y: 0}
   m_SizeDelta: {x: 400, y: 486.5}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12633,6 +12633,18 @@ MonoBehaviour:
   - {fileID: 5206967}
   availibleUnits: 0400000004000000040000000400000004000000
   resourceBar: {fileID: 1711843011}
+  elementsUI:
+  - {fileID: 1290616998}
+  - {fileID: 313558685}
+  - {fileID: 512566930}
+  - {fileID: 1378657953}
+  - {fileID: 1806498864}
+  - {fileID: 2020661658}
+  - {fileID: 568978464}
+  - {fileID: 1302807064}
+  - {fileID: 617772258}
+  - {fileID: 427350878}
+  - {fileID: 1091600685}
   controller: {fileID: 1903306897}
 --- !u!114 &1903306900
 MonoBehaviour:

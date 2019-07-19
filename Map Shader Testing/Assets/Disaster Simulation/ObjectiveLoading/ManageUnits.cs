@@ -10,6 +10,7 @@ public class ManageUnits : MonoBehaviour
     public GameObject[] unitCounts = new GameObject[5];
     public int[] availibleUnits = new int[5];
     public GameObject resourceBar;
+    public GameObject[] elementsUI = new GameObject[12];
     private Text[] resourceValues = new Text[5];
 
     public PlayerControls controller;
@@ -42,6 +43,24 @@ public class ManageUnits : MonoBehaviour
             controller.selectedObjective.units[i] = val;
             availibleUnits[i] -= val;
             resourceValues[i].text = "" + availibleUnits[i];
+        }
+    }
+
+    public void ToggleUI(bool status)
+    {
+        for (int i = 0; i < elementsUI.Length - 1; i++)
+        {
+            elementsUI[i].SetActive(status);
+        }
+
+        if (!status)
+        {
+            elementsUI[11].GetComponent<Text>().text = "Units Sent";
+        }
+
+        else if (status)
+        {
+            elementsUI[11].GetComponent<Text>().text = "Units Requested";
         }
     }
 
