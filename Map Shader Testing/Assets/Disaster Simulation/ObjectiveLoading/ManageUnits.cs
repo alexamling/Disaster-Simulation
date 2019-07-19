@@ -44,23 +44,35 @@ public class ManageUnits : MonoBehaviour
             availibleUnits[i] -= val;
             resourceValues[i].text = "" + availibleUnits[i];
         }
+
+        controller.selectedObjective.objectiveState = ObjectiveState.Responding;
+        ToggleUI(controller.selectedObjective);
     }
 
-    public void ToggleUI(bool status)
+    public void ToggleUI(PlayerObjective selectedObject)
     {
-        for (int i = 0; i < elementsUI.Length - 1; i++)
+        if (selectedObject.objectiveState == ObjectiveState.Requesting)
         {
-            elementsUI[i].SetActive(status);
+            for (int i = 0; i < elementsUI.Length - 1; i++)
+            {
+                elementsUI[i].SetActive(true);
+            }
+            elementsUI[11].GetComponent<Text>().text = "Units Requested";
         }
-
-        if (!status)
+        else if (selectedObject.objectiveState == ObjectiveState.Responding)
         {
+            for (int i = 0; i < elementsUI.Length - 1; i++)
+            {
+                elementsUI[i].SetActive(false);
+            }
             elementsUI[11].GetComponent<Text>().text = "Units Sent";
         }
-
-        else if (status)
+        for (int i = 0; i < unitCounts.Length; i++)
         {
-            elementsUI[11].GetComponent<Text>().text = "Units Requested";
+            unitCounts[i].GetComponent<Text>().text = selectedObject.units[i].ToString();
+
+            //Remember to update with populated values as default
+            unitCounts[i].GetComponent<Counter>().value = 0;
         }
     }
 

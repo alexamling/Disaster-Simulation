@@ -20,6 +20,7 @@ public class PlayerControls : MonoBehaviour
     public MapController manager;
     public PlayerObjective selectedObjective;
     public GameObject[] coolDowns;
+    public ManageUnits unitManager;
     [HideInInspector]
     public RadialMenu radialMenu;
     public GameObject cameraPos;
@@ -235,6 +236,9 @@ public class PlayerControls : MonoBehaviour
                         playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
                         playerObjective.notification.Display();
                         selectedObjective = playerObjective;
+
+                        //Unit Assigning UI Stuff
+                        unitManager.ToggleUI(selectedObjective);
                     }
                 }
 
