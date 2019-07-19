@@ -255,7 +255,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (coolDowns[i].fillAmount < 1)
             {
-                coolDowns[i].fillAmount += (1.0f / 750.0f);
+                coolDowns[i].fillAmount += (1.0f / 750.0f); //1/750 = 15 seconds
             }
         }
     }
