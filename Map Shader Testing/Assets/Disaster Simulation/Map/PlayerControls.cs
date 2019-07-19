@@ -19,7 +19,7 @@ public class PlayerControls : MonoBehaviour
 {
     public MapController manager;
     public PlayerObjective selectedObjective;
-    public GameObject[] coolDowns;
+    public Image[] coolDowns;
     public ManageUnits unitManager;
     [HideInInspector]
     public RadialMenu radialMenu;
@@ -253,9 +253,9 @@ public class PlayerControls : MonoBehaviour
     {
         for (int i = 0; i < coolDowns.Length; i++)
         {
-            if (coolDowns[i].GetComponent<Image>().fillAmount < 1)
+            if (coolDowns[i].fillAmount < 1)
             {
-                coolDowns[i].GetComponent<Image>().fillAmount += (1.0f / 750.0f);
+                coolDowns[i].fillAmount += (1.0f / 750.0f);
             }
         }
     }

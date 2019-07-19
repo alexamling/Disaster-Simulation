@@ -12785,9 +12785,9 @@ MonoBehaviour:
   manager: {fileID: 1903306896}
   selectedObjective: {fileID: 0}
   coolDowns:
-  - {fileID: 1828215113}
-  - {fileID: 945475991}
-  - {fileID: 914604054}
+  - {fileID: 1828215116}
+  - {fileID: 945475994}
+  - {fileID: 914604057}
   unitManager: {fileID: 1903306899}
   radialMenu: {fileID: 594467939}
   cameraPos: {fileID: 2065187806}
