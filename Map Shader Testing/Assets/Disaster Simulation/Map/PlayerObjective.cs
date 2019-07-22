@@ -24,6 +24,7 @@ public class PlayerObjective: MonoBehaviour
     public bool selected;
     public bool hover;
     public bool revealed;
+    public bool onMap;
 
     public GameObject iconPrefab;
     public GameObject icon;
@@ -38,6 +39,8 @@ public class PlayerObjective: MonoBehaviour
     public float[] immediateResponseModifiers;
     public float[] delayedResponseModifiers;
     public int[] units; //0EMS, 1Fire Department, 2Military, 3Police, 4Volunteers
+    public int[] localUnits;
+    public bool needsResponse;
 
 
     public string notificationTitle;
@@ -67,7 +70,7 @@ public class PlayerObjective: MonoBehaviour
         //outline = gameObject.AddComponent<Outline>();
 
         scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
-        StatusDeprecator = 0 + (scoreDeprecator - 0) * (1 - 0) / (score - 0);
+        StatusDeprecator = scoreDeprecator * 1 / score;
         
         cam = FindObjectOfType<Camera>();
         if (iconRoot)

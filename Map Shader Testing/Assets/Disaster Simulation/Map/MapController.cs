@@ -129,12 +129,16 @@ public class MapController : MonoBehaviour
         accidentLocations = accidentLocationRoot.GetComponentsInChildren<Transform>();
         evacLocations = evacLocationRoot.GetComponentsInChildren<Transform>();
         personalLocations = personalLocationRoot.GetComponentsInChildren<Transform>();
+        floodLocations = floodLocationRoot.GetComponentsInChildren<Transform>();
 
         shapeModule = fireParticles.shape;
         terrainData = terrain.terrainData;
 
         fireSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, true);
         viewSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
+
+        #region old shader functionality
+        /*
 
         if (floodEnabled)
         {
@@ -193,12 +197,14 @@ public class MapController : MonoBehaviour
         terrainGenerator.heightMap = dataMaps.heightMap;
         terrainGenerator.scale = heightScale;
         terrainGenerator.terrainData = terrainData;
-        
+        */
+        #endregion
+
         playerControls = FindObjectOfType<PlayerControls>();
 
         objectiveReader = FindObjectOfType<objectiveReader>();
 
-        StartCoroutine(Load());
+        //StartCoroutine(Load());
     }
 
     IEnumerator Load()

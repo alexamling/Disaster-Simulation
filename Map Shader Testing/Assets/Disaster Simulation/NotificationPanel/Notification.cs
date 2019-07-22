@@ -33,6 +33,7 @@ public class Notification : MonoBehaviour
         }
         else
         {
+            objective.onMap = true;
             manager.currentObjectivePanel.panel.SetActive(true);
             manager.currentObjectivePanel.text.text = text.text;
             Vector2 objectivePos = USNGGrid.ToUSNG(objective.transform.position);

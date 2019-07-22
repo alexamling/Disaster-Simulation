@@ -221,7 +221,7 @@ public class PlayerControls : MonoBehaviour
                 {
                     playerObjective = colliders[i].GetComponent<PlayerObjective>();
 
-                    if (playerObjective)
+                    if (playerObjective && playerObjective.onMap)
                     {
                         playerObjective.revealed = true;
                         playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
