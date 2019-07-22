@@ -215,7 +215,7 @@ public class PlayerControls : MonoBehaviour
             if (clicked && !offMap)
             {
                 #region Ping Map
-                Collider[] colliders = Physics.OverlapSphere(hit.point, 45);
+                Collider[] colliders = Physics.OverlapSphere(hit.point, 30);
 
                 for(int i = 0; i < colliders.Length; i++)
                 {

@@ -115,6 +115,9 @@ public class MapController : MonoBehaviour
 
     private PlayerControls playerControls;
 
+    [Header("UI Variables")]
+    public GameObject iconRoot;
+
     [HideInInspector]
     public float score;
 
@@ -286,6 +289,7 @@ public class MapController : MonoBehaviour
         newNotification.objective = objective;
         newNotification.manager = playerControls;
         objective.notification = newNotification;
+        objective.iconRoot = iconRoot;
         playerControls.notifications.Add(newNotification);
 
         objective.objectiveState = ObjectiveState.Requesting;
@@ -324,25 +328,5 @@ public class MapController : MonoBehaviour
     void SpawnPersonalObjective()
     {
 
-    }
-
-    void Explosion(Vector2 pos)
-    {
-        // particle effect
-
-        //  sound effect
-
-        // add fire
-        fireManager.StartFire(pos);
-        // add damage
-
-        // add notification
-    }
-
-    void FuelSpill(Vector2 pos)
-    {
-        // add to fuel map
-
-        // add notification
     }
 }
