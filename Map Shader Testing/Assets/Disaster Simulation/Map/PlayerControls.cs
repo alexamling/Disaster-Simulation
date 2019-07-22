@@ -22,10 +22,8 @@ public class PlayerControls : MonoBehaviour
     public Image[] coolDowns;
     public ManageUnits unitManager;
     [HideInInspector]
-    public RadialMenu radialMenu;
     public GameObject cameraPos;
-
-    // lists of buttons for the radial menu
+    
     // TODO: improve on this/replace several lists with seperate menus
     public List<Button> options;
 
@@ -84,8 +82,6 @@ public class PlayerControls : MonoBehaviour
 
         currentObjectivePanel.panel.SetActive(false);
         objectiveMessage.panel.SetActive(false);
-
-        radialMenu.Display(options);
     }
     
     void Update()
@@ -185,8 +181,7 @@ public class PlayerControls : MonoBehaviour
             other = hit.collider.gameObject;
 
             clicked = Input.GetMouseButtonDown(0);
-
-            #region Set Radial Menu Position
+            
             try
             {
                 other.GetComponent<PlayerObjective>().hover = true;
@@ -215,11 +210,7 @@ public class PlayerControls : MonoBehaviour
             if (selectedObjective)
             {
                 screenPos = cam.WorldToScreenPoint(selectedObjective.transform.position);
-                radialMenu.SetPosition(new Vector3(screenPos.x, screenPos.y, 100));
             }
-            else
-                radialMenu.SetPosition(new Vector3(-1000, 0, 0));
-            #endregion
 
             if (clicked && !offMap)
             {

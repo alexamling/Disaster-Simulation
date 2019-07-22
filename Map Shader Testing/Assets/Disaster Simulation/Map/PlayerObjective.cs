@@ -85,6 +85,7 @@ public class PlayerObjective: MonoBehaviour
     protected void Update()
     { 
         icon.transform.position = cam.WorldToScreenPoint(transform.position);
+        icon.transform.localScale = (Vector3.one / Camera.main.fieldOfView) * 15f;
 
         if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
