@@ -2,30 +2,30 @@ Score: 100/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
-NotificationTitle: Shit's gone WHACK/
-FullMessage: Bad stuff. Do thing. Much halp./
+NotificationTitle: Low Severity Fire Reported/
+FullMessage: The 911 Dispatch Center has reported a fire in Galveston County. It is being reported that the fire is a low class brush fire and more than likely able to be handled by local reinforcements./
 TimeLimit: 40
 |
 Score: 100/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
-NotificationTitle: Shit's gone WHACK/
-FullMessage: Bad stuff. Do thing. Much halp./
+NotificationTitle: Moderate Severity Fire Reported/
+FullMessage: The 911 Dispatch Center has reported a fire in Texas City. This fire is in moderate proximity to the oil refineries and should be addressed soon./
 TimeLimit: 40
 |
 Score: 100/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
-NotificationTitle: Shit's gone WHACK/
-FullMessage: Bad stuff. Do thing. Much halp./
+NotificationTitle: High Severity Fire Reported/
+FullMessage: The 911 Call Center has reported a structure fire in Galveston County. It appears as if the fire started within the building.  There are buildings in close proximity to the one engulfed in flames./
 TimeLimit: 40
 |
 Score: 100/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
-NotificationTitle: Shit's gone WHACK/
-FullMessage: Bad stuff. Do thing. Much halp./
+NotificationTitle: Unknown Situation/
+FullMessage: The Call Center reported a fire in Galveston County. However, witness reports that there is a strange smell and greenish color coming from the fire./
 TimeLimit: 40
