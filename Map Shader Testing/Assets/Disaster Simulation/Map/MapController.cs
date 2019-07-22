@@ -61,7 +61,7 @@ public class MapController : MonoBehaviour
     public AnimationCurve floodCurve;
     public float baseFloodHeight;
     public float maxFloodHeight;
-    public GameObject floodlocationRoot;
+    public GameObject floodLocationRoot;
     private Transform[] floodLocations;
     [HideInInspector]
     public FloodManager floodManager;
@@ -121,7 +121,7 @@ public class MapController : MonoBehaviour
             floodManager.baseHeight = baseFloodHeight;
             floodManager.maxHeight = maxFloodHeight;
 
-            floodLocations = floodlocationRoot.GetComponentsInChildren<Transform>();
+            floodLocations = floodLocationRoot.GetComponentsInChildren<Transform>();
 
             // load availible data maps
             if (dataMaps.heightMap)
