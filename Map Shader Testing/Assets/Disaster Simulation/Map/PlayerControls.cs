@@ -147,7 +147,7 @@ public class PlayerControls : MonoBehaviour
         */
 
         // lerp the camera towards the new location
-        newCamPos = Vector3.ClampMagnitude(newCamPos,750);
+        newCamPos = Vector3.ClampMagnitude(newCamPos,500);
         cameraPos.transform.position = Vector3.Lerp(cameraPos.transform.position, newCamPos, .1f);
         
         // raycast to UI
