@@ -76,4 +76,13 @@ public class ManageUnits : MonoBehaviour
         }
     }
 
+    public void restoreUnits(PlayerObjective obj)
+    {
+        for (int i = 0; i < unitCounts.Length; i++)
+        {
+            availibleUnits[i] += obj.units[i];
+            resourceValues[i].text = "" + availibleUnits[i];
+        }
+    }
+
 }
