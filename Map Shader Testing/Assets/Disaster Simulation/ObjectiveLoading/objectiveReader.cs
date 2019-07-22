@@ -7,11 +7,17 @@ using System.Globalization;
 
 public class objectiveReader : MonoBehaviour
 {
-    public TextAsset testObjectivesFire;
-    public TextAsset testObjectivesFlood;
+    public TextAsset ObjectivesFire;
+    public TextAsset ObjectivesFlood;
+    public TextAsset ObjectivesAccident;
+    public TextAsset ObjectivesEvac;
+    public TextAsset ObjectivesPersonal;
 
     public List<PlayerObjective> fireList;
     public List<PlayerObjective> floodList;
+    public List<PlayerObjective> accidentList;
+    public List<PlayerObjective> evacList;
+    public List<PlayerObjective> personalList;
 
     public GameObject objectivePrefab;
 
@@ -20,8 +26,11 @@ public class objectiveReader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        readFile(testObjectivesFire, fireList);
-        readFile(testObjectivesFlood, floodList);
+        readFile(ObjectivesFire, fireList);
+        readFile(ObjectivesFlood, floodList);
+        readFile(ObjectivesAccident, accidentList);
+        readFile(ObjectivesEvac, evacList);
+        readFile(ObjectivesPersonal, personalList);
     }
 
     public void readFile(TextAsset textFile, List<PlayerObjective> list)

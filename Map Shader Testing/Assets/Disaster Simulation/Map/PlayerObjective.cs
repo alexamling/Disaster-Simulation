@@ -31,6 +31,8 @@ public class PlayerObjective: MonoBehaviour
     private Canvas canvas;
     private Camera cam;
 
+    public ManageUnits unitManager;
+
     public Vector2 location;
 
     public float[] immediateResponseModifiers;
@@ -70,6 +72,8 @@ public class PlayerObjective: MonoBehaviour
         cam = FindObjectOfType<Camera>();
         icon = Instantiate(iconPrefab, canvas.transform);
         iconImage = icon.GetComponentInChildren<Image>();
+
+        unitManager = GameObject.Find("Main Camera").GetComponent<ManageUnits>();
 
         //DEBUG
         revealed = true;
@@ -173,12 +177,14 @@ public class PlayerObjective: MonoBehaviour
                 iconImage.color = Color.green;
                 status = 1;
                 objectiveState = ObjectiveState.Resolved;
+                unitManager.restoreUnits(this);
             }
 
             if (status <= 0.001f) // turn the outline solid black when the status is low enough
             {
                 iconImage.color = Color.black;
                 objectiveState = ObjectiveState.Resolved;
+                unitManager.restoreUnits(this);
             }
         }
     }
