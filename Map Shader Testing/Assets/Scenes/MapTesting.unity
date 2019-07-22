@@ -12768,6 +12768,9 @@ MonoBehaviour:
   explosionParticles: {fileID: 0}
   fireLocationRoot: {fileID: 0}
   fireManager: {fileID: 0}
+  evacLocationRoot: {fileID: 0}
+  personalLocationRoot: {fileID: 0}
+  accidentLocationRoot: {fileID: 0}
   terrainGenerator: {fileID: 0}
   objectiveReader: {fileID: 0}
   score: 0
@@ -12832,10 +12835,12 @@ MonoBehaviour:
   ObjectivesFlood: {fileID: 4900000, guid: 244819ed52944f741b0be9ff19b8fafa, type: 3}
   ObjectivesAccident: {fileID: 4900000, guid: da63eb04ae8ca79498157bd9886c382b, type: 3}
   ObjectivesEvac: {fileID: 4900000, guid: ecefe97432a1a5e4c831777aaefc2dbc, type: 3}
+  ObjectivesPersonal: {fileID: 4900000, guid: 39758214b8c37074b885048ddc8db55d, type: 3}
   fireList: []
   floodList: []
   accidentList: []
   evacList: []
+  personalList: []
   objectivePrefab: {fileID: 39305521758710688, guid: c7c221325da700c4c934a7527837bc5f,
     type: 3}
   parent: {fileID: 94631552}

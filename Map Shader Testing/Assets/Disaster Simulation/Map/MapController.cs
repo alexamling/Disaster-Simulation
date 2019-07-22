@@ -75,7 +75,25 @@ public class MapController : MonoBehaviour
     private Transform[] fireLocations;
     [HideInInspector]
     public FireManager fireManager;
-    
+
+    [Space(5)]
+
+    [Header("Evacuation Variables")]
+    public GameObject evacLocationRoot;
+    private Transform[] evacLocations;
+
+    [Space(5)]
+
+    [Header("PersonalIncidents Variables")]
+    public GameObject personalLocationRoot;
+    private Transform[] personalLocations;
+
+    [Space(5)]
+
+    [Header("Accident Variables")]
+    public GameObject accidentLocationRoot;
+    private Transform[] accidentLocations;
+
 
 
     private Texture2D fireSnapshot;
@@ -103,6 +121,9 @@ public class MapController : MonoBehaviour
     // Adds managers and passes values to them
     void Start()
     {
+        //initialize locations
+        fireLocations = fireLocationRoot.GetComponentsInChildren<Transform>();
+
         shapeModule = fireParticles.shape;
         terrainData = terrain.terrainData;
 
@@ -142,7 +163,7 @@ public class MapController : MonoBehaviour
             fireManager.mapWidth = mapWidth;
             fireManager.mapHeight = mapHeight;
 
-            fireLocations = fireLocationRoot.GetComponentsInChildren<Transform>();
+            //fireLocations = fireLocationRoot.GetComponentsInChildren<Transform>();
 
             // load availible data maps
             if (dataMaps.heightMap)
@@ -196,6 +217,26 @@ public class MapController : MonoBehaviour
         {
             SpawnFloodObjective();
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SpawnFireObjective();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SpawnEvacObjective();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            SpawnAccidentObjective();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SpawnPersonalObjective();
+        }
     }
 
     /// <summary>
@@ -248,6 +289,41 @@ public class MapController : MonoBehaviour
         playerControls.notifications.Add(newNotification);
 
         objective.objectiveState = ObjectiveState.Requesting;
+    }
+
+    void SpawnFireObjective()
+    {
+        PlayerObjective objective = Instantiate(objectiveReader.fireList[Random.Range(0, objectiveReader.fireList.Count)]);
+        Transform placementValues = fireLocations[Random.Range(0, fireLocations.Length)].transform;
+
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+
+        objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
+
+        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
+        newNotification.text.text = objective.notificationTitle;
+        newNotification.severity = 0;
+        newNotification.objective = objective;
+        newNotification.manager = playerControls;
+        objective.notification = newNotification;
+        playerControls.notifications.Add(newNotification);
+
+        objective.objectiveState = ObjectiveState.Requesting;
+    }
+
+    void SpawnEvacObjective()
+    {
+
+    }
+
+    void SpawnAccidentObjective()
+    {
+
+    }
+
+    void SpawnPersonalObjective()
+    {
+
     }
 
     void Explosion(Vector2 pos)
