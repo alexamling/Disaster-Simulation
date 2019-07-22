@@ -27,8 +27,8 @@ public class PlayerObjective: MonoBehaviour
 
     public GameObject iconPrefab;
     public GameObject icon;
+    public GameObject iconRoot;
     private Image iconImage;
-    private Canvas canvas;
     private Camera cam;
 
     public ManageUnits unitManager;
@@ -38,6 +38,7 @@ public class PlayerObjective: MonoBehaviour
     public float[] immediateResponseModifiers;
     public float[] delayedResponseModifiers;
     public int[] units; //0EMS, 1Fire Department, 2Military, 3Police, 4Volunteers
+
 
     public string notificationTitle;
     public string fullMessage;
@@ -68,9 +69,11 @@ public class PlayerObjective: MonoBehaviour
         scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
         StatusDeprecator = 0 + (scoreDeprecator - 0) * (1 - 0) / (score - 0);
         
-        canvas = FindObjectOfType<Canvas>();
         cam = FindObjectOfType<Camera>();
-        icon = Instantiate(iconPrefab, canvas.transform);
+        if (iconRoot)
+            icon = Instantiate(iconPrefab, iconRoot.transform);
+        else
+            icon = Instantiate(iconPrefab);
         iconImage = icon.GetComponentInChildren<Image>();
 
         unitManager = GameObject.Find("Main Camera").GetComponent<ManageUnits>();
@@ -83,9 +86,13 @@ public class PlayerObjective: MonoBehaviour
     private float value;
 
     protected void Update()
-    { 
-        icon.transform.position = cam.WorldToScreenPoint(transform.position);
-        icon.transform.localScale = (Vector3.one / Camera.main.fieldOfView) * 15f;
+    {
+
+        if (revealed)
+        {
+            icon.transform.position = cam.WorldToScreenPoint(transform.position);
+            icon.transform.localScale = (Vector3.one / Camera.main.fieldOfView) * 15f;
+        }
 
         if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
         {
