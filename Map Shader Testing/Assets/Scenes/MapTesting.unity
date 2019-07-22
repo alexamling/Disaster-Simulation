@@ -12828,10 +12828,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b75a08ae6d3ab94d88dcc83e9f17bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testObjectivesFire: {fileID: 4900000, guid: f9ce994538960b144ba7ad27d6d6efbe, type: 3}
-  testObjectivesFlood: {fileID: 4900000, guid: 244819ed52944f741b0be9ff19b8fafa, type: 3}
+  ObjectivesFire: {fileID: 4900000, guid: f9ce994538960b144ba7ad27d6d6efbe, type: 3}
+  ObjectivesFlood: {fileID: 4900000, guid: 244819ed52944f741b0be9ff19b8fafa, type: 3}
+  ObjectivesAccident: {fileID: 4900000, guid: da63eb04ae8ca79498157bd9886c382b, type: 3}
+  ObjectivesEvac: {fileID: 4900000, guid: ecefe97432a1a5e4c831777aaefc2dbc, type: 3}
   fireList: []
   floodList: []
+  accidentList: []
+  evacList: []
   objectivePrefab: {fileID: 39305521758710688, guid: c7c221325da700c4c934a7527837bc5f,
     type: 3}
   parent: {fileID: 94631552}
