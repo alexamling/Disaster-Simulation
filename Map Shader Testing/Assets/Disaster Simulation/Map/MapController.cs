@@ -126,6 +126,9 @@ public class MapController : MonoBehaviour
     {
         //initialize locations
         fireLocations = fireLocationRoot.GetComponentsInChildren<Transform>();
+        accidentLocations = accidentLocationRoot.GetComponentsInChildren<Transform>();
+        evacLocations = evacLocationRoot.GetComponentsInChildren<Transform>();
+        personalLocations = personalLocationRoot.GetComponentsInChildren<Transform>();
 
         shapeModule = fireParticles.shape;
         terrainData = terrain.terrainData;
@@ -216,27 +219,27 @@ public class MapController : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             SpawnFloodObjective();
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.N))
         {
             SpawnFireObjective();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             SpawnEvacObjective();
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             SpawnAccidentObjective();
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             SpawnPersonalObjective();
         }
@@ -282,17 +285,8 @@ public class MapController : MonoBehaviour
         Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
-        
-        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
-        newNotification.text.text = objective.notificationTitle;
-        newNotification.severity = 0;
-        newNotification.objective = objective;
-        newNotification.manager = playerControls;
-        objective.notification = newNotification;
-        objective.iconRoot = iconRoot;
-        playerControls.notifications.Add(newNotification);
 
-        objective.objectiveState = ObjectiveState.Requesting;
+        SpawnObjective(objective);
     }
 
     void SpawnFireObjective()
@@ -304,15 +298,7 @@ public class MapController : MonoBehaviour
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
-        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
-        newNotification.text.text = objective.notificationTitle;
-        newNotification.severity = 0;
-        newNotification.objective = objective;
-        newNotification.manager = playerControls;
-        objective.notification = newNotification;
-        playerControls.notifications.Add(newNotification);
-
-        objective.objectiveState = ObjectiveState.Requesting;
+        SpawnObjective(objective);
     }
 
     void SpawnEvacObjective()
@@ -324,15 +310,7 @@ public class MapController : MonoBehaviour
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
-        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
-        newNotification.text.text = objective.notificationTitle;
-        newNotification.severity = 0;
-        newNotification.objective = objective;
-        newNotification.manager = playerControls;
-        objective.notification = newNotification;
-        playerControls.notifications.Add(newNotification);
-
-        objective.objectiveState = ObjectiveState.Requesting;
+        SpawnObjective(objective);
     }
 
     void SpawnAccidentObjective()
@@ -344,15 +322,7 @@ public class MapController : MonoBehaviour
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
-        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
-        newNotification.text.text = objective.notificationTitle;
-        newNotification.severity = 0;
-        newNotification.objective = objective;
-        newNotification.manager = playerControls;
-        objective.notification = newNotification;
-        playerControls.notifications.Add(newNotification);
-
-        objective.objectiveState = ObjectiveState.Requesting;
+        SpawnObjective(objective);
     }
 
     void SpawnPersonalObjective()
@@ -364,12 +334,19 @@ public class MapController : MonoBehaviour
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
+        SpawnObjective(objective);
+    }
+
+    private void SpawnObjective(PlayerObjective objective)
+    {
+
         Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
         newNotification.text.text = objective.notificationTitle;
         newNotification.severity = 0;
         newNotification.objective = objective;
         newNotification.manager = playerControls;
         objective.notification = newNotification;
+        objective.iconRoot = iconRoot;
         playerControls.notifications.Add(newNotification);
 
         objective.objectiveState = ObjectiveState.Requesting;
