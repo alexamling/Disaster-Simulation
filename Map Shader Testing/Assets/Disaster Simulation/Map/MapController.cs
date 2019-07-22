@@ -317,16 +317,61 @@ public class MapController : MonoBehaviour
 
     void SpawnEvacObjective()
     {
+        PlayerObjective objective = Instantiate(objectiveReader.evacList[Random.Range(0, objectiveReader.evacList.Count)]);
+        Transform placementValues = evacLocations[Random.Range(0, evacLocations.Length)].transform;
 
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+
+        objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
+
+        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
+        newNotification.text.text = objective.notificationTitle;
+        newNotification.severity = 0;
+        newNotification.objective = objective;
+        newNotification.manager = playerControls;
+        objective.notification = newNotification;
+        playerControls.notifications.Add(newNotification);
+
+        objective.objectiveState = ObjectiveState.Requesting;
     }
 
     void SpawnAccidentObjective()
     {
+        PlayerObjective objective = Instantiate(objectiveReader.accidentList[Random.Range(0, objectiveReader.accidentList.Count)]);
+        Transform placementValues = accidentLocations[Random.Range(0, accidentLocations.Length)].transform;
 
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+
+        objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
+
+        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
+        newNotification.text.text = objective.notificationTitle;
+        newNotification.severity = 0;
+        newNotification.objective = objective;
+        newNotification.manager = playerControls;
+        objective.notification = newNotification;
+        playerControls.notifications.Add(newNotification);
+
+        objective.objectiveState = ObjectiveState.Requesting;
     }
 
     void SpawnPersonalObjective()
     {
+        PlayerObjective objective = Instantiate(objectiveReader.personalList[Random.Range(0, objectiveReader.personalList.Count)]);
+        Transform placementValues = personalLocations[Random.Range(0, personalLocations.Length)].transform;
 
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+
+        objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
+
+        Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
+        newNotification.text.text = objective.notificationTitle;
+        newNotification.severity = 0;
+        newNotification.objective = objective;
+        newNotification.manager = playerControls;
+        objective.notification = newNotification;
+        playerControls.notifications.Add(newNotification);
+
+        objective.objectiveState = ObjectiveState.Requesting;
     }
 }
