@@ -13528,6 +13528,7 @@ MonoBehaviour:
   - {fileID: 617772258}
   - {fileID: 427350878}
   - {fileID: 1091600685}
+  - {fileID: 864768829}
   - {fileID: 383316517}
   controller: {fileID: 1903306897}
 --- !u!114 &1903306900
@@ -13562,7 +13563,7 @@ MonoBehaviour:
   sceneTimer: {fileID: 1470923444}
   scoreText: {fileID: 1457815979}
   curTime: 0
-  timeLimit: 44.2
+  timeLimit: 600
   gameState: 2
 --- !u!1 &1923934028
 GameObject:
@@ -15763,7 +15764,7 @@ GameObject:
   - component: {fileID: 6768446003604391535}
   - component: {fileID: 6768446003604391520}
   m_Layer: 5
-  m_Name: Inject Canvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
