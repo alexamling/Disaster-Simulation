@@ -103,12 +103,12 @@ public class PlayerControls : MonoBehaviour
             newObjective.transform.position = newPos;
             AddNotification("Test " + ++numNotifications, 0, newObjective);
         }
-        */
 
         if (Input.GetKeyDown(KeyCode.G) && manager.terrainGenerator)
         {
             StartCoroutine(manager.terrainGenerator.Load());
         }
+        */
         
         screenPos = Input.mousePosition;
         
