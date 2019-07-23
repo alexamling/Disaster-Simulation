@@ -19,6 +19,7 @@ public class PlayerControls : MonoBehaviour
 {
     public MapController manager;
     public PlayerObjective selectedObjective;
+    public Image progressBar;
     public Image[] coolDowns;
     public ManageUnits unitManager;
     [HideInInspector]
@@ -248,6 +249,11 @@ public class PlayerControls : MonoBehaviour
             {
                 coolDowns[i].fillAmount += (1.0f / 750.0f); //1/750 = 15 seconds
             }
+        }
+        
+        if (selectedObjective != null)
+        {
+            progressBar.fillAmount = selectedObjective.status;
         }
     }
 
