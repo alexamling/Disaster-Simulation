@@ -62,7 +62,7 @@ Material:
     - _distort: 0.1
     m_Colors:
     - BumpParm: {r: 1, g: 1, b: 1, a: 1}
-    - WaveSpeed: {r: 29.47, g: 67.7, b: -34.94, a: -86.18}
+    - WaveSpeed: {r: 178.32, g: 67.7, b: -34.94, a: -86.18}
     - _BumpMap_ST: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _ColorControlCube_ST: {r: 1, g: 1, b: 0, a: 0}
