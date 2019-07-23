@@ -17,6 +17,7 @@ public class PlayerObjective: MonoBehaviour
     [Range(0,1)]
     public float status = 0.99f;
     public float score;
+    public float originalScore;
     [HideInInspector]
     public Outline outline;
     public string[] tipString = new string[] { "Nothing to report", "Nothing to report", "Nothing to report" }; //Plan, Log, Ops
@@ -71,6 +72,8 @@ public class PlayerObjective: MonoBehaviour
 
         scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
         StatusDeprecator = scoreDeprecator * 1 / score;
+
+        originalScore = score;
         
         cam = FindObjectOfType<Camera>();
         if (iconRoot)

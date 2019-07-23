@@ -118,7 +118,7 @@ public class MapController : MonoBehaviour
     [Header("UI Variables")]
     public GameObject iconRoot;
 
-    [HideInInspector]
+    //[HideInInspector]
     public float score;
 
     // Adds managers and passes values to them

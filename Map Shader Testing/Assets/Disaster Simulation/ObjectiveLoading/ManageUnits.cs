@@ -14,6 +14,7 @@ public class ManageUnits : MonoBehaviour
     private Text[] resourceValues = new Text[5];
 
     public PlayerControls controller;
+    private MapController mapController;
 
     // Start is called before the first frame update
     void Start()
@@ -25,13 +26,30 @@ public class ManageUnits : MonoBehaviour
             resourceValues[i] = resourceBar.transform.GetChild(i).GetChild(0).GetComponent<Text>();
             resourceValues[i].text = "" + availibleUnits[i];
         }
-        
+
+        mapController = GameObject.Find("Main Camera").GetComponent<MapController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void ignoreResponse()
+    {
+        if (controller.selectedObjective.needsResponse)
+        {
+
+        }
+
+        else if (!controller.selectedObjective.needsResponse)
+        {
+            mapController.score += controller.selectedObjective.originalScore;
+        }
+
+        controller.selectedObjective.objectiveState = ObjectiveState.Responding;
+        ToggleUI(controller.selectedObjective);
     }
 
     public void sendTeam()
@@ -82,6 +100,15 @@ public class ManageUnits : MonoBehaviour
         {
             availibleUnits[i] += obj.units[i];
             resourceValues[i].text = "" + availibleUnits[i];
+        }
+
+        if (obj.score > 0.0f)
+        {
+            mapController.score += obj.score;
+        }
+        else
+        {
+            mapController.score += 0;
         }
     }
 

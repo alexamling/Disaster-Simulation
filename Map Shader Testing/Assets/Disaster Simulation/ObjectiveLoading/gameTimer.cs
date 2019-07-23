@@ -48,7 +48,7 @@ public class gameTimer : MonoBehaviour
             {
                 gameState = GameState.Completed;
                 gameOverPanel.SetActive(true);
-                scoreText.text = "Final Score" + "\n" + mapControl.score;
+                scoreText.text = "Final Score" + "\n" + Mathf.FloorToInt(mapControl.score);
             }
         }
         
