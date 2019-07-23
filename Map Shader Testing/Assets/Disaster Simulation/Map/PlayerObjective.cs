@@ -85,7 +85,7 @@ public class PlayerObjective: MonoBehaviour
         unitManager = GameObject.Find("Main Camera").GetComponent<ManageUnits>();
 
         //DEBUG
-        revealed = true;
+        //revealed = true;
         //units = new int[] { 1, 3};
     }
 
@@ -164,7 +164,7 @@ public class PlayerObjective: MonoBehaviour
 
             if (units.Length > 0 && status < 1) //if units have been assigned
             {
-                if (!hasImmediateResponded)
+                if (!hasImmediateResponded && objectiveState == ObjectiveState.Responding)
                 {
                     hasImmediateResponded = true;
                     for (int i = 0; i < units.Length; i++)
