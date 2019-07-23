@@ -6,8 +6,13 @@ using UnityEngine.UI;
 public class gameTimer : MonoBehaviour
 {
     public Text sceneTimer;
+    public Text scoreText;
+
     public float curTime;
     public float timeLimit = 600;
+
+    private MapController mapControl;
+    private GameObject gameOverPanel;
 
     public enum GameState { Paused, Completed, Running };
     public GameState gameState = GameState.Running;
@@ -16,6 +21,10 @@ public class gameTimer : MonoBehaviour
     void Start()
     {
         curTime = timeLimit;
+        mapControl = GameObject.Find("Main Camera").GetComponent<MapController>();
+
+        gameOverPanel = GameObject.Find("gameOver");
+        gameOverPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,6 +47,8 @@ public class gameTimer : MonoBehaviour
             if (curTime <= 0.0f)
             {
                 gameState = GameState.Completed;
+                gameOverPanel.SetActive(true);
+                scoreText.text = "Final Score" + "\n" + mapControl.score;
             }
         }
         
@@ -48,7 +59,7 @@ public class gameTimer : MonoBehaviour
 
         else if (gameState == GameState.Completed)
         {
-
+            
         }
     }
 }
