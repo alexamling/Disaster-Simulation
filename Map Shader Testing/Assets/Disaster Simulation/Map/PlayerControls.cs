@@ -103,12 +103,12 @@ public class PlayerControls : MonoBehaviour
             newObjective.transform.position = newPos;
             AddNotification("Test " + ++numNotifications, 0, newObjective);
         }
-        */
 
         if (Input.GetKeyDown(KeyCode.G) && manager.terrainGenerator)
         {
             StartCoroutine(manager.terrainGenerator.Load());
         }
+        */
         
         screenPos = Input.mousePosition;
         
@@ -147,7 +147,7 @@ public class PlayerControls : MonoBehaviour
         */
 
         // lerp the camera towards the new location
-        newCamPos = Vector3.ClampMagnitude(newCamPos,500);
+        newCamPos = Vector3.ClampMagnitude(newCamPos, 500);
         cameraPos.transform.position = Vector3.Lerp(cameraPos.transform.position, newCamPos, .1f);
         
         // raycast to UI
@@ -167,7 +167,7 @@ public class PlayerControls : MonoBehaviour
         if (!offMap)
         {
             newFov -= Input.GetAxis("Mouse ScrollWheel") * 20;
-            newFov = Mathf.Clamp(newFov, 2.5f, 65);
+            newFov = Mathf.Clamp(newFov, 1f, 65);
         }
         #endregion
 

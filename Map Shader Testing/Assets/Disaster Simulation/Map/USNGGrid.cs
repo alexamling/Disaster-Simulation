@@ -25,7 +25,7 @@ public class USNGGrid : MonoBehaviour
 
     public static Vector2 ToUSNG(Vector3 pos)
     {
-        return new Vector2(pos.x / .425f + 1738, pos.z / .425f + 4735);
+        return new Vector2(pos.x / .425f + 1748, pos.z / .425f + 4735);
     }
 
     // Start is called before the first frame update

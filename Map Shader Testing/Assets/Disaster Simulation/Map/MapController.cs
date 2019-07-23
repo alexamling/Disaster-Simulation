@@ -36,6 +36,10 @@ public struct ShaderCollection
 
 public class MapController : MonoBehaviour
 {
+    /// <summary>
+    /// Unused. Left in for future implementation
+    /// </summary>
+    /*
     public Terrain terrain;
     private TerrainData terrainData;
     [Range(64, 8192)]
@@ -54,6 +58,8 @@ public class MapController : MonoBehaviour
     [Space(5)]
     public Material mapMaterial;
     [Space(10)]
+    */
+
     public List<GameObject> objectives;
 
     [Header("Flood Variables")]
@@ -69,12 +75,12 @@ public class MapController : MonoBehaviour
     [Space(5)]
 
     [Header("Fire Variables")]
-    public ParticleSystem fireParticles;
-    public ParticleSystem explosionParticles;
+    //public ParticleSystem fireParticles;
+    //public ParticleSystem explosionParticles;
     public GameObject fireLocationRoot;
     private Transform[] fireLocations;
-    [HideInInspector]
-    public FireManager fireManager;
+    //[HideInInspector]
+    //public FireManager fireManager;
 
     [Space(5)]
 
@@ -94,32 +100,29 @@ public class MapController : MonoBehaviour
     public GameObject accidentLocationRoot;
     private Transform[] accidentLocations;
 
+    [Header("UI Variables")]
+    public GameObject iconRoot;
 
-
-    private Texture2D fireSnapshot;
-    private Texture2D viewSnapshot;
-    private Texture2D replacement;
-
-    // map display
     [HideInInspector]
-    public TerrainGenerator terrainGenerator;
-
-    // managers
+    public float score;
+    
+    //private Texture2D fireSnapshot;
+    //private Texture2D viewSnapshot;
+    //private Texture2D replacement;
+    
+    //[HideInInspector]
+    //public TerrainGenerator terrainGenerator;
+    
     [HideInInspector]
     public objectiveReader objectiveReader;
 
 
-    private new Renderer renderer;
+    //private new Renderer renderer;
 
-    private ParticleSystem.ShapeModule shapeModule;
+    //private ParticleSystem.ShapeModule shapeModule;
 
     private PlayerControls playerControls;
 
-    [Header("UI Variables")]
-    public GameObject iconRoot;
-
-    //[HideInInspector]
-    public float score;
 
     // Adds managers and passes values to them
     void Start()
@@ -131,14 +134,14 @@ public class MapController : MonoBehaviour
         personalLocations = personalLocationRoot.GetComponentsInChildren<Transform>();
         floodLocations = floodLocationRoot.GetComponentsInChildren<Transform>();
 
+        #region old shader functionality
+        /*
+
         shapeModule = fireParticles.shape;
         terrainData = terrain.terrainData;
 
         fireSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, true);
         viewSnapshot = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, false);
-
-        #region old shader functionality
-        /*
 
         if (floodEnabled)
         {
@@ -207,22 +210,6 @@ public class MapController : MonoBehaviour
         //StartCoroutine(Load());
     }
 
-    IEnumerator Load()
-    {
-        yield return StartCoroutine(terrainGenerator.Load());
-        shapeModule.mesh = terrainGenerator.mesh;
-        if (fireEnabled)
-            yield return StartCoroutine(fireManager.Load());
-        if (floodEnabled)
-            yield return StartCoroutine(floodManager.Load());
-
-        if (fireEnabled)
-        for (int i = 0; i < 25; i++)
-        {
-            fireManager.StartFire();
-        }
-    }
-    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -248,6 +235,27 @@ public class MapController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             SpawnPersonalObjective();
+        }
+    }
+
+    /// <summary>
+    /// Unused. Left in for possible future implementation
+    /// </summary>
+    /// <returns></returns>
+    /*
+    IEnumerator Load()
+    {
+        yield return StartCoroutine(terrainGenerator.Load());
+        shapeModule.mesh = terrainGenerator.mesh;
+        if (fireEnabled)
+            yield return StartCoroutine(fireManager.Load());
+        if (floodEnabled)
+            yield return StartCoroutine(floodManager.Load());
+
+        if (fireEnabled)
+        for (int i = 0; i < 25; i++)
+        {
+            fireManager.StartFire();
         }
     }
 
@@ -281,6 +289,7 @@ public class MapController : MonoBehaviour
         else
             renderer = gameObject.GetComponent<Renderer>();
     }
+    */
 
     void SpawnFloodObjective()
     {
