@@ -57,7 +57,7 @@ public class ManageUnits : MonoBehaviour
             {
                 elementsUI[i].SetActive(true);
             }
-            elementsUI[11].GetComponent<Text>().text = "Units Requested";
+            elementsUI[12].GetComponent<Text>().text = "Units Requested";
         }
         else if (selectedObject.objectiveState == ObjectiveState.Responding)
         {
@@ -65,7 +65,7 @@ public class ManageUnits : MonoBehaviour
             {
                 elementsUI[i].SetActive(false);
             }
-            elementsUI[11].GetComponent<Text>().text = "Units Sent";
+            elementsUI[12].GetComponent<Text>().text = "Units Sent";
         }
         for (int i = 0; i < unitCounts.Length; i++)
         {
