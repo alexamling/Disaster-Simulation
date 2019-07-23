@@ -59,18 +59,21 @@ public class MapController : MonoBehaviour
     public Material mapMaterial;
     [Space(10)]
     */
+    
+    public float objectiveFrequency;
+    public float objectiveVarience;
 
     public List<GameObject> objectives;
 
     [Header("Flood Variables")]
-    public GameObject waterPrefab;
-    public AnimationCurve floodCurve;
-    public float baseFloodHeight;
-    public float maxFloodHeight;
+    //public GameObject waterPrefab;
+    //public AnimationCurve floodCurve;
+    //public float baseFloodHeight;
+    //public float maxFloodHeight;
     public GameObject floodLocationRoot;
     private Transform[] floodLocations;
-    [HideInInspector]
-    public FloodManager floodManager;
+    //[HideInInspector]
+    //public FloodManager floodManager;
 
     [Space(5)]
 
@@ -102,8 +105,7 @@ public class MapController : MonoBehaviour
 
     [Header("UI Variables")]
     public GameObject iconRoot;
-
-    [HideInInspector]
+    
     public float score;
     
     //private Texture2D fireSnapshot;
@@ -122,7 +124,7 @@ public class MapController : MonoBehaviour
     //private ParticleSystem.ShapeModule shapeModule;
 
     private PlayerControls playerControls;
-
+    private InjectManager injectManager;
 
     // Adds managers and passes values to them
     void Start()
@@ -204,7 +206,7 @@ public class MapController : MonoBehaviour
         #endregion
 
         playerControls = FindObjectOfType<PlayerControls>();
-
+        injectManager = FindObjectOfType<InjectManager>();
         objectiveReader = FindObjectOfType<objectiveReader>();
 
         //StartCoroutine(Load());
@@ -235,6 +237,11 @@ public class MapController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             SpawnPersonalObjective();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            StartCoroutine(injectManager.RunInject());
         }
     }
 
