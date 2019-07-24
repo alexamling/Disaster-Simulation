@@ -64,11 +64,15 @@ public class PlayerObjective: MonoBehaviour
     public bool active { get { return objectiveState == ObjectiveState.Responding || objectiveState == ObjectiveState.Requesting; } }
 
     private float mix;
+
+    private gameTimer timer;
     
     protected void Start()
     {
         selected = false;
         //outline = gameObject.AddComponent<Outline>();
+
+        timer = FindObjectOfType<gameTimer>();
 
         scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
         StatusDeprecator = scoreDeprecator * 1 / score;
@@ -144,7 +148,7 @@ public class PlayerObjective: MonoBehaviour
 
     void FixedUpdate()
     {
-        if (active)
+        if (active && notification.manager.manager.gameTimer.gameState != GameState.Paused)
         {
             float incrimentorImm;
             float incrimentorDel;
@@ -184,23 +188,23 @@ public class PlayerObjective: MonoBehaviour
                     score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, (scoreDeprecator * 0.125f));
                 }
             }
-
             if (status >= 1)
             {
                 iconImage.color = Color.green;
                 status = 1;
                 objectiveState = ObjectiveState.Resolved;
-                notification.Display();
+                notification.manager.UpdateResult(this);
                 unitManager.restoreUnits(this);
             }
 
-            if (status <= 0.001f) // turn the outline solid black when the status is low enough
+            if (status <= 0f) // turn the outline solid black when the status is low enough
             {
                 iconImage.color = Color.black;
                 objectiveState = ObjectiveState.Resolved;
-                notification.Display();
+                notification.manager.UpdateResult(this);
                 unitManager.restoreUnits(this);
             }
         }
+
     }
 }

@@ -30,7 +30,7 @@ public class Notification : MonoBehaviour
         if (objective.revealed)
         {
             manager.currentObjectivePanel.panel.SetActive(false);
-            Display();
+            manager.Display(objective);
         }
         else
         {
@@ -60,32 +60,6 @@ public class Notification : MonoBehaviour
         Vector3 objectivePos = objective.transform.position;
         manager.selectedObjective = objective;
         manager.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
-    }
-
-    public void Display()
-    {
-        FocusOnObjective();
-        if(objective.active)
-        {
-            manager.objectiveMessage.panel.SetActive(true);
-            manager.objectiveResult.panel.SetActive(false);
-            manager.objectiveMessage.text.text = objective.fullMessage;
-        }
-        if (objective.objectiveState == ObjectiveState.Resolved)
-        {
-            if(objective.status <= 0)
-            {
-                manager.objectiveResult.panel.SetActive(true);
-                //display failure message
-                manager.objectiveResult.text.text = "Failure";
-            }
-            else
-            {
-                manager.objectiveResult.panel.SetActive(true);
-                //display sucess message
-                manager.objectiveResult.text.text = "Sucess";
-            }
-        }
     }
 }
 

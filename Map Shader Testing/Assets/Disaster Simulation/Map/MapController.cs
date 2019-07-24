@@ -166,7 +166,7 @@ public class MapController : MonoBehaviour
 
         timeSinceLastObjective = 0;
         timeSinceLastInject = 0;
-        nextObjective = objectiveFrequency + Random.Range(-objectiveVariance, objectiveVariance);
+        nextObjective = 1;
         nextInject = injectFrequency + Random.Range(-injectVariance, injectVariance);
 
         #region old shader functionality

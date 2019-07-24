@@ -243,15 +243,13 @@ public class PlayerControls : MonoBehaviour
                     {
                         closestObjective = playerObjective;
                     }
-                    
-
                 }
 
                 if (closestObjective && closestObjective.onMap)
                 {
                     closestObjective.revealed = true;
                     closestObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
-                    closestObjective.notification.Display();
+                    Display(closestObjective);
                     selectedObjective = closestObjective;
 
                     //Unit Assigning UI Stuff
@@ -306,6 +304,41 @@ public class PlayerControls : MonoBehaviour
         newNotification.objective = objective;
         objective.notification = newNotification;
         notifications.Add(newNotification);
+    }
+
+    public void Display(PlayerObjective objective)
+    {
+        objective.notification.FocusOnObjective();
+        if (objective.active)
+        {
+            objectiveMessage.panel.SetActive(true);
+            objectiveResult.panel.SetActive(false);
+            objectiveMessage.text.text = objective.fullMessage;
+        }
+        if (objective.objectiveState == ObjectiveState.Resolved)
+        {
+            UpdateResult(objective);
+        }
+    }
+
+    public void UpdateResult(PlayerObjective objective)
+    {
+        if (objective.status <= 0)
+        {
+            objectiveMessage.panel.SetActive(true);
+            objectiveResult.panel.SetActive(true);
+            //display failure message
+
+            objectiveMessage.text.text = "Failure";
+        }
+        else
+        {
+            objectiveMessage.panel.SetActive(true);
+            objectiveResult.panel.SetActive(true);
+            //display sucess message
+
+            objectiveMessage.text.text = "Sucess";
+        }
     }
 
     public void CloseCurrentObjective()
