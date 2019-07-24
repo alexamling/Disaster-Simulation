@@ -148,7 +148,7 @@ public class PlayerObjective: MonoBehaviour
 
     void FixedUpdate()
     {
-        if (active && notification.manager.manager.gameTimer.gameState != GameState.Paused)
+        if (active && timer.gameState != GameState.Paused)
         {
             float incrimentorImm;
             float incrimentorDel;
@@ -168,24 +168,37 @@ public class PlayerObjective: MonoBehaviour
 
             if (units.Length > 0 && status < 1) //if units have been assigned
             {
-                if (!hasImmediateResponded && objectiveState == ObjectiveState.Responding)
+                if (objectiveState == ObjectiveState.Responding)
                 {
-                    hasImmediateResponded = true;
+                    int nonZeroUnits = 0;
                     for (int i = 0; i < units.Length; i++)
                     {
-                        //score += immediateResponseModifiers[units[i]] / 10.0f;
-                        incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
-                        status += incrimentorImm;
-                        score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, (scoreDeprecator * 0.125f));
-                        
+                        if (units[i] != 0)
+                        {
+                            nonZeroUnits++;
+                        }
                     }
-                }
-                for (int i = 0; i < units.Length; i++)
-                {
-                    //score += delayedResponseModifiers[units[i]] / 100.0f;
-                    incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
-                    status += incrimentorDel;
-                    score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, (scoreDeprecator * 0.125f));
+
+                    if (!hasImmediateResponded)
+                    {
+                        hasImmediateResponded = true;
+                        for (int i = 0; i < units.Length; i++)
+                        {
+                            //score += immediateResponseModifiers[units[i]] / 10.0f;
+                            incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
+                            status += incrimentorImm / 3.33f;
+                            score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, ((scoreDeprecator * 0.125f) / nonZeroUnits));
+
+                        }
+                    }
+
+                    for (int i = 0; i < units.Length; i++)
+                    {
+                        //score += delayedResponseModifiers[units[i]] / 100.0f;
+                        incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
+                        status += incrimentorDel / 3.33f;
+                        score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, ((scoreDeprecator * 0.125f) / nonZeroUnits));
+                    }
                 }
             }
             if (status >= 1)
