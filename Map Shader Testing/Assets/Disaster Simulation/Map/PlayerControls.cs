@@ -323,6 +323,9 @@ public class PlayerControls : MonoBehaviour
 
     public void UpdateResult(PlayerObjective objective)
     {
+        if (objective != selectedObjective)
+            return;
+
         if (objective.status <= 0)
         {
             objectiveMessage.panel.SetActive(true);

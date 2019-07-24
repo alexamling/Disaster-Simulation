@@ -352,6 +352,16 @@ public class MapController : MonoBehaviour
     }
     */
 
+    void SelectObjectiveAreas(List<Transform> list)
+    {
+        list.RemoveAt(0);
+
+        for (int i = 0; i < list.Count - 3; i++)
+        {
+            list.RemoveAt(Random.Range(0, list.Count));
+        }
+    }
+
     void SpawnRandomObjective()
     {
         int val = Random.Range(0, 6);
