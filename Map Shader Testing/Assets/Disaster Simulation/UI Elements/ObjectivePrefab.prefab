@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status: 1
   score: 0
+  originalScore: 0
   outline: {fileID: 0}
   tipString:
   - Nothing to report
@@ -55,6 +56,7 @@ MonoBehaviour:
   selected: 0
   hover: 0
   revealed: 0
+  onMap: 0
   iconPrefab: {fileID: 6784222474366284184, guid: 8ef2817192eb92047ab74c94298e6330,
     type: 3}
   icon: {fileID: 0}
@@ -64,6 +66,8 @@ MonoBehaviour:
   immediateResponseModifiers: []
   delayedResponseModifiers: []
   units: 
+  localUnits: 
+  needsResponse: 0
   notificationTitle: 
   fullMessage: 
   notification: {fileID: 0}
@@ -133,7 +137,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5741467259814000001}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

@@ -191,7 +191,7 @@ public class InjectManager : MonoBehaviour
     }
 
     // Determine if an inject should fire or not
-    public IEnumerator RunInject()
+    public IEnumerator RunInject(float delay, float delayVariance)
     {
         // Sets up each of the parts of the inject and waits till the
         // yield requirements are met.  Based on both time and and logic
@@ -201,18 +201,18 @@ public class InjectManager : MonoBehaviour
         StartInject();
         OngoingInject();
         yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance,delayVariance));
         selected = false;
         //Debug.Log("-1-");
         OngoingInject();
         yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
         selected = false;
         //Debug.Log("-2-");
         OngoingInject();
            
         yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
         selected = false;
         //Debug.Log("Heck");
         buttons[0].SetActive(true);
