@@ -36,6 +36,7 @@ public class PlayerControls : MonoBehaviour
     public InfoPanel objectiveLocationPanel;
     public InfoPanel objectiveMessage;
     public InfoPanel objectiveResult;
+    public InfoPanel pausePanel;
     public Notification notificationPrefab;
     public PlayerObjective objectivePrefab;
     public List<Notification> notifications;
@@ -85,14 +86,22 @@ public class PlayerControls : MonoBehaviour
         currentObjectivePanel.panel.SetActive(false);
         objectiveMessage.panel.SetActive(false);
         objectiveResult.panel.SetActive(false);
+        pausePanel.panel.SetActive(false);
     }
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && selectedObjective)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ResetFocus();
-            CloseInfoMenu();
+            if (selectedObjective)
+            {
+                ResetFocus();
+                CloseInfoMenu();
+            }
+            else
+            {
+                Pause();
+            }
         }
 
         /*
@@ -240,10 +249,10 @@ public class PlayerControls : MonoBehaviour
 
                 if (closestObjective && closestObjective.onMap)
                 {
-                    playerObjective.revealed = true;
-                    playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
-                    playerObjective.notification.Display();
-                    selectedObjective = playerObjective;
+                    closestObjective.revealed = true;
+                    closestObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
+                    closestObjective.notification.Display();
+                    selectedObjective = closestObjective;
 
                     //Unit Assigning UI Stuff
                     unitManager.ToggleUI(selectedObjective);
@@ -271,6 +280,22 @@ public class PlayerControls : MonoBehaviour
             progressBar.fillAmount = selectedObjective.status;
             progressBar.color = selectedObjective.iconImage.color;
         }
+    }
+
+    public void Pause()
+    {
+
+        if (manager.gameTimer.gameState == GameState.Paused)
+        {
+            pausePanel.panel.SetActive(false);
+            manager.gameTimer.gameState = GameState.Running;
+        }
+        else
+        {
+            pausePanel.panel.SetActive(true);
+            manager.gameTimer.gameState = GameState.Paused;
+        }
+
     }
 
     public void AddNotification(string message, int severity, PlayerObjective objective)
