@@ -30,7 +30,7 @@ public class PlayerObjective: MonoBehaviour
     public GameObject iconPrefab;
     public GameObject icon;
     public GameObject iconRoot;
-    private Image iconImage;
+    public Image iconImage;
     private Camera cam;
 
     public ManageUnits unitManager;

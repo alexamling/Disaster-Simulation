@@ -254,6 +254,7 @@ public class PlayerControls : MonoBehaviour
         if (selectedObjective != null)
         {
             progressBar.fillAmount = selectedObjective.status;
+            progressBar.color = selectedObjective.iconImage.color;
         }
     }
 
