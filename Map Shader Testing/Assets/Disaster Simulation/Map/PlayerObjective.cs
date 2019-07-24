@@ -194,10 +194,6 @@ public class PlayerObjective: MonoBehaviour
                         incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
                         status += incrimentorDel / 3.33f;
                         score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, ((scoreDeprecator * 0.125f) / nonZeroUnits));
-                        Debug.Log(incrimentorDel);
-                        Debug.Log(incrimentorDel * 25.0f);
-                        Debug.Log(scoreDeprecator * 0.125f);
-                        Debug.Log(Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, ((scoreDeprecator * 0.125f) / nonZeroUnits)));
                     }
                 }
             }
