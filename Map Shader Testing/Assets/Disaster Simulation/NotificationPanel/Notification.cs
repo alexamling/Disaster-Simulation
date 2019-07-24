@@ -75,10 +75,13 @@ public class Notification : MonoBehaviour
             {
                 manager.objectiveResult.panel.SetActive(true);
                 //display failure message
+                manager.objectiveResult.text.text = "Failure";
             }
             else
             {
+                manager.objectiveResult.panel.SetActive(true);
                 //display sucess message
+                manager.objectiveResult.text.text = "Sucess";
             }
         }
     }

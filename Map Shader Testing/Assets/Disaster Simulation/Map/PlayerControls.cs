@@ -220,20 +220,33 @@ public class PlayerControls : MonoBehaviour
                 #region Ping Map
                 Collider[] colliders = Physics.OverlapSphere(hit.point, 30);
 
-                for(int i = 0; i < colliders.Length; i++)
+                float shortestDist = float.MaxValue;
+                PlayerObjective closestObjective = null;
+
+                for (int i = 0; i < colliders.Length; i++)
                 {
                     playerObjective = colliders[i].GetComponent<PlayerObjective>();
 
-                    if (playerObjective && playerObjective.onMap)
-                    {
-                        playerObjective.revealed = true;
-                        playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
-                        playerObjective.notification.Display();
-                        selectedObjective = playerObjective;
+                    if (playerObjective == null)
+                        continue;
 
-                        //Unit Assigning UI Stuff
-                        unitManager.ToggleUI(selectedObjective);
+                    if (Vector3.Distance(colliders[i].transform.position, hit.point) < shortestDist)
+                    {
+                        closestObjective = playerObjective;
                     }
+                    
+
+                }
+
+                if (closestObjective && closestObjective.onMap)
+                {
+                    playerObjective.revealed = true;
+                    playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
+                    playerObjective.notification.Display();
+                    selectedObjective = playerObjective;
+
+                    //Unit Assigning UI Stuff
+                    unitManager.ToggleUI(selectedObjective);
                 }
 
                 Instantiate(pingParticle, hit.point + Vector3.up, Quaternion.identity);                
@@ -284,6 +297,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         objectiveMessage.panel.SetActive(false);
+        objectiveResult.panel.SetActive(false);
     }
 
     public void FocusOn(Vector2 pos, float fov)
