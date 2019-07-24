@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum GameState { Paused, Completed, Running };
+
 public class gameTimer : MonoBehaviour
 {
     public Text sceneTimer;
@@ -14,7 +16,6 @@ public class gameTimer : MonoBehaviour
     private MapController mapControl;
     private GameObject gameOverPanel;
 
-    public enum GameState { Paused, Completed, Running };
     public GameState gameState = GameState.Running;
 
     // Start is called before the first frame update

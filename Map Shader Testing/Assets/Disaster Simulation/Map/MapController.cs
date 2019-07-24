@@ -59,11 +59,32 @@ public class MapController : MonoBehaviour
     public Material mapMaterial;
     [Space(10)]
     */
-    
-    public float objectiveFrequency;
-    public float objectiveVarience;
 
+    [Header("Objective Variables")]
+    [Range(0, 60)]
+    public float objectiveFrequency;
+    [Range(0, 60)]
+    public float objectiveVariance;
     public List<GameObject> objectives;
+    private float timeSinceLastObjective;
+    private float nextObjective;
+
+    [Space(5)]
+
+    [Header("Inject Variables")]
+    [Range(0, 300)]
+    public float injectFrequency;
+    [Range(0,60)]
+    public float injectVariance;
+    [Range(0, 60)]
+    public float injectStepTimer;
+    [Range(0, 60)]
+    public float injectStepVariance;
+    private InjectManager injectManager;
+    private float timeSinceLastInject;
+    private float nextInject;
+
+    [Space(5)]
 
     [Header("Flood Variables")]
     //public GameObject waterPrefab;
@@ -106,25 +127,26 @@ public class MapController : MonoBehaviour
     [Header("UI Variables")]
     public GameObject iconRoot;
     
+    [Space(10)]
     public float score;
+
+    [HideInInspector]
+    public objectiveReader objectiveReader;
+    private PlayerControls playerControls;
+    private gameTimer gameTimer;
     
+
     //private Texture2D fireSnapshot;
     //private Texture2D viewSnapshot;
     //private Texture2D replacement;
     
     //[HideInInspector]
     //public TerrainGenerator terrainGenerator;
-    
-    [HideInInspector]
-    public objectiveReader objectiveReader;
-
 
     //private new Renderer renderer;
 
     //private ParticleSystem.ShapeModule shapeModule;
 
-    private PlayerControls playerControls;
-    private InjectManager injectManager;
 
     // Adds managers and passes values to them
     void Start()
@@ -135,6 +157,16 @@ public class MapController : MonoBehaviour
         evacLocations = evacLocationRoot.GetComponentsInChildren<Transform>();
         personalLocations = personalLocationRoot.GetComponentsInChildren<Transform>();
         floodLocations = floodLocationRoot.GetComponentsInChildren<Transform>();
+
+        playerControls = FindObjectOfType<PlayerControls>();
+        injectManager = FindObjectOfType<InjectManager>();
+        objectiveReader = FindObjectOfType<objectiveReader>();
+        gameTimer = FindObjectOfType<gameTimer>();
+
+        timeSinceLastObjective = 0;
+        timeSinceLastInject = 0;
+        nextObjective = objectiveFrequency + Random.Range(-objectiveVariance, objectiveVariance);
+        nextInject = injectFrequency + Random.Range(-injectVariance, injectVariance);
 
         #region old shader functionality
         /*
@@ -205,10 +237,6 @@ public class MapController : MonoBehaviour
         */
         #endregion
 
-        playerControls = FindObjectOfType<PlayerControls>();
-        injectManager = FindObjectOfType<InjectManager>();
-        objectiveReader = FindObjectOfType<objectiveReader>();
-
         //StartCoroutine(Load());
     }
 
@@ -241,7 +269,32 @@ public class MapController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            StartCoroutine(injectManager.RunInject());
+            StartCoroutine(injectManager.RunInject(injectStepTimer, injectStepVariance));
+        }
+
+
+    }
+
+    void FixedUpdate()
+    {
+        if (gameTimer.gameState == GameState.Running)
+        {
+            timeSinceLastObjective += Time.deltaTime;
+            timeSinceLastInject += Time.deltaTime;
+
+            if(timeSinceLastObjective > nextObjective)
+            {
+                timeSinceLastObjective -= nextObjective;
+                nextObjective = objectiveFrequency + Random.Range(-objectiveVariance, objectiveVariance);
+                SpawnRandomObjective();
+            }
+
+            if(timeSinceLastInject > nextInject)
+            {
+                timeSinceLastInject -= nextInject;
+                nextInject = injectFrequency + Random.Range(-injectVariance, injectVariance);
+                StartCoroutine(injectManager.RunInject(injectStepTimer, injectStepVariance));
+            }
         }
     }
 
@@ -297,6 +350,31 @@ public class MapController : MonoBehaviour
             renderer = gameObject.GetComponent<Renderer>();
     }
     */
+
+    void SpawnRandomObjective()
+    {
+        int val = Random.Range(0, 6);
+
+        switch (val)
+        {
+            case (0):
+            case (1):
+                SpawnFloodObjective();
+                break;
+            case (2):
+                SpawnFireObjective();
+                break;
+            case (3):
+                SpawnEvacObjective();
+                break;
+            case (4):
+                SpawnAccidentObjective();
+                break;
+            case (5):
+                SpawnPersonalObjective();
+                break;
+        }
+    }
 
     void SpawnFloodObjective()
     {

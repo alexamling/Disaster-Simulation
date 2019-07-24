@@ -13676,9 +13676,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687061adf9a64d1498e208e7e5e9fcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveFrequency: 0
-  objectiveVarience: 0
+  objectiveFrequency: 4.7
+  objectiveVariance: 1.6
   objectives: []
+  injectFrequency: 30
+  injectVariance: 0
+  injectStepTimer: 9.7
+  injectStepVariance: 0
   floodLocationRoot: {fileID: 2014518290}
   fireLocationRoot: {fileID: 22393146}
   evacLocationRoot: {fileID: 22393146}
