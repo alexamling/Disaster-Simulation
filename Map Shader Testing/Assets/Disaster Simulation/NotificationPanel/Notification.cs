@@ -44,7 +44,10 @@ public class Notification : MonoBehaviour
 
     public void Close()
     {
-        manager.manager.score += objective.score;
+        if (objective.needsResponse && objective.status >= 1)
+        {
+            manager.manager.score += objective.score;
+        }
         Debug.Log(manager.manager.score);
         Destroy(objective);
         Destroy(gameObject);
@@ -65,6 +68,18 @@ public class Notification : MonoBehaviour
         {
             manager.objectiveMessage.panel.SetActive(true);
             manager.objectiveMessage.text.text = objective.fullMessage;
+        }
+        if (objective.objectiveState == ObjectiveState.Resolved)
+        {
+            if(objective.status <= 0)
+            {
+                manager.objectiveResult.panel.SetActive(true);
+                //display failure message
+            }
+            else
+            {
+                //display sucess message
+            }
         }
     }
 }

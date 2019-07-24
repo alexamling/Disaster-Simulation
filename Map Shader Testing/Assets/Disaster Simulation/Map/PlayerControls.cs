@@ -35,6 +35,7 @@ public class PlayerControls : MonoBehaviour
     public InfoPanel currentObjectivePanel;
     public InfoPanel objectiveLocationPanel;
     public InfoPanel objectiveMessage;
+    public InfoPanel objectiveResult;
     public Notification notificationPrefab;
     public PlayerObjective objectivePrefab;
     public List<Notification> notifications;
@@ -83,6 +84,7 @@ public class PlayerControls : MonoBehaviour
 
         currentObjectivePanel.panel.SetActive(false);
         objectiveMessage.panel.SetActive(false);
+        objectiveResult.panel.SetActive(false);
     }
     
     void Update()
@@ -265,6 +267,11 @@ public class PlayerControls : MonoBehaviour
         newNotification.objective = objective;
         objective.notification = newNotification;
         notifications.Add(newNotification);
+    }
+
+    public void CloseCurrentObjective()
+    {
+        selectedObjective.notification.Close();
     }
 
     public void CloseInfoMenu()
