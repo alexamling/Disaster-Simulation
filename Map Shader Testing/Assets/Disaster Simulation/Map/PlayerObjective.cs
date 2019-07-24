@@ -172,7 +172,7 @@ public class PlayerObjective: MonoBehaviour
                         //score += immediateResponseModifiers[units[i]] / 10.0f;
                         incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
                         status += incrimentorImm;
-                        score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, scoreDeprecator);
+                        score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, (scoreDeprecator * 0.125f));
                         
                     }
                 }
@@ -181,7 +181,7 @@ public class PlayerObjective: MonoBehaviour
                     //score += delayedResponseModifiers[units[i]] / 100.0f;
                     incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
                     status += incrimentorDel;
-                    score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator);
+                    score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, (scoreDeprecator * 0.125f));
                 }
             }
 
