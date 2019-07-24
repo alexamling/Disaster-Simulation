@@ -207,6 +207,7 @@ public class PlayerObjective: MonoBehaviour
                 iconImage.color = Color.green;
                 status = 1;
                 objectiveState = ObjectiveState.Resolved;
+                notification.Display();
                 unitManager.restoreUnits(this);
             }
 
@@ -214,6 +215,7 @@ public class PlayerObjective: MonoBehaviour
             {
                 iconImage.color = Color.black;
                 objectiveState = ObjectiveState.Resolved;
+                notification.Display();
                 unitManager.restoreUnits(this);
             }
         }

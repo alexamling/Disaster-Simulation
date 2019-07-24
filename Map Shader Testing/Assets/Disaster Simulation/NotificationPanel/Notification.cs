@@ -26,6 +26,7 @@ public class Notification : MonoBehaviour
 
     public void Clicked()
     {
+        manager.objectiveMessage.panel.SetActive(false);
         if (objective.revealed)
         {
             manager.currentObjectivePanel.panel.SetActive(false);
@@ -67,6 +68,7 @@ public class Notification : MonoBehaviour
         if(objective.active)
         {
             manager.objectiveMessage.panel.SetActive(true);
+            manager.objectiveResult.panel.SetActive(false);
             manager.objectiveMessage.text.text = objective.fullMessage;
         }
         if (objective.objectiveState == ObjectiveState.Resolved)
