@@ -9,6 +9,7 @@ public class ManageUnits : MonoBehaviour
 {
     public GameObject[] unitCounts = new GameObject[5];
     public int[] availibleUnits = new int[5];
+    private bool isUnitsEmpty = true;
     public GameObject resourceBar;
     public GameObject[] elementsUI = new GameObject[12];
     private Text[] resourceValues = new Text[5];
@@ -34,6 +35,31 @@ public class ManageUnits : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void FixedUpdate()
+    {
+        if (isUnitsEmpty)
+        {
+            elementsUI[10].GetComponent<Button>().interactable = false;
+        }
+        else if (!isUnitsEmpty)
+        {
+            elementsUI[10].GetComponent<Button>().interactable = true;
+        }
+
+        for (int i = 0; i < unitCounts.Length; i++)
+        {
+            if (Int32.Parse(unitCounts[i].GetComponent<Text>().text, CultureInfo.InvariantCulture.NumberFormat) != 0)
+            {
+                isUnitsEmpty = false;
+                break;
+            }
+            else if (Int32.Parse(unitCounts[i].GetComponent<Text>().text, CultureInfo.InvariantCulture.NumberFormat) == 0)
+            {
+                isUnitsEmpty = true;
+            }
+        }
     }
 
     public void ignoreResponse()
