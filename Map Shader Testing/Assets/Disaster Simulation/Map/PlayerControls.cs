@@ -310,6 +310,7 @@ public class PlayerControls : MonoBehaviour
 
     public void CloseCurrentObjective()
     {
+        objectiveMessage.panel.SetActive(false);
         selectedObjective.notification.Close();
     }
 
