@@ -49,7 +49,7 @@ public class Notification : MonoBehaviour
             manager.manager.score += objective.score;
         }
         Debug.Log(manager.manager.score);
-        Destroy(objective);
+        Destroy(objective.gameObject);
         Destroy(gameObject);
         Destroy(objective.icon);
     }
