@@ -11,8 +11,6 @@ using UnityEngine.Events;
 */
 public class InjectManager : MonoBehaviour
 {
-    //UnityEvent
-
     // List of possible injects and placeholder for currently active inject
     public List<InjectFlow> injects;
     InjectFlow currentInject;
