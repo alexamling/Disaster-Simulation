@@ -12,7 +12,7 @@ public class ManageUnits : MonoBehaviour
     private bool isUnitsEmpty = true;
     public GameObject resourceBar;
     public GameObject[] elementsUI = new GameObject[12];
-    private Text[] resourceValues = new Text[5];
+    public Text[] resourceValues = new Text[5];
 
     public PlayerControls controller;
     private MapController mapController;
