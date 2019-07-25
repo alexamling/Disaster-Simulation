@@ -56,6 +56,7 @@ public class mutualAidManager : MonoBehaviour
                     if (selectedRange == blackList[i])
                     {
                         requestButton.interactable = false;
+                        description.text = "You've Already Requested Units from this County\nPlease Select Another";
                     }
                 }
             }
@@ -70,6 +71,7 @@ public class mutualAidManager : MonoBehaviour
                 {
                     dropdown.interactable = true;
                     requestButton.interactable = true;
+                    description.text = "Potential Aid Available for Request:" + "\n\n" + "Standing By";
                     step = 0;
                     aidCar.transform.Rotate(new Vector3(0, 1, 0), 180); //flip sprite for standby
                     DisplayUnits();
@@ -85,6 +87,7 @@ public class mutualAidManager : MonoBehaviour
 
                 if (aidCar.transform.localPosition.x == endPoint.x)
                 {
+                    description.text = "Aid has Arrived:\n +" + unitsToAdd[0] + " EMS, +" + unitsToAdd[1] + " FireDept, +" + unitsToAdd[2] + " Military,\n +" + unitsToAdd[3] + " Police, +" + unitsToAdd[4] + " Volunteer Groups\nReturning...";
                     aidState = AidState.Arrived;
                 }
             }
@@ -159,6 +162,7 @@ public class mutualAidManager : MonoBehaviour
         {
             selectedRange[i] = 0; //set the used range's new values all to 0
         }
+        description.text = "Mutual Aid En Route, Please Wait for Resources to Arrive.";
         aidState = AidState.Sending; //send the car
         dropdown.interactable = false;
         requestButton.interactable = false;
@@ -183,5 +187,6 @@ public class mutualAidManager : MonoBehaviour
         }
 
         requestButton.interactable = true;
+        description.text = "Potential Aid Available for Request:" + "\n\n" + "Standing By";
     }
 }
