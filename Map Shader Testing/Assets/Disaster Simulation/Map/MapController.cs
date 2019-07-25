@@ -80,7 +80,7 @@ public class MapController : MonoBehaviour
     public float injectStepTimer;
     [Range(0, 60)]
     public float injectStepVariance;
-    private InjectManager injectManager;
+    private InjectsManager injectManager;
     private float timeSinceLastInject;
     private float nextInject;
 
@@ -165,7 +165,7 @@ public class MapController : MonoBehaviour
 
 
         playerControls = FindObjectOfType<PlayerControls>();
-        injectManager = FindObjectOfType<InjectManager>();
+        injectManager = FindObjectOfType<InjectsManager>();
         objectiveReader = FindObjectOfType<objectiveReader>();
         gameTimer = FindObjectOfType<gameTimer>();
 
@@ -275,7 +275,7 @@ public class MapController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            StartCoroutine(injectManager.RunInject(injectStepTimer, injectStepVariance));
+            injectManager.StartInject(injectStepTimer, injectStepVariance);
         }
 
 
@@ -299,7 +299,7 @@ public class MapController : MonoBehaviour
             {
                 timeSinceLastInject -= nextInject;
                 nextInject = injectFrequency + Random.Range(-injectVariance, injectVariance);
-                StartCoroutine(injectManager.RunInject(injectStepTimer, injectStepVariance));
+                injectManager.StartInject(injectStepTimer, injectStepVariance);
             }
         }
     }
