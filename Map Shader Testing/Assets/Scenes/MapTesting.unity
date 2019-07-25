@@ -19220,13 +19220,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687061adf9a64d1498e208e7e5e9fcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveFrequency: 15.8
-  objectiveVariance: 3.4
+  objectiveFrequency: 15
+  objectiveVariance: 3
   objectives: []
-  injectFrequency: 120
-  injectVariance: 0
-  injectStepTimer: 9.9
-  injectStepVariance: 0
+  injectFrequency: 90
+  injectVariance: 10
+  injectStepTimer: 10
+  injectStepVariance: 3
   floodLocationRoot: {fileID: 2014518290}
   fireLocationRoot: {fileID: 22393146}
   evacLocationRoot: {fileID: 22393146}
@@ -21424,7 +21424,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6768446003604391520}
+      - m_Target: {fileID: 6768446003604391522}
         m_MethodName: GetInput
         m_Mode: 2
         m_Arguments:
@@ -21786,7 +21786,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6768446003604391520}
+      - m_Target: {fileID: 6768446003604391522}
         m_MethodName: GetInput
         m_Mode: 2
         m_Arguments:
@@ -21861,26 +21861,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6768446003563614803}
   m_CullTransparentMesh: 0
---- !u!114 &6768446003604391520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6768446003604391521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8b6baf9249baa47ae838bc7a805f43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  injects: []
-  injectCanvas: {fileID: 6768446003366997253}
-  mainText: {fileID: 6768446003868165009}
-  buttonHolder: {fileID: 0}
-  buttons:
-  - {fileID: 6768446003431406230}
-  - {fileID: 6768446003563614803}
-  - {fileID: 6768446005221511860}
 --- !u!1 &6768446003604391521
 GameObject:
   m_ObjectHideFlags: 0
@@ -21893,8 +21873,8 @@ GameObject:
   - component: {fileID: 6768446003604391532}
   - component: {fileID: 6768446003604391533}
   - component: {fileID: 6768446003604391534}
-  - component: {fileID: 6768446003604391535}
-  - component: {fileID: 6768446003604391520}
+  - component: {fileID: 6768446003604391522}
+  - component: {fileID: 6768446003604391523}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -21902,6 +21882,37 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6768446003604391522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6768446003604391521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4413b8ed04983f94b9282c6556642edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  display: {fileID: 6768446003366997253}
+  mainText: {fileID: 6768446003868165009}
+  buttons:
+  - {fileID: 6768446003431406230}
+  - {fileID: 6768446003563614803}
+  - {fileID: 6768446005221511860}
+--- !u!114 &6768446003604391523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6768446003604391521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3c92049bccb0d449e3e26263d53bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  injects: []
 --- !u!224 &6768446003604391531
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21992,19 +22003,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6768446003604391535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6768446003604391521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a13c6b72bfcca5e4284821f7ce186aca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  injects: []
 --- !u!222 &6768446003868165008
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22164,7 +22162,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6768446003604391520}
+      - m_Target: {fileID: 6768446003604391522}
         m_MethodName: GetInput
         m_Mode: 2
         m_Arguments:
