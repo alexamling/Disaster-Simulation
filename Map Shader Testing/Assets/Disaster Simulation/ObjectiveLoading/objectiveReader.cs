@@ -35,7 +35,7 @@ public class objectiveReader : MonoBehaviour
 
     public void readFile(TextAsset textFile, List<PlayerObjective> list)
     {
-        string[] newStrings = textFile.text.Split(new String[] { "Score: ", "Location: ", "ImmediateResponseModifiers: ", "DelayedResponseModifiers: ", "NotificationTitle: ", "FullMessage: ", "TimeLimit: ", "\n", "  " }, StringSplitOptions.RemoveEmptyEntries);
+        string[] newStrings = textFile.text.Split(new String[] { "Score: ", "Location: ", "ImmediateResponseModifiers: ", "DelayedResponseModifiers: ", "NotificationTitle: ", "FullMessage: ", "TimeLimit: ", "NeedsResponse: ", "\n", "  " }, StringSplitOptions.RemoveEmptyEntries);
         string newString = String.Join("", newStrings);
 
        
@@ -57,6 +57,14 @@ public class objectiveReader : MonoBehaviour
                 objective.fullMessage = subObjectives[14];
                 objective.timeLimit = float.Parse(subObjectives[15], CultureInfo.InvariantCulture.NumberFormat);
                 objective.units = new int[] { 0, 0, 0, 0, 0 };
+                if (subObjectives[16].ToUpper().Contains("TRUE"))
+                {
+                    objective.needsResponse = true;
+                }
+                else if (subObjectives[16].ToUpper().Contains("FALSE"))
+                {
+                    objective.needsResponse = false;
+                }
             }
             list.Add(objective);
         }

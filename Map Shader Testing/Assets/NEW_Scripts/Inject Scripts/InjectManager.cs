@@ -185,50 +185,44 @@ public class InjectManager : MonoBehaviour
 
     void Update()
     {
-        // Determines when an inject should start
-        if(!started)
-            StartCoroutine(SelectInject());
+
     }
 
     // Determine if an inject should fire or not
-    IEnumerator SelectInject()
+    public IEnumerator RunInject(float delay, float delayVariance)
     {
-        // Chooses whether to start inject based around number range
-        if (Random.Range(0f, 1f) > .99f)
-        {
-            // Sets up each of the parts of the inject and waits till the
-            // yield requirements are met.  Based on both time and and logic
-            // from user input.
-            //Debug.Log("Inject Activated");
-            started = true;
-            StartInject();
-            OngoingInject();
-            yield return new WaitUntil(() => selected == true);
-            yield return new WaitForSeconds(1);
-            selected = false;
-            //Debug.Log("-1-");
-            OngoingInject();
-            yield return new WaitUntil(() => selected == true);
-            yield return new WaitForSeconds(1);
-            selected = false;
-            //Debug.Log("-2-");
-            OngoingInject();
+        // Sets up each of the parts of the inject and waits till the
+        // yield requirements are met.  Based on both time and and logic
+        // from user input.
+        //Debug.Log("Inject Activated");
+        started = true;
+        StartInject();
+        OngoingInject();
+        yield return new WaitUntil(() => selected == true);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance,delayVariance));
+        selected = false;
+        //Debug.Log("-1-");
+        OngoingInject();
+        yield return new WaitUntil(() => selected == true);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
+        selected = false;
+        //Debug.Log("-2-");
+        OngoingInject();
            
-            yield return new WaitUntil(() => selected == true);
-            yield return new WaitForSeconds(1);
-            selected = false;
-            //Debug.Log("Heck");
-            buttons[0].SetActive(true);
-            buttons[0].GetComponentInChildren<Text>().text = "Continue";
+        yield return new WaitUntil(() => selected == true);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
+        selected = false;
+        //Debug.Log("Heck");
+        buttons[0].SetActive(true);
+        buttons[0].GetComponentInChildren<Text>().text = "Continue";
 
-            //Debug.Log("-3-");
-            yield return new WaitUntil(() => selected == true);
-            injectCanvas.SetActive(false);
-            selected = false;
+        //Debug.Log("-3-");
+        yield return new WaitUntil(() => selected == true);
+        injectCanvas.SetActive(false);
+        selected = false;
 
-            // Resets 'started' to false in preparation for a new inject
-            started = false;
-        }
+        // Resets 'started' to false in preparation for a new inject
+        started = false;
         yield return null;
     }
 }

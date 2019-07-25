@@ -60,17 +60,41 @@ public class MapController : MonoBehaviour
     [Space(10)]
     */
 
+    [Header("Objective Variables")]
+    [Range(0, 60)]
+    public float objectiveFrequency;
+    [Range(0, 60)]
+    public float objectiveVariance;
     public List<GameObject> objectives;
+    private float timeSinceLastObjective;
+    private float nextObjective;
+
+    [Space(5)]
+
+    [Header("Inject Variables")]
+    [Range(0, 300)]
+    public float injectFrequency;
+    [Range(0,60)]
+    public float injectVariance;
+    [Range(0, 60)]
+    public float injectStepTimer;
+    [Range(0, 60)]
+    public float injectStepVariance;
+    private InjectManager injectManager;
+    private float timeSinceLastInject;
+    private float nextInject;
+
+    [Space(5)]
 
     [Header("Flood Variables")]
-    public GameObject waterPrefab;
-    public AnimationCurve floodCurve;
-    public float baseFloodHeight;
-    public float maxFloodHeight;
+    //public GameObject waterPrefab;
+    //public AnimationCurve floodCurve;
+    //public float baseFloodHeight;
+    //public float maxFloodHeight;
     public GameObject floodLocationRoot;
     private Transform[] floodLocations;
-    [HideInInspector]
-    public FloodManager floodManager;
+    //[HideInInspector]
+    //public FloodManager floodManager;
 
     [Space(5)]
 
@@ -102,26 +126,27 @@ public class MapController : MonoBehaviour
 
     [Header("UI Variables")]
     public GameObject iconRoot;
+    
+    [Space(10)]
+    public float score;
 
     [HideInInspector]
-    public float score;
+    public objectiveReader objectiveReader;
+    [HideInInspector]
+    public gameTimer gameTimer;
+    private PlayerControls playerControls;
     
+
     //private Texture2D fireSnapshot;
     //private Texture2D viewSnapshot;
     //private Texture2D replacement;
     
     //[HideInInspector]
     //public TerrainGenerator terrainGenerator;
-    
-    [HideInInspector]
-    public objectiveReader objectiveReader;
-
 
     //private new Renderer renderer;
 
     //private ParticleSystem.ShapeModule shapeModule;
-
-    private PlayerControls playerControls;
 
 
     // Adds managers and passes values to them
@@ -133,6 +158,16 @@ public class MapController : MonoBehaviour
         evacLocations = evacLocationRoot.GetComponentsInChildren<Transform>();
         personalLocations = personalLocationRoot.GetComponentsInChildren<Transform>();
         floodLocations = floodLocationRoot.GetComponentsInChildren<Transform>();
+
+        playerControls = FindObjectOfType<PlayerControls>();
+        injectManager = FindObjectOfType<InjectManager>();
+        objectiveReader = FindObjectOfType<objectiveReader>();
+        gameTimer = FindObjectOfType<gameTimer>();
+
+        timeSinceLastObjective = 0;
+        timeSinceLastInject = 0;
+        nextObjective = 1;
+        nextInject = injectFrequency + Random.Range(-injectVariance, injectVariance);
 
         #region old shader functionality
         /*
@@ -203,10 +238,6 @@ public class MapController : MonoBehaviour
         */
         #endregion
 
-        playerControls = FindObjectOfType<PlayerControls>();
-
-        objectiveReader = FindObjectOfType<objectiveReader>();
-
         //StartCoroutine(Load());
     }
 
@@ -235,6 +266,36 @@ public class MapController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             SpawnPersonalObjective();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            StartCoroutine(injectManager.RunInject(injectStepTimer, injectStepVariance));
+        }
+
+
+    }
+
+    void FixedUpdate()
+    {
+        if (gameTimer.gameState == GameState.Running)
+        {
+            timeSinceLastObjective += Time.deltaTime;
+            timeSinceLastInject += Time.deltaTime;
+
+            if(timeSinceLastObjective > nextObjective)
+            {
+                timeSinceLastObjective -= nextObjective;
+                nextObjective = objectiveFrequency + Random.Range(-objectiveVariance, objectiveVariance);
+                SpawnRandomObjective();
+            }
+
+            if(timeSinceLastInject > nextInject)
+            {
+                timeSinceLastInject -= nextInject;
+                nextInject = injectFrequency + Random.Range(-injectVariance, injectVariance);
+                StartCoroutine(injectManager.RunInject(injectStepTimer, injectStepVariance));
+            }
         }
     }
 
@@ -291,13 +352,48 @@ public class MapController : MonoBehaviour
     }
     */
 
+    void SelectObjectiveAreas(List<Transform> list)
+    {
+        list.RemoveAt(0);
+
+        for (int i = 0; i < list.Count - 3; i++)
+        {
+            list.RemoveAt(Random.Range(0, list.Count));
+        }
+    }
+
+    void SpawnRandomObjective()
+    {
+        int val = Random.Range(0, 6);
+
+        switch (val)
+        {
+            case (0):
+            case (1):
+                SpawnFloodObjective();
+                break;
+            case (2):
+                SpawnFireObjective();
+                break;
+            case (3):
+                SpawnEvacObjective();
+                break;
+            case (4):
+                SpawnAccidentObjective();
+                break;
+            case (5):
+                SpawnPersonalObjective();
+                break;
+        }
+    }
+
     void SpawnFloodObjective()
     {
         PlayerObjective objective = Instantiate(objectiveReader.floodList[Random.Range(0, objectiveReader.floodList.Count)]);
 
-        Transform placementValues = floodLocations[Random.Range(0, floodLocations.Length)].transform;
+        Transform placementValues = floodLocations[Random.Range(1, floodLocations.Length)].transform;
 
-        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x * .5f;
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
@@ -307,9 +403,9 @@ public class MapController : MonoBehaviour
     void SpawnFireObjective()
     {
         PlayerObjective objective = Instantiate(objectiveReader.fireList[Random.Range(0, objectiveReader.fireList.Count)]);
-        Transform placementValues = fireLocations[Random.Range(0, fireLocations.Length)].transform;
+        Transform placementValues = fireLocations[Random.Range(1, fireLocations.Length)].transform;
 
-        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x * .5f;
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
@@ -319,9 +415,9 @@ public class MapController : MonoBehaviour
     void SpawnEvacObjective()
     {
         PlayerObjective objective = Instantiate(objectiveReader.evacList[Random.Range(0, objectiveReader.evacList.Count)]);
-        Transform placementValues = evacLocations[Random.Range(0, evacLocations.Length)].transform;
+        Transform placementValues = evacLocations[Random.Range(1, evacLocations.Length)].transform;
 
-        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x * .5f;
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
@@ -331,9 +427,9 @@ public class MapController : MonoBehaviour
     void SpawnAccidentObjective()
     {
         PlayerObjective objective = Instantiate(objectiveReader.accidentList[Random.Range(0, objectiveReader.accidentList.Count)]);
-        Transform placementValues = accidentLocations[Random.Range(0, accidentLocations.Length)].transform;
+        Transform placementValues = accidentLocations[Random.Range(1, accidentLocations.Length)].transform;
 
-        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x * .5f;
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
@@ -343,9 +439,9 @@ public class MapController : MonoBehaviour
     void SpawnPersonalObjective()
     {
         PlayerObjective objective = Instantiate(objectiveReader.personalList[Random.Range(0, objectiveReader.personalList.Count)]);
-        Transform placementValues = personalLocations[Random.Range(0, personalLocations.Length)].transform;
+        Transform placementValues = personalLocations[Random.Range(1, personalLocations.Length)].transform;
 
-        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x;
+        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x * .5f;
 
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 

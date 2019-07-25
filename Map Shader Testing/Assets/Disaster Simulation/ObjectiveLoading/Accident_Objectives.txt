@@ -4,7 +4,8 @@ ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 NotificationTitle: Low Priority Incident/
 FullMessage: The police department reports that there has been a minor accident on one of the city roads. This does not critically affect intra-city travel, but would be beneficial to handle in time./
-TimeLimit: 40
+TimeLimit: 60/
+NeedsResponse: true
 |
 Score: 100/
 Location: 1000/ 500/
@@ -12,7 +13,8 @@ ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 NotificationTitle: Moderate Priority Incident/
 FullMessage: The police department reports that there has been an accident along an on-ramp onto one of the highways. At the moment, traffic is moving slowly. Sending law enforcement to re-route the traffic would assist in speeding up traffic./
-TimeLimit: 40
+TimeLimit: 60/
+NeedsResponse: false
 |
 Score: 100/
 Location: 1000/ 500/
@@ -20,7 +22,8 @@ ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 NotificationTitle: High Priority Incident/
 FullMessage: The police department reports that there has been a major accident along (I-45 or Highway 146) that is forcing all traffic to a standstill. Law Enforcement are needed to re-route traffic immediately./
-TimeLimit: 40
+TimeLimit: 60/
+NeedsResponse: true
 |
 Score: 100/
 Location: 1000/ 500/
@@ -28,4 +31,5 @@ ImmediateResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 3.0/ 4.0/ 5.0/
 NotificationTitle: Abduction Alert/
 FullMessage: According to local law enforcement, it has been reported that a child has been reported missing in the midst of the flooding. Parents last saw the child outside of the home. This particular home was not flooded and the family was staying since they sat on higher ground. In the aftermath of the storm, there appears to have been a higher presence of vehicles roaming all the different neighborhoods./
-TimeLimit: 40
+TimeLimit: 60/
+NeedsResponse: true

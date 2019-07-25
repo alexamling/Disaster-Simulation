@@ -9,11 +9,13 @@ public class ManageUnits : MonoBehaviour
 {
     public GameObject[] unitCounts = new GameObject[5];
     public int[] availibleUnits = new int[5];
+    private bool isUnitsEmpty = true;
     public GameObject resourceBar;
     public GameObject[] elementsUI = new GameObject[12];
-    private Text[] resourceValues = new Text[5];
+    public Text[] resourceValues = new Text[5];
 
     public PlayerControls controller;
+    private MapController mapController;
 
     // Start is called before the first frame update
     void Start()
@@ -25,13 +27,55 @@ public class ManageUnits : MonoBehaviour
             resourceValues[i] = resourceBar.transform.GetChild(i).GetChild(0).GetComponent<Text>();
             resourceValues[i].text = "" + availibleUnits[i];
         }
-        
+
+        mapController = GameObject.Find("Main Camera").GetComponent<MapController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void FixedUpdate()
+    {
+        if (isUnitsEmpty)
+        {
+            elementsUI[10].GetComponent<Button>().interactable = false;
+        }
+        else if (!isUnitsEmpty)
+        {
+            elementsUI[10].GetComponent<Button>().interactable = true;
+        }
+
+        for (int i = 0; i < unitCounts.Length; i++)
+        {
+            if (Int32.Parse(unitCounts[i].GetComponent<Text>().text, CultureInfo.InvariantCulture.NumberFormat) != 0)
+            {
+                isUnitsEmpty = false;
+                break;
+            }
+            else if (Int32.Parse(unitCounts[i].GetComponent<Text>().text, CultureInfo.InvariantCulture.NumberFormat) == 0)
+            {
+                isUnitsEmpty = true;
+            }
+        }
+    }
+
+    public void ignoreResponse()
+    {
+        if (controller.selectedObjective.needsResponse)
+        {
+
+        }
+
+        else if (!controller.selectedObjective.needsResponse)
+        {
+            mapController.score += controller.selectedObjective.originalScore;
+        }
+
+        controller.selectedObjective.objectiveState = ObjectiveState.Responding;
+        ToggleUI(controller.selectedObjective);
     }
 
     public void sendTeam()
@@ -82,6 +126,15 @@ public class ManageUnits : MonoBehaviour
         {
             availibleUnits[i] += obj.units[i];
             resourceValues[i].text = "" + availibleUnits[i];
+        }
+
+        if (obj.score > 0.0f)
+        {
+            mapController.score += obj.score;
+        }
+        else
+        {
+            mapController.score += 0;
         }
     }
 

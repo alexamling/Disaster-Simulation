@@ -26,10 +26,11 @@ public class Notification : MonoBehaviour
 
     public void Clicked()
     {
+        manager.objectiveMessage.panel.SetActive(false);
         if (objective.revealed)
         {
             manager.currentObjectivePanel.panel.SetActive(false);
-            Display();
+            manager.Display(objective);
         }
         else
         {
@@ -44,8 +45,12 @@ public class Notification : MonoBehaviour
 
     public void Close()
     {
-        manager.manager.score += objective.score;
-        Destroy(objective);
+        if (objective.needsResponse && objective.status >= 1)
+        {
+            manager.manager.score += objective.score;
+        }
+        Debug.Log(manager.manager.score);
+        Destroy(objective.gameObject);
         Destroy(gameObject);
         Destroy(objective.icon);
     }
@@ -55,16 +60,6 @@ public class Notification : MonoBehaviour
         Vector3 objectivePos = objective.transform.position;
         manager.selectedObjective = objective;
         manager.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
-    }
-
-    public void Display()
-    {
-        FocusOnObjective();
-        if(objective.active)
-        {
-            manager.objectiveMessage.panel.SetActive(true);
-            manager.objectiveMessage.text.text = objective.fullMessage;
-        }
     }
 }
 

@@ -19,6 +19,7 @@ public class PlayerControls : MonoBehaviour
 {
     public MapController manager;
     public PlayerObjective selectedObjective;
+    public Image progressBar;
     public Image[] coolDowns;
     public ManageUnits unitManager;
     [HideInInspector]
@@ -34,6 +35,8 @@ public class PlayerControls : MonoBehaviour
     public InfoPanel currentObjectivePanel;
     public InfoPanel objectiveLocationPanel;
     public InfoPanel objectiveMessage;
+    public InfoPanel objectiveResult;
+    public InfoPanel pausePanel;
     public Notification notificationPrefab;
     public PlayerObjective objectivePrefab;
     public List<Notification> notifications;
@@ -82,14 +85,23 @@ public class PlayerControls : MonoBehaviour
 
         currentObjectivePanel.panel.SetActive(false);
         objectiveMessage.panel.SetActive(false);
+        objectiveResult.panel.SetActive(false);
+        pausePanel.panel.SetActive(false);
     }
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && selectedObjective)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ResetFocus();
-            CloseInfoMenu();
+            if (selectedObjective)
+            {
+                ResetFocus();
+                CloseInfoMenu();
+            }
+            else
+            {
+                Pause();
+            }
         }
 
         /*
@@ -217,20 +229,31 @@ public class PlayerControls : MonoBehaviour
                 #region Ping Map
                 Collider[] colliders = Physics.OverlapSphere(hit.point, 30);
 
-                for(int i = 0; i < colliders.Length; i++)
+                float shortestDist = float.MaxValue;
+                PlayerObjective closestObjective = null;
+
+                for (int i = 0; i < colliders.Length; i++)
                 {
                     playerObjective = colliders[i].GetComponent<PlayerObjective>();
 
-                    if (playerObjective && playerObjective.onMap)
-                    {
-                        playerObjective.revealed = true;
-                        playerObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
-                        playerObjective.notification.Display();
-                        selectedObjective = playerObjective;
+                    if (playerObjective == null)
+                        continue;
 
-                        //Unit Assigning UI Stuff
-                        unitManager.ToggleUI(selectedObjective);
+                    if (Vector3.Distance(colliders[i].transform.position, hit.point) < shortestDist)
+                    {
+                        closestObjective = playerObjective;
                     }
+                }
+
+                if (closestObjective && closestObjective.onMap)
+                {
+                    closestObjective.revealed = true;
+                    closestObjective.notification.text.fontStyle = FontStyle.BoldAndItalic;
+                    Display(closestObjective);
+                    selectedObjective = closestObjective;
+
+                    //Unit Assigning UI Stuff
+                    unitManager.ToggleUI(selectedObjective);
                 }
 
                 Instantiate(pingParticle, hit.point + Vector3.up, Quaternion.identity);                
@@ -249,6 +272,28 @@ public class PlayerControls : MonoBehaviour
                 coolDowns[i].fillAmount += (1.0f / 750.0f); //1/750 = 15 seconds
             }
         }
+        
+        if (selectedObjective != null)
+        {
+            progressBar.fillAmount = selectedObjective.status;
+            progressBar.color = selectedObjective.iconImage.color;
+        }
+    }
+
+    public void Pause()
+    {
+
+        if (manager.gameTimer.gameState == GameState.Paused)
+        {
+            pausePanel.panel.SetActive(false);
+            manager.gameTimer.gameState = GameState.Running;
+        }
+        else
+        {
+            pausePanel.panel.SetActive(true);
+            manager.gameTimer.gameState = GameState.Paused;
+        }
+
     }
 
     public void AddNotification(string message, int severity, PlayerObjective objective)
@@ -261,6 +306,50 @@ public class PlayerControls : MonoBehaviour
         notifications.Add(newNotification);
     }
 
+    public void Display(PlayerObjective objective)
+    {
+        objective.notification.FocusOnObjective();
+        if (objective.active)
+        {
+            objectiveMessage.panel.SetActive(true);
+            objectiveResult.panel.SetActive(false);
+            objectiveMessage.text.text = objective.fullMessage;
+        }
+        if (objective.objectiveState == ObjectiveState.Resolved)
+        {
+            UpdateResult(objective);
+        }
+    }
+
+    public void UpdateResult(PlayerObjective objective)
+    {
+        if (objective != selectedObjective)
+            return;
+
+        if (objective.status <= 0)
+        {
+            objectiveMessage.panel.SetActive(true);
+            objectiveResult.panel.SetActive(true);
+            //display failure message
+
+            objectiveMessage.text.text = "Failure";
+        }
+        else
+        {
+            objectiveMessage.panel.SetActive(true);
+            objectiveResult.panel.SetActive(true);
+            //display sucess message
+
+            objectiveMessage.text.text = "Sucess";
+        }
+    }
+
+    public void CloseCurrentObjective()
+    {
+        objectiveMessage.panel.SetActive(false);
+        selectedObjective.notification.Close();
+    }
+
     public void CloseInfoMenu()
     {
         if (selectedObjective)
@@ -270,6 +359,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         objectiveMessage.panel.SetActive(false);
+        objectiveResult.panel.SetActive(false);
     }
 
     public void FocusOn(Vector2 pos, float fov)

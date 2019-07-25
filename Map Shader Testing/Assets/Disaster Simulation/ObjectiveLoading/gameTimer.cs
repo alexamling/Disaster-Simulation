@@ -3,24 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum GameState { Paused, Completed, Running };
+
 public class gameTimer : MonoBehaviour
 {
     public Text sceneTimer;
     public Text scoreText;
 
-    public float curTime;
+    public float currentTime;
     public float timeLimit = 600;
 
     private MapController mapControl;
     private GameObject gameOverPanel;
 
-    public enum GameState { Paused, Completed, Running };
     public GameState gameState = GameState.Running;
 
     // Start is called before the first frame update
     void Start()
     {
-        curTime = timeLimit;
+        currentTime = timeLimit;
         mapControl = GameObject.Find("Main Camera").GetComponent<MapController>();
 
         gameOverPanel = GameObject.Find("gameOver");
@@ -37,18 +38,18 @@ public class gameTimer : MonoBehaviour
     {
         if (gameState == GameState.Running)
         {
-            if (curTime > 0.0f)
+            if (currentTime > 0.0f)
             {
-                curTime -= Time.fixedDeltaTime;
-                int minutes = Mathf.FloorToInt(curTime / 60.0f);
-                int seconds = Mathf.FloorToInt(curTime - (minutes * 60));
+                currentTime -= Time.fixedDeltaTime;
+                int minutes = Mathf.FloorToInt(currentTime / 60.0f);
+                int seconds = Mathf.FloorToInt(currentTime - (minutes * 60));
                 sceneTimer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             }
-            if (curTime <= 0.0f)
+            if (currentTime <= 0.0f)
             {
                 gameState = GameState.Completed;
                 gameOverPanel.SetActive(true);
-                scoreText.text = "Final Score" + "\n" + mapControl.score;
+                scoreText.text = "Final Score" + "\n" + Mathf.FloorToInt(mapControl.score);
             }
         }
         

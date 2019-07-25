@@ -17,6 +17,7 @@ public class PlayerObjective: MonoBehaviour
     [Range(0,1)]
     public float status = 0.99f;
     public float score;
+    public float originalScore;
     [HideInInspector]
     public Outline outline;
     public string[] tipString = new string[] { "Nothing to report", "Nothing to report", "Nothing to report" }; //Plan, Log, Ops
@@ -29,7 +30,7 @@ public class PlayerObjective: MonoBehaviour
     public GameObject iconPrefab;
     public GameObject icon;
     public GameObject iconRoot;
-    private Image iconImage;
+    public Image iconImage;
     private Camera cam;
 
     public ManageUnits unitManager;
@@ -63,14 +64,20 @@ public class PlayerObjective: MonoBehaviour
     public bool active { get { return objectiveState == ObjectiveState.Responding || objectiveState == ObjectiveState.Requesting; } }
 
     private float mix;
+
+    private gameTimer timer;
     
     protected void Start()
     {
         selected = false;
         //outline = gameObject.AddComponent<Outline>();
 
+        timer = FindObjectOfType<gameTimer>();
+
         scoreDeprecator = score / ((1 / Time.fixedDeltaTime) * timeLimit);
         StatusDeprecator = scoreDeprecator * 1 / score;
+
+        originalScore = score;
         
         cam = FindObjectOfType<Camera>();
         if (iconRoot)
@@ -82,7 +89,7 @@ public class PlayerObjective: MonoBehaviour
         unitManager = GameObject.Find("Main Camera").GetComponent<ManageUnits>();
 
         //DEBUG
-        revealed = true;
+        //revealed = true;
         //units = new int[] { 1, 3};
     }
 
@@ -141,7 +148,7 @@ public class PlayerObjective: MonoBehaviour
 
     void FixedUpdate()
     {
-        if (active)
+        if (active && timer.gameState != GameState.Paused)
         {
             float incrimentorImm;
             float incrimentorDel;
@@ -161,41 +168,56 @@ public class PlayerObjective: MonoBehaviour
 
             if (units.Length > 0 && status < 1) //if units have been assigned
             {
-                if (!hasImmediateResponded)
+                if (objectiveState == ObjectiveState.Responding)
                 {
-                    hasImmediateResponded = true;
+                    int nonZeroUnits = 0;
                     for (int i = 0; i < units.Length; i++)
                     {
-                        //score += immediateResponseModifiers[units[i]] / 10.0f;
-                        incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
-                        status += incrimentorImm;
-                        score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, scoreDeprecator);
-                        
+                        if (units[i] != 0)
+                        {
+                            nonZeroUnits++;
+                        }
+                    }
+
+                    if (!hasImmediateResponded)
+                    {
+                        hasImmediateResponded = true;
+                        for (int i = 0; i < units.Length; i++)
+                        {
+                            //score += immediateResponseModifiers[units[i]] / 10.0f;
+                            incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
+                            status += incrimentorImm / 3.33f;
+                            score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, ((scoreDeprecator * 0.125f) / nonZeroUnits));
+
+                        }
+                    }
+
+                    for (int i = 0; i < units.Length; i++)
+                    {
+                        //score += delayedResponseModifiers[units[i]] / 100.0f;
+                        incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
+                        status += incrimentorDel / 3.33f;
+                        score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, ((scoreDeprecator * 0.125f) / nonZeroUnits));
                     }
                 }
-                for (int i = 0; i < units.Length; i++)
-                {
-                    //score += delayedResponseModifiers[units[i]] / 100.0f;
-                    incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
-                    status += incrimentorDel;
-                    score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, scoreDeprecator);
-                }
             }
-
             if (status >= 1)
             {
                 iconImage.color = Color.green;
                 status = 1;
                 objectiveState = ObjectiveState.Resolved;
+                notification.manager.UpdateResult(this);
                 unitManager.restoreUnits(this);
             }
 
-            if (status <= 0.001f) // turn the outline solid black when the status is low enough
+            if (status <= 0f) // turn the outline solid black when the status is low enough
             {
                 iconImage.color = Color.black;
                 objectiveState = ObjectiveState.Resolved;
+                notification.manager.UpdateResult(this);
                 unitManager.restoreUnits(this);
             }
         }
+
     }
 }
