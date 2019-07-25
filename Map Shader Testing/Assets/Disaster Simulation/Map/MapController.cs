@@ -159,6 +159,11 @@ public class MapController : MonoBehaviour
         personalLocations = personalLocationRoot.GetComponentsInChildren<Transform>();
         floodLocations = floodLocationRoot.GetComponentsInChildren<Transform>();
 
+        fireLocations = SelectObjectiveAreas(fireLocations, 3);
+        accidentLocations = SelectObjectiveAreas(accidentLocations, 6);
+        personalLocations = SelectObjectiveAreas(personalLocations, 7);
+
+
         playerControls = FindObjectOfType<PlayerControls>();
         injectManager = FindObjectOfType<InjectManager>();
         objectiveReader = FindObjectOfType<objectiveReader>();
@@ -352,14 +357,18 @@ public class MapController : MonoBehaviour
     }
     */
 
-    void SelectObjectiveAreas(List<Transform> list)
+    Transform[] SelectObjectiveAreas(Transform[] arr, int numLocations)
     {
-        list.RemoveAt(0);
+        numLocations = (arr.Length > numLocations) ? numLocations : arr.Length;
 
-        for (int i = 0; i < list.Count - 3; i++)
+        Transform[] newArr = new Transform[numLocations];
+
+        for (int i = 0; i < numLocations; i++)
         {
-            list.RemoveAt(Random.Range(0, list.Count));
+            newArr[i] = arr[Random.Range(1, arr.Length)];
         }
+
+        return newArr;
     }
 
     void SpawnRandomObjective()
