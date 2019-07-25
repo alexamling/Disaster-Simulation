@@ -123,19 +123,6 @@ public class PlayerControls : MonoBehaviour
         */
         
         screenPos = Input.mousePosition;
-        
-        if (Input.GetMouseButtonDown(1))
-        {
-            clickedPos = screenPos;
-
-        }
-        else if (Input.GetMouseButton(1))
-        {
-            swapPos = (clickedPos - screenPos) * newFov * .015f;
-            clickedPos = screenPos;
-            newCamPos.x += swapPos.x;
-            newCamPos.z += swapPos.y;
-        }
 
         /*
         #region Camera Panning
@@ -182,6 +169,19 @@ public class PlayerControls : MonoBehaviour
             newFov = Mathf.Clamp(newFov, 1f, 65);
         }
         #endregion
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            clickedPos = screenPos;
+
+        }
+        else if (Input.GetMouseButton(1) && !offMap)
+        {
+            swapPos = (clickedPos - screenPos) * newFov * .015f;
+            clickedPos = screenPos;
+            newCamPos.x += swapPos.x;
+            newCamPos.z += swapPos.y;
+        }
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newFov, .2f);
         

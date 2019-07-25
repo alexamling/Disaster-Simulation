@@ -104,7 +104,7 @@ public class PlayerObjective: MonoBehaviour
             icon.transform.localScale = (Vector3.one / Camera.main.fieldOfView) * 15f;
         }
 
-        if (active && revealed) // shift the color based on status green -> yellow -> orange -> red
+        if (active && revealed && timer.gameState != GameState.Paused) // shift the color based on status green -> yellow -> orange -> red
         {
             value = Mathf.Abs(Mathf.Sin(Time.time / (status)));
             Color c = new Color();
