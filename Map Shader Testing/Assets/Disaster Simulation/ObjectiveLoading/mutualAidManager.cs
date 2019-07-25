@@ -117,11 +117,7 @@ public class mutualAidManager : MonoBehaviour
         {
             if (i % 2 == 0) //if even index (low range)
             {
-                range[i] = minUnitRange + Random.Range(unitRangeVariance * -1, unitRangeVariance + 1); //rnage is minimum with variance
-                if (range[i] < minUnitRange) //if given range would be less than the min, set to the min
-                {
-                    range[i] = minUnitRange;
-                }
+                range[i] = minUnitRange + Random.Range(0, unitRangeVariance + 1); //rnage is minimum with variance
             }
 
             else if (i % 2 != 0) //if odd index (high range)
