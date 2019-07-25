@@ -74,8 +74,7 @@ public class ManageUnits : MonoBehaviour
             mapController.score += controller.selectedObjective.originalScore;
         }
 
-        controller.selectedObjective.objectiveState = ObjectiveState.Responding;
-        ToggleUI(controller.selectedObjective);
+        controller.selectedObjective.notification.Close();
     }
 
     public void sendTeam()
