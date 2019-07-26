@@ -23,6 +23,7 @@ public class InjectsManager : MonoBehaviour
     // Booleans used to work through inject logic
     bool started;
     bool selected;
+    bool earlyEnd;
 
     // Local value that holds the chosen interval value
     int chosenValue;
@@ -34,14 +35,15 @@ public class InjectsManager : MonoBehaviour
         injects = GetComponent<ImportScript>().injects;
         started = false;
         selected = false;
+        earlyEnd = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         // Small chance to activate inject based on random number and if an inject is already started
-        //if (Random.Range(0f, 1f) > .99f && started == false)
-            //StartInject();
+        if (Random.Range(0f, 1f) > .99f && started == false)
+            StartInject(1, 0);
     }
 
     /// STARTINJECT
@@ -80,28 +82,77 @@ public class InjectsManager : MonoBehaviour
     IEnumerator ProcessInject(float delay, float delayVariance)
     {
         // Wait until an option has been chosen.  It changes selected to true and allows the routine to continue
-        yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
-        ProcessChanges(chosenValue);
-        selected = false;
-        yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
-        ProcessChanges(chosenValue);
-        selected = false;
-        yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
-        ProcessChanges(chosenValue);
-        selected = false;
+        // If a chosen option is connected to a negative interval before the final section, it changes earlyEnd to true.
+        // When earlyEnd is true, display the result from the inject and provide a continue button which exits the inject early.
         yield return new WaitUntil(() => selected == true);
         yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
 
-        // Resets values for buttons after inject ends
-        for (int x = 0; x < buttons.Count; x++)
-            buttons[x].GetComponent<ButtonValues>().Reset();
+        // Process next set of events
+        ProcessChanges(chosenValue);
 
+        // Checks if earlyEnd is true, begins the end of the inject
+        selected = false;
+        if(earlyEnd == true)
+            EndInject();
+
+        yield return new WaitUntil(() => selected == true);
+
+        // When Early end is active, reset UI elements and scripts and break from the coroutine
+        if (earlyEnd == true)
+        {
+            started = false;
+            selected = false;
+            earlyEnd = false;
+            ResetButtons();
+            yield break;
+        }
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
+        
+        // Process next set of events
+        ProcessChanges(chosenValue);
+        selected = false;
+
+        // Checks if earlyEnd is true, begins the end of the inject
+        if (earlyEnd == true)
+            EndInject();
+
+        yield return new WaitUntil(() => selected == true);
+
+        // When Early end is active, reset UI elements and scripts and break from the coroutine
+        if (earlyEnd == true)
+        {
+            started = false;
+            selected = false;
+            earlyEnd = false;
+            ResetButtons();
+            yield break;
+        }
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
+        
+        // Process next set of events
+        ProcessChanges(chosenValue);
+        selected = false;
+
+        yield return new WaitUntil(() => selected == true);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
+        
+        // Reset buttons values
+        ResetButtons();
+
+        // Reset default values in preparation for a new inject
         selected = false;
         started = false;
         yield return null;
+    }
+
+    /// RESETBUTTONS
+    /// Description:
+    /// Changes the button values of each of the buttons back to their defaults
+    /// by calling a function local to the ButtonValues script
+    void ResetButtons()
+    {
+        for (int x = 0; x < buttons.Count; x++)
+            buttons[x].GetComponent<ButtonValues>().Reset();
     }
 
     /// PROCESSCHANGES
@@ -124,6 +175,13 @@ public class InjectsManager : MonoBehaviour
             // Local array to hold new set of intervals
             string[] local = currentNode.intervals[value].Split('^');
 
+            if (local[0] == "-1")
+            {
+                ResetButtons();
+                earlyEnd = true;
+                return;
+            }
+
             // Local value for handling changing button data
             int index = 0;
 
@@ -138,11 +196,19 @@ public class InjectsManager : MonoBehaviour
         }
         else  // If the final section is finished, display final results and continue button
         {
-            display.SetActive(true);
-            buttons[0].SetActive(true);
-            buttons[0].GetComponentInChildren<Text>().text = "Continue";
+            EndInject();
         }
-        
+    }
+
+    /// ENDINJECT
+    /// Description:
+    /// Show a single button with the content being 'Continue' to end inject interaction
+    void EndInject()
+    {
+        // Show canvas and button and change the text
+        display.SetActive(true);
+        buttons[0].SetActive(true);
+        buttons[0].GetComponentInChildren<Text>().text = "Continue";
     }
 
     /// GETINPUT
