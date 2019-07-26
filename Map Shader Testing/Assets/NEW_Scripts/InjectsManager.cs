@@ -40,15 +40,15 @@ public class InjectsManager : MonoBehaviour
     void Update()
     {
         // Small chance to activate inject based on random number and if an inject is already started
-        if (Random.Range(0f, 1f) > .99f && started == false)
-            StartInject();
+        //if (Random.Range(0f, 1f) > .99f && started == false)
+            //StartInject();
     }
 
     /// STARTINJECT
     /// Description:
     /// Prepares the inject for user input.  Sets up buttons and text
     /// to use for traversing the injects.
-    void StartInject()
+    public void StartInject(float delay, float delayVariance)
     {
         // Changes started to true in order to prevent a new inject from overwriting the current one
         started = true;
@@ -70,30 +70,30 @@ public class InjectsManager : MonoBehaviour
         }
 
         // Start the inject
-        StartCoroutine(ProcessInject());
+        StartCoroutine(ProcessInject(delay, delayVariance));
     }
 
     /// PROCESSINJECT
     /// COROUTINE
     /// Description:
     /// Goes through each of the sections of the inject and makes sure there is user input
-    IEnumerator ProcessInject()
+    IEnumerator ProcessInject(float delay, float delayVariance)
     {
         // Wait until an option has been chosen.  It changes selected to true and allows the routine to continue
         yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
         ProcessChanges(chosenValue);
         selected = false;
         yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
         ProcessChanges(chosenValue);
         selected = false;
         yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
         ProcessChanges(chosenValue);
         selected = false;
         yield return new WaitUntil(() => selected == true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
 
         // Resets values for buttons after inject ends
         for (int x = 0; x < buttons.Count; x++)
