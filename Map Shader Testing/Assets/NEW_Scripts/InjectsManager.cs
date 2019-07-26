@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
+ * NSF REU Serious Geogame and Spatial Thinking Research (2nd Year)
+ * Elliot Privateer
+ * Class created to start and manage the injects that appear in the game
+*/
 public class InjectsManager : MonoBehaviour
 {
     // List of all the injects able to be used
