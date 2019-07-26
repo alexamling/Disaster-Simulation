@@ -1001,7 +1001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &93556692
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4621,7 +4621,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -35.9}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -10.3, y: -1069.8}
+  m_AnchoredPosition: {x: -10.3, y: -1101.9}
   m_SizeDelta: {x: 106.23, y: 401.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401917853
@@ -8841,7 +8841,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -63.6}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -202.9, y: 69.7}
+  m_AnchoredPosition: {x: -243.3, y: 69.7}
   m_SizeDelta: {x: 322, y: 131.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &834739404
@@ -9458,7 +9458,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &883637961
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11066,7 +11066,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 63.12}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 57.19995, y: -200.79999}
+  m_AnchoredPosition: {x: 57.19995, y: -76.8}
   m_SizeDelta: {x: 351.2, y: 168.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &958668640
@@ -11374,7 +11374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -63.6}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -965, y: 929.75}
+  m_AnchoredPosition: {x: -934.8, y: 796.3}
   m_SizeDelta: {x: 322, y: 131.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &987320771
@@ -15825,7 +15825,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 63.26}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 344.69995, y: 14.899902}
+  m_AnchoredPosition: {x: 344.69995, y: 18.800049}
   m_SizeDelta: {x: 351.2, y: 168.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437618483
