@@ -448,5 +448,10 @@ public class MapController : MonoBehaviour
         playerControls.notifications.Add(newNotification);
 
         objective.objectiveState = ObjectiveState.Requesting;
+
+        if (!objective.needsResponse)
+        {
+            playerControls.ignoredObjectivesIdeal++;
+        }
     }
 }
