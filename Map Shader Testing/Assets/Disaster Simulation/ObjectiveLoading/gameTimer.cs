@@ -45,14 +45,14 @@ public class gameTimer : MonoBehaviour
     {
         if (gameState == GameState.Running)
         {
-            if (currentTime > 0.0f)
+            if (currentTime > 0.1f)
             {
                 currentTime -= Time.fixedDeltaTime;
                 int minutes = Mathf.FloorToInt(currentTime / 60.0f);
                 int seconds = Mathf.FloorToInt(currentTime - (minutes * 60));
                 sceneTimer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             }
-            if (currentTime <= 0.0f)
+            if (currentTime <= 0.1f)
             {
                 gameState = GameState.Completed;
                 gameOverPanel.SetActive(true);
