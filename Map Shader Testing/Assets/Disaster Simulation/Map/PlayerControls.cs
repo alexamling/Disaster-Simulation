@@ -24,7 +24,18 @@ public class PlayerControls : MonoBehaviour
     public ManageUnits unitManager;
     [HideInInspector]
     public GameObject cameraPos;
-    
+
+    #region StatVariables
+
+    public int sucessfulObjectivesCount = 0;
+    public int failedObjectivesCount = 0;
+    public int totalSentUnits = 0;
+    public int totalRequesyedUnits = 0;
+    public int ignoredObjectivesActual = 0;
+    public int ignoredObjectivesIdeal = 0;
+
+    #endregion
+
     // TODO: improve on this/replace several lists with seperate menus
     public List<Button> options;
 
