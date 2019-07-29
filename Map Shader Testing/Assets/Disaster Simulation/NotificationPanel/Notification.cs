@@ -45,11 +45,18 @@ public class Notification : MonoBehaviour
 
     public void Close()
     {
+        if (!objective.needsResponse)
+        {
+            manager.manager.score += objective.originalScore;
+        }
+
         manager.objectiveMessage.panel.SetActive(false);
+
         if (objective.needsResponse && objective.status >= 1)
         {
             manager.manager.score += objective.score;
         }
+
         Destroy(objective.gameObject);
         Destroy(gameObject);
         Destroy(objective.icon);
