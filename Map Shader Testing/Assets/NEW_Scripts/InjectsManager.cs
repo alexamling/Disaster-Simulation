@@ -59,7 +59,7 @@ public class InjectsManager : MonoBehaviour
         display.SetActive(true);
 
         // Sets current node to a random inject from the list
-        currentNode = injects[Random.Range(0, injects.Count - 1)];
+        currentNode = injects[Random.Range(0, injects.Count)];
 
         // Set thte main text of the UI to reflect that of the starting text of the inject
         mainText.text = currentNode.main;
@@ -175,7 +175,8 @@ public class InjectsManager : MonoBehaviour
             // Local array to hold new set of intervals
             string[] local = currentNode.intervals[value].Split('^');
 
-            if (local[0] == "-1")
+            // Checks if the inject is ending early
+            if (local[0].Contains("-1"))
             {
                 ResetButtons();
                 chosenValue = 0;

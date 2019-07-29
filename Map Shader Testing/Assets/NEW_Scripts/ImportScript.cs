@@ -34,7 +34,7 @@ public class ImportScript : MonoBehaviour
             intervals = new List<string>();
 
             // Goes through each of the files and skips the meta files 
-            for (int x = 0; x < injectFiles.Count; x+=2)
+            for (int x = 0; x < injectFiles.Count; x++)
             {
                 // Transform list into array and add it to the dictionary
                 // with the name string as they key and array as the value
@@ -100,6 +100,7 @@ public class ImportScript : MonoBehaviour
 
                 // Create new inject and add it to list
                 InjectNode newNode = new InjectNode(injectFormat, 0);
+                injectFormat.Clear();
                 newNode.main = holdMain;
                 injects.Add(newNode);
             }

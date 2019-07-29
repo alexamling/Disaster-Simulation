@@ -21,7 +21,7 @@ Result:The lack of action regarding does not reflect well on the county as well 
 Option:Contact Water Department to offer support
 Result:Since the water was running so long without being addressed, there was a significant pressure lost, contamination concerns, and sickness among the population. Because you neglected action on the issue for so long, this is going to be a long-term issue that will require more assistance than your office can provide.
 Display
-Intervals: 0^2/2^4/-1/4^6/-1/-1
+Intervals:0^2/2^4/-1/4^6/-1/-1
 Option:Issue a “Do Not Use” notice
 Result:After the Lab reports that the bacteria has been cleared of the city water supply, the water is safe to drink. Because the population was educated & the situation was handled promptly & by the correct personnel, unnecessary cases were prevented.
 Option:Do not issue any public statements until the lab results are known
