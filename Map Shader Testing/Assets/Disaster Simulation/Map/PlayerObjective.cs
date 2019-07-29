@@ -208,6 +208,8 @@ public class PlayerObjective: MonoBehaviour
                 objectiveState = ObjectiveState.Resolved;
                 notification.manager.UpdateResult(this);
                 unitManager.restoreUnits(this);
+
+                unitManager.controller.sucessfulObjectivesCount++;
             }
 
             if (status <= 0f) // turn the outline solid black when the status is low enough
@@ -216,6 +218,8 @@ public class PlayerObjective: MonoBehaviour
                 objectiveState = ObjectiveState.Resolved;
                 notification.manager.UpdateResult(this);
                 unitManager.restoreUnits(this);
+
+                unitManager.controller.failedObjectivesCount++;
             }
         }
 

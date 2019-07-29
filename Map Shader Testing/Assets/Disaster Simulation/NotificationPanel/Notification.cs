@@ -45,19 +45,23 @@ public class Notification : MonoBehaviour
 
     public void Close()
     {
-        if (!objective.needsResponse)
+        if (objective.objectiveState != ObjectiveState.Resolved)
         {
-            manager.manager.score += objective.originalScore;
+            if (!objective.needsResponse)
+            {
+                manager.manager.score += objective.originalScore;
+            }
+
+            manager.objectiveMessage.panel.SetActive(false);
+
+            if (objective.needsResponse && objective.status >= 1)
+            {
+                manager.manager.score += objective.score;
+            }
+
+            manager.ignoredObjectivesActual++;
         }
-
-        manager.objectiveMessage.panel.SetActive(false);
-
-        if (objective.needsResponse && objective.status >= 1)
-        {
-            manager.manager.score += objective.score;
-        }
-
-        manager.ignoredObjectivesActual++;
+        
 
         Destroy(objective.gameObject);
         Destroy(gameObject);

@@ -128,7 +128,7 @@ public class MapController : MonoBehaviour
     public objectiveReader objectiveReader;
     [HideInInspector]
     public gameTimer gameTimer;
-    private PlayerControls playerControls;
+    public PlayerControls playerControls;
     
 
     //private Texture2D fireSnapshot;

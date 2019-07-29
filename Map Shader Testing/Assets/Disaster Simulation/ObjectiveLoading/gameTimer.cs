@@ -10,6 +10,13 @@ public class gameTimer : MonoBehaviour
     public Text sceneTimer;
     public Text scoreText;
 
+    public Text successfulObj;
+    public Text failedObj;
+    public Text ignoredObj;
+    public Text ignoredObJIdeal;
+    public Text unitsSent;
+    public Text unitsRequested;
+
     public float currentTime;
     public float timeLimit = 600;
 
@@ -50,6 +57,13 @@ public class gameTimer : MonoBehaviour
                 gameState = GameState.Completed;
                 gameOverPanel.SetActive(true);
                 scoreText.text = "Final Score" + "\n" + Mathf.FloorToInt(mapControl.score);
+
+                successfulObj.text = "Objectives Successfully Resolved: " + mapControl.playerControls.sucessfulObjectivesCount;
+                failedObj.text = "Objectives Failed: " + mapControl.playerControls.failedObjectivesCount;
+                ignoredObj.text = "Objectives Ignored/Passed On: " + mapControl.playerControls.ignoredObjectivesActual;
+                ignoredObJIdeal.text = "Ideal Number of Objectives to Ignore: " + mapControl.playerControls.ignoredObjectivesIdeal;
+                unitsSent.text = "Total Units Sent: " + mapControl.playerControls.totalSentUnits;
+                unitsRequested.text = "Units Requested/Mutual Aid: " + mapControl.playerControls.totalRequestedUnits;
             }
         }
         

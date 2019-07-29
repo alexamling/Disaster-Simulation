@@ -30,7 +30,7 @@ public class PlayerControls : MonoBehaviour
     public int sucessfulObjectivesCount = 0;
     public int failedObjectivesCount = 0;
     public int totalSentUnits = 0;
-    public int totalRequesyedUnits = 0;
+    public int totalRequestedUnits = 0;
     public int ignoredObjectivesActual = 0;
     public int ignoredObjectivesIdeal = 0;
 
