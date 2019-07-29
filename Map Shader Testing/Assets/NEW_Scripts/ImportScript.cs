@@ -15,6 +15,7 @@ public class ImportScript : MonoBehaviour
     List<string> intervals;
     List<List<string[]>> injectFormat;
     public List<InjectNode> injects;
+    public List<TextAsset> injectFiles;
 
     // Creates list of injects to be used in game
     void Awake()
@@ -32,18 +33,12 @@ public class ImportScript : MonoBehaviour
             results = new List<string>();
             intervals = new List<string>();
 
-            // Grabs all the files in the directory
-            FileInfo[] data = textDirectory.GetFiles("*.*");
-
             // Goes through each of the files and skips the meta files 
-            for (int x = 0; x < data.Length; x += 2)
+            for (int x = 0; x < injectFiles.Count; x++)
             {
-                // Takes file name and removes file extension for readability
-                string name = data[x].Name.Replace(".txt", "");
-
                 // Transform list into array and add it to the dictionary
                 // with the name string as they key and array as the value
-                string[] tempArray = File.ReadAllLines(path + "/" + data[x].Name);
+                string[] tempArray = injectFiles[x].ToString().Split('\n');
 
                 // Variables to hold parsed strings and arrays for separating
                 // the different aspects of the inject sections
