@@ -142,6 +142,11 @@ public class MapController : MonoBehaviour
 
     //private ParticleSystem.ShapeModule shapeModule;
 
+    public static void QuitGame()
+    {
+        Application.Quit();
+    }
+
 
     // Adds managers and passes values to them
     void Start()
