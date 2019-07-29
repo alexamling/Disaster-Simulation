@@ -34,7 +34,7 @@ public class ImportScript : MonoBehaviour
             intervals = new List<string>();
 
             // Goes through each of the files and skips the meta files 
-            for (int x = 0; x < injectFiles.Count; x++)
+            for (int x = 0; x < injectFiles.Count; x+=2)
             {
                 // Transform list into array and add it to the dictionary
                 // with the name string as they key and array as the value
