@@ -142,7 +142,7 @@ public class MapController : MonoBehaviour
 
     //private ParticleSystem.ShapeModule shapeModule;
 
-    public static void QuitGame()
+    public void QuitGame()
     {
         Application.Quit();
     }
@@ -439,6 +439,7 @@ public class MapController : MonoBehaviour
     {
 
         Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
+        newNotification.transform.SetAsFirstSibling();
         newNotification.text.text = objective.notificationTitle;
         newNotification.severity = 0;
         newNotification.objective = objective;

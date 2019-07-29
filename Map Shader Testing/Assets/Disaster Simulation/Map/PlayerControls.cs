@@ -310,6 +310,7 @@ public class PlayerControls : MonoBehaviour
     public void AddNotification(string message, int severity, PlayerObjective objective)
     {
         Notification newNotification = Instantiate(notificationPrefab, notificationPanel.panel.transform);
+        newNotification.transform.SetAsFirstSibling();
         newNotification.text.text = message;
         newNotification.severity = severity;
         newNotification.objective = objective;
