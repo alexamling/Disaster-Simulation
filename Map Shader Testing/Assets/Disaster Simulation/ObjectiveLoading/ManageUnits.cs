@@ -64,16 +64,6 @@ public class ManageUnits : MonoBehaviour
 
     public void ignoreResponse()
     {
-        if (controller.selectedObjective.needsResponse)
-        {
-
-        }
-
-        else if (!controller.selectedObjective.needsResponse)
-        {
-            mapController.score += controller.selectedObjective.originalScore;
-        }
-
         controller.selectedObjective.notification.Close();
     }
 

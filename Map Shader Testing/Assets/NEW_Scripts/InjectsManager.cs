@@ -42,8 +42,8 @@ public class InjectsManager : MonoBehaviour
     void Update()
     {
         // Small chance to activate inject based on random number and if an inject is already started
-        if (Random.Range(0f, 1f) > .99f && started == false)
-            StartInject(1, 0);
+        //if (Random.Range(0f, 1f) > .99f && started == false)
+            //StartInject(1, 0);
     }
 
     /// STARTINJECT
