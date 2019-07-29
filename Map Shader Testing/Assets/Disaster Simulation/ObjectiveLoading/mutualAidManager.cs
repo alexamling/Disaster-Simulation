@@ -135,6 +135,8 @@ public class mutualAidManager : MonoBehaviour
         for (int i = 0; i < unitsToAdd.Length; i++)
         {
             unitsToAdd[i] = Random.Range(selectedRange[i * 2], selectedRange[i * 2 + 1]);
+
+            unitManager.controller.totalRequestedUnits += unitsToAdd[i];
         }
     }
 

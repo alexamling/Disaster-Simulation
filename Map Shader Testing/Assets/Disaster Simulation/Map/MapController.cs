@@ -128,7 +128,7 @@ public class MapController : MonoBehaviour
     public objectiveReader objectiveReader;
     [HideInInspector]
     public gameTimer gameTimer;
-    private PlayerControls playerControls;
+    public PlayerControls playerControls;
     
 
     //private Texture2D fireSnapshot;
@@ -448,5 +448,10 @@ public class MapController : MonoBehaviour
         playerControls.notifications.Add(newNotification);
 
         objective.objectiveState = ObjectiveState.Requesting;
+
+        if (!objective.needsResponse)
+        {
+            playerControls.ignoredObjectivesIdeal++;
+        }
     }
 }
