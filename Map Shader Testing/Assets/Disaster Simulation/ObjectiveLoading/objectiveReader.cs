@@ -10,13 +10,11 @@ public class objectiveReader : MonoBehaviour
     public TextAsset ObjectivesFire;
     public TextAsset ObjectivesFlood;
     public TextAsset ObjectivesAccident;
-    public TextAsset ObjectivesEvac;
     public TextAsset ObjectivesPersonal;
 
     public List<PlayerObjective> fireList;
     public List<PlayerObjective> floodList;
     public List<PlayerObjective> accidentList;
-    public List<PlayerObjective> evacList;
     public List<PlayerObjective> personalList;
 
     public GameObject objectivePrefab;
@@ -29,7 +27,6 @@ public class objectiveReader : MonoBehaviour
         readFile(ObjectivesFire, fireList);
         readFile(ObjectivesFlood, floodList);
         readFile(ObjectivesAccident, accidentList);
-        readFile(ObjectivesEvac, evacList);
         readFile(ObjectivesPersonal, personalList);
     }
 

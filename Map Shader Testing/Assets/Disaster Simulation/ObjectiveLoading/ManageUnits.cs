@@ -70,13 +70,17 @@ public class ManageUnits : MonoBehaviour
     public void sendTeam()
     {
         int val;
+        int totalUnits = 0;
         for (int i = 0; i < unitCounts.Length; i++)
         {
             val = Int32.Parse(unitCounts[i].GetComponent<Text>().text, CultureInfo.InvariantCulture.NumberFormat);
             controller.selectedObjective.units[i] = val;
             availibleUnits[i] -= val;
             resourceValues[i].text = "" + availibleUnits[i];
+            totalUnits += val;
         }
+
+        controller.totalSentUnits += totalUnits;
 
         controller.selectedObjective.objectiveState = ObjectiveState.Responding;
         ToggleUI(controller.selectedObjective);

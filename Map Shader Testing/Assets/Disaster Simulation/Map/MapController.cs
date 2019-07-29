@@ -108,12 +108,6 @@ public class MapController : MonoBehaviour
 
     [Space(5)]
 
-    [Header("Evacuation Variables")]
-    public GameObject evacLocationRoot;
-    private Transform[] evacLocations;
-
-    [Space(5)]
-
     [Header("PersonalIncidents Variables")]
     public GameObject personalLocationRoot;
     private Transform[] personalLocations;
@@ -155,7 +149,6 @@ public class MapController : MonoBehaviour
         //initialize locations
         fireLocations = fireLocationRoot.GetComponentsInChildren<Transform>();
         accidentLocations = accidentLocationRoot.GetComponentsInChildren<Transform>();
-        evacLocations = evacLocationRoot.GetComponentsInChildren<Transform>();
         personalLocations = personalLocationRoot.GetComponentsInChildren<Transform>();
         floodLocations = floodLocationRoot.GetComponentsInChildren<Transform>();
 
@@ -256,11 +249,6 @@ public class MapController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             SpawnFireObjective();
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            SpawnEvacObjective();
         }
 
         if (Input.GetKeyDown(KeyCode.V))
@@ -373,7 +361,7 @@ public class MapController : MonoBehaviour
 
     void SpawnRandomObjective()
     {
-        int val = Random.Range(0, 6);
+        int val = Random.Range(0, 5);
 
         switch (val)
         {
@@ -383,9 +371,6 @@ public class MapController : MonoBehaviour
                 break;
             case (2):
                 SpawnFireObjective();
-                break;
-            case (3):
-                SpawnEvacObjective();
                 break;
             case (4):
                 SpawnAccidentObjective();
@@ -413,18 +398,6 @@ public class MapController : MonoBehaviour
     {
         PlayerObjective objective = Instantiate(objectiveReader.fireList[Random.Range(0, objectiveReader.fireList.Count)]);
         Transform placementValues = fireLocations[Random.Range(1, fireLocations.Length)].transform;
-
-        Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x * .5f;
-
-        objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
-
-        SpawnObjective(objective);
-    }
-
-    void SpawnEvacObjective()
-    {
-        PlayerObjective objective = Instantiate(objectiveReader.evacList[Random.Range(0, objectiveReader.evacList.Count)]);
-        Transform placementValues = evacLocations[Random.Range(1, evacLocations.Length)].transform;
 
         Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x * .5f;
 
