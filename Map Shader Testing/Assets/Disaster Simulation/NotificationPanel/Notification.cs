@@ -57,6 +57,8 @@ public class Notification : MonoBehaviour
             manager.manager.score += objective.score;
         }
 
+        manager.ignoredObjectivesActual++;
+
         Destroy(objective.gameObject);
         Destroy(gameObject);
         Destroy(objective.icon);
