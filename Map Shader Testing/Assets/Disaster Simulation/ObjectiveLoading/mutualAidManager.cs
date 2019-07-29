@@ -47,62 +47,65 @@ public class mutualAidManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (aidState != AidState.Inactive)
+        if (unitManager.controller.manager.gameTimer.gameState == GameState.Running)
         {
-            if (aidState == AidState.Standby)
+            if (aidState != AidState.Inactive)
             {
-                for (int i = 0; i < blackList.Count; i++)
+                if (aidState == AidState.Standby)
                 {
-                    if (selectedRange == blackList[i])
+                    for (int i = 0; i < blackList.Count; i++)
                     {
-                        requestButton.interactable = false;
-                        description.text = "You've Already Requested Units from this County\nPlease Select Another";
+                        if (selectedRange == blackList[i])
+                        {
+                            requestButton.interactable = false;
+                            description.text = "You've Already Requested Units from this County\nPlease Select Another";
+                        }
                     }
                 }
-            }
 
-            else if (aidState == AidState.Returning)
-            {
-                Vector3 newPosition = new Vector3(Vector3.Lerp(endPoint, startPoint, step).x, aidCar.transform.localPosition.y, aidCar.transform.localPosition.z);
-                aidCar.transform.localPosition = newPosition;
-                step += 1 / ((1 / Time.fixedDeltaTime) * (travelTimeRoundTrip / 2));
-
-                if (aidCar.transform.localPosition.x == startPoint.x)
+                else if (aidState == AidState.Returning)
                 {
-                    dropdown.interactable = true;
-                    requestButton.interactable = true;
-                    description.text = "Potential Aid Available for Request:" + "\n\n" + "Standing By";
+                    Vector3 newPosition = new Vector3(Vector3.Lerp(endPoint, startPoint, step).x, aidCar.transform.localPosition.y, aidCar.transform.localPosition.z);
+                    aidCar.transform.localPosition = newPosition;
+                    step += 1 / ((1 / Time.fixedDeltaTime) * (travelTimeRoundTrip / 2));
+
+                    if (aidCar.transform.localPosition.x == startPoint.x)
+                    {
+                        dropdown.interactable = true;
+                        requestButton.interactable = true;
+                        description.text = "Potential Aid Available for Request:" + "\n\n" + "Standing By";
+                        step = 0;
+                        aidCar.transform.Rotate(new Vector3(0, 1, 0), 180); //flip sprite for standby
+                        DisplayUnits();
+                        aidState = AidState.Standby;
+                    }
+                }
+
+                else if (aidState == AidState.Sending)
+                {
+                    Vector3 newPosition = new Vector3(Vector3.Lerp(startPoint, endPoint, step).x, aidCar.transform.localPosition.y, aidCar.transform.localPosition.z);
+                    aidCar.transform.localPosition = newPosition;
+                    step += 1 / ((1 / Time.fixedDeltaTime) * (travelTimeRoundTrip / 2));
+
+                    if (aidCar.transform.localPosition.x == endPoint.x)
+                    {
+                        description.text = "Aid has Arrived:\n +" + unitsToAdd[0] + " EMS, +" + unitsToAdd[1] + " FireDept, +" + unitsToAdd[2] + " Military,\n +" + unitsToAdd[3] + " Police, +" + unitsToAdd[4] + " Volunteer Groups\nReturning...";
+                        aidState = AidState.Arrived;
+                    }
+                }
+
+                else if (aidState == AidState.Arrived)
+                {
+                    for (int i = 0; i < unitsToAdd.Length; i++)
+                    {
+                        unitManager.availibleUnits[i] += unitsToAdd[i];
+                        unitManager.resourceValues[i].text = "" + unitManager.availibleUnits[i];
+                    }
+
+                    aidCar.transform.Rotate(new Vector3(0, 1, 0), 180); //flip sprite for retrun trip
                     step = 0;
-                    aidCar.transform.Rotate(new Vector3(0, 1, 0), 180); //flip sprite for standby
-                    DisplayUnits();
-                    aidState = AidState.Standby;
+                    aidState = AidState.Returning;
                 }
-            }
-
-            else if (aidState == AidState.Sending)
-            {
-                Vector3 newPosition = new Vector3(Vector3.Lerp(startPoint, endPoint, step).x, aidCar.transform.localPosition.y, aidCar.transform.localPosition.z);
-                aidCar.transform.localPosition = newPosition;
-                step += 1 / ((1 / Time.fixedDeltaTime) * (travelTimeRoundTrip / 2));
-
-                if (aidCar.transform.localPosition.x == endPoint.x)
-                {
-                    description.text = "Aid has Arrived:\n +" + unitsToAdd[0] + " EMS, +" + unitsToAdd[1] + " FireDept, +" + unitsToAdd[2] + " Military,\n +" + unitsToAdd[3] + " Police, +" + unitsToAdd[4] + " Volunteer Groups\nReturning...";
-                    aidState = AidState.Arrived;
-                }
-            }
-
-            else if (aidState == AidState.Arrived)
-            {
-                for (int i = 0; i < unitsToAdd.Length; i++)
-                {
-                    unitManager.availibleUnits[i] += unitsToAdd[i];
-                    unitManager.resourceValues[i].text = "" + unitManager.availibleUnits[i];
-                }
-
-                aidCar.transform.Rotate(new Vector3(0, 1, 0), 180); //flip sprite for retrun trip
-                step = 0;
-                aidState = AidState.Returning;
             }
         }
     }
