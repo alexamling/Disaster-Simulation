@@ -21259,16 +21259,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687061adf9a64d1498e208e7e5e9fcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectiveFrequency: 15
-  objectiveVariance: 3
+  objectiveFrequency: 10
+  objectiveVariance: 4
   objectives: []
   injectFrequency: 90
   injectVariance: 10
-  injectStepTimer: 10
+  injectStepTimer: 15
   injectStepVariance: 3
   floodLocationRoot: {fileID: 2014518290}
   fireLocationRoot: {fileID: 22393146}
-  evacLocationRoot: {fileID: 22393146}
   personalLocationRoot: {fileID: 22393146}
   accidentLocationRoot: {fileID: 22393146}
   iconRoot: {fileID: 240644091}
@@ -21345,14 +21344,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectivesFire: {fileID: 4900000, guid: f9ce994538960b144ba7ad27d6d6efbe, type: 3}
-  ObjectivesFlood: {fileID: 4900000, guid: 244819ed52944f741b0be9ff19b8fafa, type: 3}
+  ObjectivesFlood: {fileID: 4900000, guid: ecefe97432a1a5e4c831777aaefc2dbc, type: 3}
   ObjectivesAccident: {fileID: 4900000, guid: da63eb04ae8ca79498157bd9886c382b, type: 3}
-  ObjectivesEvac: {fileID: 4900000, guid: ecefe97432a1a5e4c831777aaefc2dbc, type: 3}
   ObjectivesPersonal: {fileID: 4900000, guid: 39758214b8c37074b885048ddc8db55d, type: 3}
   fireList: []
   floodList: []
   accidentList: []
-  evacList: []
   personalList: []
   objectivePrefab: {fileID: 39305521758710688, guid: c7c221325da700c4c934a7527837bc5f,
     type: 3}
@@ -24150,7 +24147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   injects: []
-  injectFiles: []
+  injectFiles:
+  - {fileID: 4900000, guid: 75b40f5a3a068e844985119eb714002e, type: 3}
 --- !u!224 &6768446003604391531
 RectTransform:
   m_ObjectHideFlags: 0
