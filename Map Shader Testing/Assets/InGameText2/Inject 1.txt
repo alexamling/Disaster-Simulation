@@ -1,9 +1,9 @@
-Inject:A police officer calls the water superintendent to let them know that, while on patrol, he noticed a water main spurting with water nearby the intersection of (Street 1) & (Street 2). (Waste Treatment Facility) has just notified you that one of the sewers for the city is functioning at a diminished capacity & they have just learned that substances from the line is seeping into the underground water supply. If not addressed correctly, the water supply could be contaminated, resulting in sickness of the population or panic throughout the city. 
+Inject:A police officer calls the water superintendent to let them know that, while on patrol, he noticed a water main spurting. THe local waste treatment facility has just notified you that one of the sewers for the city is functioning at a diminished capacity & they have just learned that substances from the line is seeping into the underground water supply. If not addressed correctly, the water supply could be contaminated, resulting in sickness of the population or panic throughout the city. 
 Display
 Option:Consult the EOP as to the recommended actions and follow the actions
-Result:Per the EOP, in the event of a water contamination concern, the following actions should be taken (see Local Government Response to a Utility Outage)
-Option:Issue Press Release (share information to the public without answers)
-Result:A Water main break along (Street 1) & (Street 2) has many citizens of the area especially concerned. The Office of Emergency Management has shared a press release stating the nature of the situation.
+Result:Per the EOP, in the event of a water contamination concern, take necessary action
+Option:Issue Press Release
+Result:A Water main break along a major intersection has many citizens of the area especially concerned. The Office of Emergency Management has shared a press release stating the nature of the situation. 
 Option:Disregard Information as it is not the County’s Job
 Result:A Water Main Break has many citizens of the area especially concerned. The Office of Emergency Management has not taken any action & (News Source) was unable to contact with the water company due to the overwhelming amount of calls.
 Display
@@ -33,5 +33,5 @@ Result:The water is continuing with no hope of ceasing. The water has become con
 Option:Issue a “Do Not Use” Notice
 Result:After The Lab reports that the bacteria has been cleared of the city water supply and the water is safe to drink. Because the population was educated and the situation was handled promptly and by the correct personnel, unnecessary cases were prevented.
 Option:Do Not Issue any public statements until results are confirmed 
-Result:Despite the Initial sharing of information regarding the situation, the OEM has suddenly become tight lipped about the situation. (Creating lack of trust)
+Result:Despite the Initial sharing of information regarding the situation, the OEM has suddenly become tight lipped about the situation. 
 Display
