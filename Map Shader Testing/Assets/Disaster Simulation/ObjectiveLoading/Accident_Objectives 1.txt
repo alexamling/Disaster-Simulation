@@ -2,8 +2,8 @@ Score: 100/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 3.0/ 2.0/ 5.0/ 4.0/
 DelayedResponseModifiers: 1.0/ 3.0/ 2.0/ 5.0/ 4.0/
-NotificationTitle: Low Priority Incident/
-FullMessage: The police department reports that there has been a minor accident on one of the city roads. This does not critically affect intra-city travel, but would be beneficial to handle in time./
+NotificationTitle: Traffic Accident/
+FullMessage: The police department reports that there has been an accident at a busy intersection. This does not critically affect intra-city travel, but would be beneficial to handle in time./
 TimeLimit: 60/
 NeedsResponse: false
 |
@@ -11,7 +11,7 @@ Score: 100/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 3.0/ 4.0/ 5.0/ 1.0/
 DelayedResponseModifiers: 2.0/ 3.0/ 4.0/ 5.0/ 1.0/
-NotificationTitle: Moderate Priority Incident/
+NotificationTitle: Highway Traffic Accident/
 FullMessage: The police department reports that there has been an accident along an on-ramp onto one of the highways. At the moment, traffic is moving slowly. Sending law enforcement to re-route the traffic would assist in speeding up traffic./
 TimeLimit: 60/
 NeedsResponse: false
@@ -20,8 +20,8 @@ Score: 100/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 3.0/ 4.0/ 5.0/ 1.0/
 DelayedResponseModifiers: 2.0/ 3.0/ 4.0/ 5.0/ 1.0/
-NotificationTitle: High Priority Incident/
-FullMessage: The police department reports that there has been a major accident along (I-45 or Highway 146) that is forcing all traffic to a standstill. Law Enforcement are needed to re-route traffic immediately./
+NotificationTitle: Multi-Car Accident/
+FullMessage: The police department reports that there has been a major accident along I-45 that is forcing all traffic to a standstill. Law Enforcement are needed to re-route traffic immediately./
 TimeLimit: 60/
 NeedsResponse: true
 |

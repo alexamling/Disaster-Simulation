@@ -15036,7 +15036,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1322144175}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1903306897}
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1322144175
@@ -23932,11 +23943,6 @@ PrefabInstance:
       propertyPath: elementsUI.Array.data[12]
       value: 
       objectReference: {fileID: 383316517}
-    - target: {fileID: 1529595122732764108, guid: cf007f96acfd48d42bd2c2264f72cbba,
-        type: 3}
-      propertyPath: parent
-      value: 
-      objectReference: {fileID: 94631552}
     - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: tipMessages.Array.data[0]
@@ -23952,6 +23958,36 @@ PrefabInstance:
       propertyPath: tipMessages.Array.data[2]
       value: 
       objectReference: {fileID: 1893442422}
+    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: description
+      value: 
+      objectReference: {fileID: 746029915}
+    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: rangesText
+      value: 
+      objectReference: {fileID: 462523914}
+    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: dropdown
+      value: 
+      objectReference: {fileID: 1122483230}
+    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: requestButton
+      value: 
+      objectReference: {fileID: 1886108125}
+    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: aidCar
+      value: 
+      objectReference: {fileID: 501294123}
+    - target: {fileID: 1529595122732764108, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 94631552}
     - target: {fileID: 1529595122732764107, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: sceneTimer
@@ -24002,31 +24038,6 @@ PrefabInstance:
       propertyPath: unitsSent
       value: 
       objectReference: {fileID: 1041823603}
-    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
-        type: 3}
-      propertyPath: description
-      value: 
-      objectReference: {fileID: 746029915}
-    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
-        type: 3}
-      propertyPath: rangesText
-      value: 
-      objectReference: {fileID: 462523914}
-    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
-        type: 3}
-      propertyPath: dropdown
-      value: 
-      objectReference: {fileID: 1122483230}
-    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
-        type: 3}
-      propertyPath: requestButton
-      value: 
-      objectReference: {fileID: 1886108125}
-    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
-        type: 3}
-      propertyPath: aidCar
-      value: 
-      objectReference: {fileID: 501294123}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf007f96acfd48d42bd2c2264f72cbba, type: 3}
 --- !u!1001 &5519166682946214545

@@ -61,7 +61,8 @@ public class Notification : MonoBehaviour
 
             manager.ignoredObjectivesActual++;
         }
-        
+
+        manager.currentObjectivePanel.panel.SetActive(false);
 
         Destroy(objective.gameObject);
         Destroy(gameObject);
