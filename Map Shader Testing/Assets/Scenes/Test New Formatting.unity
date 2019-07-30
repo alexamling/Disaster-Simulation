@@ -425,6 +425,9 @@ MonoBehaviour:
   injectFiles:
   - {fileID: 4900000, guid: 75b40f5a3a068e844985119eb714002e, type: 3}
   - {fileID: 4900000, guid: c5620789805ea344ba9f09113d10253a, type: 3}
+  - {fileID: 4900000, guid: 8881d3483ad0ba74da93caadc1e8b9ae, type: 3}
+  - {fileID: 4900000, guid: c030668dfd29813489037827d15cc381, type: 3}
+  - {fileID: 4900000, guid: d503d971e579d1144875d7ca907aa31c, type: 3}
 --- !u!1 &899913251
 GameObject:
   m_ObjectHideFlags: 0
