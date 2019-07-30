@@ -2,8 +2,8 @@ Inject:Hospital administrators have notified your office that a large number of 
 Display
 Option:Establish a shelter
 Result:Shelter established!  What is the first thing to do next?
-Option:Don’t do anything. Instead, allow the hospital to address the flow of people
-Result:With their current level of staffing and people coming in seeking shelter, there is a higher worker to “patient” level than what is good. Therefore, the standard of care for patients in the hospital have gone down. 
+Option:Don't do anything. Instead, allow the hospital to address the flow of people
+Result:With their current level of staffing and people coming in seeking shelter, there is a higher "patient" to worker ratio than what is acceptable. Therefore, the standard of care for patients in the hospital have gone down. 
 Display
 Intervals:0^2/2^4
 Option:Contact DOT for map of area

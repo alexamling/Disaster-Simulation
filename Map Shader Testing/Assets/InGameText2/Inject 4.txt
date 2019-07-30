@@ -1,9 +1,9 @@
 Inject:Due to the rising floodwater, a facility for the elderly, both independent and dependent living, is in the path of the floodwater. At this point in time, the facility will only be able to sustain essential operations for 2 more hours. After that, it will no longer be safe for residents and they will require evacuation. If not evacuated, there could be a media disaster as well as great loss of life. As the Emergency Manager, you should work with medical professionals to determine the best route for the residents. 
 Display
 Option:Evacuate the facility. 
-Result:Contact Operations & Planning Department to find the surrounding facilities able to care for residents. There are several facilities in the area that “could” handle the residents. Below is a list of facilities & their coordinates in relation to the site looking to evacuate. 
+Result:Contact Operations & Planning Department to find the surrounding facilities able to care for residents. There are several facilities in the area that "could" handle the residents. Below is a list of facilities & their coordinates in relation to the site looking to evacuate. 
 Option:Prepare the facility for incoming water
-Result:The floodwaters are estimated to hit within the hour. By not evacuating the facility, it may ensure that more critical patients don’t get worse. The current power source is only running on essential function & can last for less than an hour. After that, all power for the facility will be gone. 
+Result:The floodwaters are estimated to hit within the hour. By not evacuating the facility, it may ensure that more critical patients don't get worse. The current power source is only running on essential function & can last for less than an hour. After that, all power for the facility will be gone. 
 Display
 Intervals:0^2/2^4
 Option:Select the facility that has ample space, but is further from the site
