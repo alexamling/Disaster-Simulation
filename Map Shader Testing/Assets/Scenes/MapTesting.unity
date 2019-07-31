@@ -2202,7 +2202,7 @@ RectTransform:
   - {fileID: 1893227226}
   - {fileID: 1839953567}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2282,7 +2282,7 @@ RectTransform:
   - {fileID: 540161793}
   - {fileID: 1490105247}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2761,7 +2761,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2792,8 +2792,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -68}
-  m_SizeDelta: {x: 336.6, y: 92.5}
+  m_AnchoredPosition: {x: 0, y: -63.8}
+  m_SizeDelta: {x: 336.6, y: 80.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &215213662
 GameObject:
@@ -3210,7 +3210,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10190,7 +10190,7 @@ RectTransform:
   - {fileID: 1505905212}
   - {fileID: 1184786469}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -13068,7 +13068,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -13099,8 +13099,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -65}
-  m_SizeDelta: {x: 336.6, y: 92.5}
+  m_AnchoredPosition: {x: 0, y: -59.7}
+  m_SizeDelta: {x: 336.6, y: 73}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1122483228
 GameObject:
@@ -16766,7 +16766,7 @@ RectTransform:
   - {fileID: 2021530836}
   - {fileID: 1815916733}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -18706,7 +18706,7 @@ RectTransform:
   m_Children:
   - {fileID: 1470923443}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -21547,7 +21547,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -21578,8 +21578,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -65}
-  m_SizeDelta: {x: 336.6, y: 92.5}
+  m_AnchoredPosition: {x: 0, y: -60.1}
+  m_SizeDelta: {x: 336.6, y: 85.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1903306895 stripped
 Transform:
@@ -23014,7 +23014,7 @@ RectTransform:
   - {fileID: 1688549165}
   - {fileID: 137113059}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -23668,7 +23668,7 @@ RectTransform:
   - {fileID: 1711843012}
   - {fileID: 199358951}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -23773,6 +23773,16 @@ PrefabInstance:
       propertyPath: iconRoot
       value: 
       objectReference: {fileID: 240644091}
+    - target: {fileID: 1529595122732764110, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: objectiveFrequency
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764110, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: objectiveVariance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764111, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: progressBar
@@ -23943,21 +23953,56 @@ PrefabInstance:
       propertyPath: elementsUI.Array.data[12]
       value: 
       objectReference: {fileID: 383316517}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[4]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[3]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: tipMessages.Array.data[0]
       value: 
-      objectReference: {fileID: 212347366}
+      objectReference: {fileID: 212347367}
     - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: tipMessages.Array.data[1]
       value: 
-      objectReference: {fileID: 1105279559}
+      objectReference: {fileID: 1105279560}
     - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: tipMessages.Array.data[2]
       value: 
-      objectReference: {fileID: 1893442422}
+      objectReference: {fileID: 1893442423}
+    - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: lowThreshhold
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: highThreshhold
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: description
@@ -23983,6 +24028,11 @@ PrefabInstance:
       propertyPath: aidCar
       value: 
       objectReference: {fileID: 501294123}
+    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: maxUnitRange
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764108, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: parent
@@ -24777,6 +24827,10 @@ MonoBehaviour:
   injects: []
   injectFiles:
   - {fileID: 4900000, guid: 75b40f5a3a068e844985119eb714002e, type: 3}
+  - {fileID: 4900000, guid: c5620789805ea344ba9f09113d10253a, type: 3}
+  - {fileID: 4900000, guid: 8881d3483ad0ba74da93caadc1e8b9ae, type: 3}
+  - {fileID: 4900000, guid: c030668dfd29813489037827d15cc381, type: 3}
+  - {fileID: 4900000, guid: d503d971e579d1144875d7ca907aa31c, type: 3}
 --- !u!224 &6768446003604391531
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24788,6 +24842,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 240644092}
   - {fileID: 164659618}
   - {fileID: 909037021}
   - {fileID: 161621499}
@@ -24795,7 +24850,6 @@ RectTransform:
   - {fileID: 1499469080}
   - {fileID: 2040599440}
   - {fileID: 1625466530}
-  - {fileID: 240644092}
   - {fileID: 6768446003366997254}
   - {fileID: 883637961}
   - {fileID: 93556692}

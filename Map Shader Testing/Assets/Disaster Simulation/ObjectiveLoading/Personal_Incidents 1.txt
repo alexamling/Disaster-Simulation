@@ -1,4 +1,4 @@
-Score: 100/
+Score: 50/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 1.0/ 3.0/ 5.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 1.0/ 3.0/ 5.0/
@@ -7,7 +7,7 @@ FullMessage: A citizen called in to the emergency line reporting that their pet 
 TimeLimit: 60/
 NeedsResponse: false
 |
-Score: 100/
+Score: 75/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 5.0/ 4.0/ 1.0/ 2.0/ 3.0/
 DelayedResponseModifiers: 5.0/ 4.0/ 1.0/ 2.0/ 3.0/
@@ -16,7 +16,7 @@ FullMessage: During the flooding, a single person was reported as having a perso
 TimeLimit: 60/
 NeedsResponse: false
 |
-Score: 100/
+Score: 50/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 2.0/ 5.0/ 3.0/ 4.0/
 DelayedResponseModifiers: 1.0/ 2.0/ 5.0/ 3.0/ 4.0/
@@ -25,7 +25,7 @@ FullMessage: Homeowners have been calling in reporting their homes being flooded
 TimeLimit: 60/
 NeedsResponse: false
 |
-Score: 100/
+Score: 75/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 3.0/ 4.0/ 1.0/ 2.0/ 5.0/
 DelayedResponseModifiers: 3.0/ 4.0/ 1.0/ 2.0/ 5.0/

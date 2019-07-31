@@ -1,4 +1,4 @@
-Score: 100/
+Score: 50/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 3.0/ 2.0/ 5.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 3.0/ 2.0/ 5.0/
@@ -7,7 +7,7 @@ FullMessage: Individuals are requesting evacuation because they are concerned fo
 TimeLimit: 60/
 NeedsResponse: false
 |
-Score: 100/
+Score: 50/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 3.0/ 2.0/ 5.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 3.0/ 2.0/ 5.0/
@@ -16,7 +16,7 @@ FullMessage: A family with children are requesting evacuation because they are c
 TimeLimit: 60/
 NeedsResponse: false
 |
-Score: 100/
+Score: 50/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 3.0/ 2.0/ 5.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 3.0/ 2.0/ 5.0/
@@ -61,7 +61,7 @@ FullMessage: A family whose neighborhood has just begun to flood are requesting 
 TimeLimit: 60/
 NeedsResponse: true
 |
-Score: 100/
+Score: 150/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 3.0/ 2.0/ 5.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 3.0/ 2.0/ 5.0/
