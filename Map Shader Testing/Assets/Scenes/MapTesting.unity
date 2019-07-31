@@ -23943,6 +23943,31 @@ PrefabInstance:
       propertyPath: elementsUI.Array.data[12]
       value: 
       objectReference: {fileID: 383316517}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[4]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[3]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764109, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: availibleUnits.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: tipMessages.Array.data[0]
@@ -23993,6 +24018,11 @@ PrefabInstance:
       propertyPath: aidCar
       value: 
       objectReference: {fileID: 501294123}
+    - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: maxUnitRange
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764108, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: parent
