@@ -16,20 +16,20 @@ Option:Contact Red Cross to help set up a secondary shelter location
 Result:The Red Cross is happy to assist in the set up and running of a shelter for the area. After looking at a topographic map of the area and high density areas, they are able to designate their top pick for a shelter and will work to get it created. Because of the flooding, a majority of the public transportation systems are down and not everyone can easily access said shelter. 
 Display
 Intervals:0^2/2^4/4^6/6^8
-Option:Start transporting people at the hospital first, then fulfill logistical needs once everybody is there
+OptionEnd^2:Start transporting people at the hospital first, then fulfill logistical needs once everybody is there
 Result:People have arrived at the new shelter, but since you have not gotten the needed materials, there are many upset without basic necessities and are sleeping on the hard concrete floor. 
-Option:Fulfill logistical needs first, then send people to the shelter after some supplies have arrived 
+OptionEnd^1:Fulfill logistical needs first, then send people to the shelter after some supplies have arrived 
 Result:The Hospital will notify any incoming people seeking shelter of the new location. They have also issued a press release for you sharing to the public the information. Since you planned ahead, found a location on higher ground, and worked to find logistical support for the shelter before people came, you have enough supplies to assist those seeking shelter.
-Option:Start transporting people at the hospital first, then fulfill logistical needs once everybody is there
+OptionEnd^4:Start transporting people at the hospital first, then fulfill logistical needs once everybody is there
 Result:Unfortunately as was predicted, the potential for flooding turned into actuality. All individuals who are in the shelter are now faced with flooding into the building. They are requiring evacuation to another facility. 
-Option:Fulfill logistical needs first, then send people to the shelter after some supplies have arrived 
+OptionEnd^3:Fulfill logistical needs first, then send people to the shelter after some supplies have arrived 
 Result:While the situation could have been worse, because you chose to select a location that could face flooding, you did lose the supplies needed to run the shelter and now it will be delayed 3 more days. Luckily no people were seeking shelter there yet, so nobody was injured. 
-Option:Close the hospital to non-patients	
+OptionEnd^8:Close the hospital to non-patients	
 Result:While you may have ensured that no additional people came into the hospital, the plan backfired when it came to the care of the community. It forced EMS to travel an additional 10 min to a secondary hospital and community members who only knew the hospital as a “safe” location cannot enter and are forced to do their best in their homes. 
-Option:Establish a “in-hospital shelter” and request volunteers
+OptionEnd^7:Establish a “in-hospital shelter” and request volunteers
 Result:People are flooding into the hospital since it's what they know. By not establishing a full blown shelter, this temporary fix can only last so long before people become overwhelmed or resources become overused.
-Option:Issue press release telling people to come on their own
+OptionEnd^6:Issue press release telling people to come on their own
 Result:Despite issuing a press release giving people the location and important information regarding the shelter, because the public transportation system is not in function, only a small percentage of the population seeking shelter actually showed up. The rest are doing their best in the floodplain areas. 
-Option:Contact External resources to get vehicles to transport
+OptionEnd^5:Contact External resources to get vehicles to transport
 Result:Because you contacted external resources to get vehicles to transport members of the community seeking shelter, it provided them a means of getting to a safer location and by working with the Red Cross, this shelter will be maintained for a longer duration of time. 
 Display

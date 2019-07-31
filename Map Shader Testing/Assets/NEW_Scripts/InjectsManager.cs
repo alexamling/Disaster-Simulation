@@ -42,14 +42,13 @@ public class InjectsManager : MonoBehaviour
     void Update()
     {
         // Small chance to activate inject based on random number and if an inject is already started
-        //if (Random.Range(0f, 1f) > .99f && started == false)
-        //    StartInject(1, 0);
+        if (Random.Range(0f, 1f) > .99f && started == false)
+            StartInject(1, 0);
     }
 
-    float SetScore(float scoreNum, int currentValue)
+    float SetScore(float scoreNum)
     {
-        float evaluatedScore = scoreNum / currentNode.numChoices;
-        evaluatedScore += evaluatedScore * currentValue;
+        float evaluatedScore = scoreNum * (10-multiplier);
         return evaluatedScore;
     }
 
@@ -66,7 +65,8 @@ public class InjectsManager : MonoBehaviour
         display.SetActive(true);
 
         // Sets current node to a random inject from the list
-        currentNode = injects[Random.Range(0, injects.Count)];
+        //currentNode = injects[Random.Range(0, injects.Count)];
+        currentNode = injects[0];
 
         // Set thte main text of the UI to reflect that of the starting text of the inject
         mainText.text = currentNode.main;
@@ -102,11 +102,12 @@ public class InjectsManager : MonoBehaviour
         selected = false;
         if(earlyEnd == true)
             EndInject();
-
+        
         yield return new WaitUntil(() => selected == true);
         // When Early end is active, reset UI elements and scripts and break from the coroutine
         if (earlyEnd == true)
         {
+            Camera.main.GetComponent<MapController>().score += SetScore(100);
             started = false;
             selected = false;
             earlyEnd = false;
@@ -127,6 +128,7 @@ public class InjectsManager : MonoBehaviour
         // When Early end is active, reset UI elements and scripts and break from the coroutine
         if (earlyEnd == true)
         {
+            Camera.main.GetComponent<MapController>().score += SetScore(100);
             started = false;
             selected = false;
             earlyEnd = false;
@@ -141,7 +143,7 @@ public class InjectsManager : MonoBehaviour
 
         yield return new WaitUntil(() => selected == true);
         yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
-        
+        Camera.main.GetComponent<MapController>().score += SetScore(100);
         // Reset buttons values
         ResetButtons();
 
@@ -160,7 +162,7 @@ public class InjectsManager : MonoBehaviour
         for (int x = 0; x < buttons.Count; x++)
             buttons[x].GetComponent<ButtonValues>().Reset();
     }
-
+    int multiplier;
     /// PROCESSCHANGES
     /// Description:
     /// Takes the user input and uses it to change the next steps for the inject
@@ -171,6 +173,9 @@ public class InjectsManager : MonoBehaviour
 
         // Sets the canvas text to the previously chosen result
         mainText.text = currentNode.results[value];
+
+        //Debug.Log(currentNode.scoreMultiplier[value]);
+        multiplier = currentNode.scoreMultiplier[value];
 
         // Checks if the inject is in it's final phase or not
         if (currentNode.localPart < currentNode.localMax)
@@ -218,6 +223,7 @@ public class InjectsManager : MonoBehaviour
         buttons[0].SetActive(true);
         buttons[0].GetComponentInChildren<Text>().text = "Continue";
         chosenValue = 0;
+        Debug.Log("mult: " + multiplier);
     }
 
     /// GETINPUT

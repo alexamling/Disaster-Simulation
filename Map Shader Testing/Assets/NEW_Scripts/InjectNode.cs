@@ -10,6 +10,8 @@ public class InjectNode : MonoBehaviour
 {
     // Values used to determine displayed text and check levels of inject
     public string main;
+    string endChoice;
+    public List<int> scoreMultiplier;
 
     // Arrays for holding the data for results, choices and intervals used to traverse them
     public string[] intervals;
@@ -25,7 +27,7 @@ public class InjectNode : MonoBehaviour
     public int numChoices;
 
     // Set up Inject and prepare next one
-    public InjectNode(List<List<string[]>> injectSections, int part)
+    public InjectNode(List<List<string[]>> injectSections, int part, List<string> endScores, int index)
     {
         // If it's not the beginning, find the intervals for the 
         if(part != 0)
@@ -35,11 +37,36 @@ public class InjectNode : MonoBehaviour
         choices = injectSections[part][1];
         results = injectSections[part][2];
 
+        scoreMultiplier = new List<int>();
+
+       
+        for (int x = 0; x < choices.Length; x++)
+        {
+            if (endScores[index].Contains("End"))
+            {
+                scoreMultiplier.Add(int.Parse(endScores[index].Split('^')[1]));
+            }
+            else
+            {
+                scoreMultiplier.Add(-1);
+            }
+            index++;
+        }
+        
+        
+
+        string test = "";
+        for(int x = 0; x < scoreMultiplier.Count; x++)
+        {
+            test += scoreMultiplier[x] + " / ";
+        }
+        //Debug.Log(test);
+
         // Sets local values and creates new Node with next part, if necessary
         numChoices = choices.Length;
         localPart = part + 1;
         localMax = injectSections.Count;
         if (localPart < injectSections.Count)
-            nextNode = new InjectNode(injectSections, localPart);
+            nextNode = new InjectNode(injectSections, localPart, endScores, index);
     }
 }

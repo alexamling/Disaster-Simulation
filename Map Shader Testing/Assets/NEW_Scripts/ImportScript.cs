@@ -12,6 +12,7 @@ public class ImportScript : MonoBehaviour
     // List of data structures used to parse and manage inject data
     List<string> choices;
     List<string> results;
+    List<string> endScores;
     List<string> intervals;
     List<List<string[]>> injectFormat;
     public List<InjectNode> injects;
@@ -32,6 +33,7 @@ public class ImportScript : MonoBehaviour
             choices = new List<string>();
             results = new List<string>();
             intervals = new List<string>();
+            endScores = new List<string>();
 
             // Goes through each of the files and skips the meta files 
             for (int x = 0; x < injectFiles.Count; x++)
@@ -63,12 +65,15 @@ public class ImportScript : MonoBehaviour
                         {
                             local = temp[z].Split(':');
                             if (local[0].Contains("Option"))
+                            {
                                 choices.Add(local[1]);
-                            else if(local[0].Contains("Result"))
+                                endScores.Add(local[0]);
+                            }
+                            else if (local[0].Contains("Result"))
                                 results.Add(local[1]);
                             else if (local[0].Contains("Intervals"))
                                 intervals.Add(local[1]);
-                            else if(local[0].Contains("Inject"))
+                            else if (local[0].Contains("Inject"))
                                 holdMain = local[1];
                         }
 
@@ -99,10 +104,11 @@ public class ImportScript : MonoBehaviour
                 }
 
                 // Create new inject and add it to list
-                InjectNode newNode = new InjectNode(injectFormat, 0);
+                InjectNode newNode = new InjectNode(injectFormat, 0, endScores, 0);
                 injectFormat.Clear();
                 newNode.main = holdMain;
                 injects.Add(newNode);
+                endScores.Clear();
             }
         }
     }
