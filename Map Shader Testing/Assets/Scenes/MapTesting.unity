@@ -23966,7 +23966,7 @@ PrefabInstance:
     - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: highThreshhold
-      value: 200
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
