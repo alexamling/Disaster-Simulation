@@ -26,6 +26,7 @@ public class Notification : MonoBehaviour
 
     public void Clicked()
     {
+        manager.HighlightSelectedObjective(objective);
         manager.objectiveMessage.panel.SetActive(false);
         if (objective.revealed)
         {
@@ -71,6 +72,7 @@ public class Notification : MonoBehaviour
 
     public void FocusOnObjective()
     {
+        gameObject.GetComponent<Image>().color = Color.grey;
         Vector3 objectivePos = objective.transform.position;
         manager.selectedObjective = objective;
         manager.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);

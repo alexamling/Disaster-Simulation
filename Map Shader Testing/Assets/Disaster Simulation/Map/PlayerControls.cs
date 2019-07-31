@@ -19,6 +19,7 @@ public class PlayerControls : MonoBehaviour
 {
     public MapController manager;
     public PlayerObjective selectedObjective;
+    private PlayerObjective lastSelected = null;
     public Image progressBar;
     public Image[] coolDowns;
     public ManageUnits unitManager;
@@ -274,6 +275,15 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    public void HighlightSelectedObjective(PlayerObjective obj)
+    {
+        if (lastSelected)
+            lastSelected.notification.GetComponent<Image>().color = new Color32(51, 47, 41, 200);
+
+        obj.notification.GetComponent<Image>().color = Color.grey;
+        lastSelected = obj;
+    }
+
     void FixedUpdate()
     {
         for (int i = 0; i < coolDowns.Length; i++)
@@ -320,6 +330,7 @@ public class PlayerControls : MonoBehaviour
 
     public void Display(PlayerObjective objective)
     {
+        HighlightSelectedObjective(objective);
         objective.notification.FocusOnObjective();
         if (objective.active)
         {
