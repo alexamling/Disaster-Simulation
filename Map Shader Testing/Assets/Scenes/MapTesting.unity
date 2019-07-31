@@ -2761,7 +2761,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2792,8 +2792,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -68}
-  m_SizeDelta: {x: 336.6, y: 92.5}
+  m_AnchoredPosition: {x: 0, y: -63.8}
+  m_SizeDelta: {x: 336.6, y: 80.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &215213662
 GameObject:
@@ -13068,7 +13068,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -13099,8 +13099,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -65}
-  m_SizeDelta: {x: 336.6, y: 92.5}
+  m_AnchoredPosition: {x: 0, y: -59.7}
+  m_SizeDelta: {x: 336.6, y: 73}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1122483228
 GameObject:
@@ -21547,7 +21547,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -21578,8 +21578,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -65}
-  m_SizeDelta: {x: 336.6, y: 92.5}
+  m_AnchoredPosition: {x: 0, y: -60.1}
+  m_SizeDelta: {x: 336.6, y: 85.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1903306895 stripped
 Transform:
@@ -23947,17 +23947,27 @@ PrefabInstance:
         type: 3}
       propertyPath: tipMessages.Array.data[0]
       value: 
-      objectReference: {fileID: 212347366}
+      objectReference: {fileID: 212347367}
     - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: tipMessages.Array.data[1]
       value: 
-      objectReference: {fileID: 1105279559}
+      objectReference: {fileID: 1105279560}
     - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: tipMessages.Array.data[2]
       value: 
-      objectReference: {fileID: 1893442422}
+      objectReference: {fileID: 1893442423}
+    - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: lowThreshhold
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764106, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: highThreshhold
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764104, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: description

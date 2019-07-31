@@ -1,4 +1,4 @@
-Score: 100/
+Score: 75/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 1.0/ 3.0/ 2.0/ 5.0/ 4.0/
 DelayedResponseModifiers: 1.0/ 3.0/ 2.0/ 5.0/ 4.0/
@@ -16,7 +16,7 @@ FullMessage: The police department reports that there has been an accident along
 TimeLimit: 60/
 NeedsResponse: false
 |
-Score: 100/
+Score: 150/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 3.0/ 4.0/ 5.0/ 1.0/
 DelayedResponseModifiers: 2.0/ 3.0/ 4.0/ 5.0/ 1.0/
@@ -25,7 +25,7 @@ FullMessage: The police department reports that there has been a major accident 
 TimeLimit: 60/
 NeedsResponse: true
 |
-Score: 100/
+Score: 125/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 3.0/ 4.0/ 1.0/ 5.0/ 2.0/
 DelayedResponseModifiers: 3.0/ 4.0/ 1.0/ 5.0/ 2.0/
@@ -43,29 +43,29 @@ FullMessage: Callers report that there appears to be two suspicious individuals 
 TimeLimit: 60/
 NeedsResponse: true
 |
-Score: 100/
+Score: 75/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 3.0/ 5.0/ 1.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 3.0/ 5.0/ 1.0/
 NotificationTitle: Residential Looting/
 FullMessage: Callers report that there are currently two individuals using a crowbar to break into a home where the family evacuated. The caller says they are calling from a safe location./
 TimeLimit: 60/
-NeedsResponse: true
+NeedsResponse: false
 |
-Score: 100/
+Score: 75/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 3.0/ 5.0/ 1.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 3.0/ 5.0/ 1.0/
 NotificationTitle: Commercial Looting/
 FullMessage: It is reported that an individual, per video recording, is trying to break into an ATM in an area that appears to be like a ghost town from a voluntary evacuation./
 TimeLimit: 60/
-NeedsResponse: true
+NeedsResponse: false
 |
-Score: 100/
+Score: 75/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 3.0/ 5.0/ 1.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 3.0/ 5.0/ 1.0/
 NotificationTitle: Commercial Looting/
 FullMessage: Per a caller from their home, it appears that there is an individual trying to break into one of the liquor stores in the area. It appears as if they threw a brick and broke the window./
 TimeLimit: 60/
-NeedsResponse: true
+NeedsResponse: false

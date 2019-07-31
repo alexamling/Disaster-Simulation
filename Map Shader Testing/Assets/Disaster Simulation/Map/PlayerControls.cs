@@ -280,7 +280,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (coolDowns[i].fillAmount < 1)
             {
-                coolDowns[i].fillAmount += (1.0f / 750.0f); //1/750 = 15 seconds
+                coolDowns[i].fillAmount += (1.0f / 1500.0f); //1/1500 = 30 seconds
             }
         }
         

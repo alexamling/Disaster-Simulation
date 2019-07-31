@@ -1,4 +1,4 @@
-Score: 100/
+Score: 75/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 4.0/ 3.0/ 1.0/ 5.0/
 DelayedResponseModifiers: 2.0/ 4.0/ 3.0/ 1.0/ 5.0/
@@ -7,7 +7,7 @@ FullMessage: The 911 Dispatch Center has reported a fire in Galveston County. It
 TimeLimit: 60/
 NeedsResponse: false
 |
-Score: 100/
+Score: 175/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 5.0/ 3.0/ 1.0/ 4.0/
 DelayedResponseModifiers: 2.0/ 5.0/ 3.0/ 1.0/ 4.0/
@@ -16,7 +16,7 @@ FullMessage: The 911 Dispatch Center has reported a fire in Texas City. This fir
 TimeLimit: 60/
 NeedsResponse: true
 |
-Score: 100/
+Score: 125/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 5.0/ 4.0/ 1.0/ 2.0/
 DelayedResponseModifiers: 2.0/ 5.0/ 4.0/ 1.0/ 2.0/
@@ -25,7 +25,7 @@ FullMessage: The 911 Call Center has reported a structure fire in Galveston Coun
 TimeLimit: 60/
 NeedsResponse: true
 |
-Score: 100/
+Score: 200/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 4.0/ 5.0/ 4.0/ 2.0/ 1.0/
 DelayedResponseModifiers: 4.0/ 5.0/ 4.0/ 2.0/ 1.0/
