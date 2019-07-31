@@ -11,8 +11,8 @@ Score: 175/
 Location: 1000/ 500/
 ImmediateResponseModifiers: 2.0/ 5.0/ 3.0/ 1.0/ 4.0/
 DelayedResponseModifiers: 2.0/ 5.0/ 3.0/ 1.0/ 4.0/
-NotificationTitle: Fire Near Refineries/
-FullMessage: The 911 Dispatch Center has reported a fire in Texas City. This fire is in moderate proximity to the oil refineries and should be addressed soon./
+NotificationTitle: Fire Near Fuel Source/
+FullMessage: The 911 Dispatch Center has reported a fire in close proximity to a fuel source. It is unclear if standard safety measures will be sufficient./
 TimeLimit: 60/
 NeedsResponse: true
 |
