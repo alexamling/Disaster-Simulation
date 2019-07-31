@@ -93,7 +93,7 @@ public class advisorTracker : MonoBehaviour
 
                 switch (logRange)
                 {
-                    case int n when (n >= 0 && n < 15):
+                    case int n when (n >= 0 && n < 10):
                         switch (backupMod[0])
                         {
                             case 0:
@@ -115,7 +115,7 @@ public class advisorTracker : MonoBehaviour
 
                         break;
 
-                    case int n when (n >= 15 && n < 100):
+                    case int n when (n >= 10 && n < 100):
                         switch (bestMod[0])
                         {
                             case 0:
@@ -147,13 +147,13 @@ public class advisorTracker : MonoBehaviour
                 {
                     switch (range)
                     {
-                        case int n when (n >= 0 && n < 2): //20% chance to be wrong
+                        case int n when (n >= 0 && n < 1): //10% chance to be wrong
                             {
                                 tipMessages[2].text = "Local units appear to have things under control, it may be better to ignore this incident and move on.";
                                 break;
                             }
 
-                        case int n when (n >= 2 && n < 6): //40% chance to be right, vague
+                        case int n when (n >= 1 && n < 6): //40% chance to be right, vague
                             {
                                 tipMessages[2].text = "Local units are stetched thin. They may have things covered, but additional resources should be sent if available.";
                                 break;
@@ -171,13 +171,13 @@ public class advisorTracker : MonoBehaviour
                 {
                     switch (range)
                     {
-                        case int n when (n >= 0 && n < 2): //20% chance to be wrong
+                        case int n when (n >= 0 && n < 1): //10% chance to be wrong
                             {
                                 tipMessages[2].text = "The incident seems to be too much for local units to handle, you are advised to send support";
                                 break;
                             }
 
-                        case int n when (n >= 2 && n < 6): //40% chance to be right, vague
+                        case int n when (n >= 1 && n < 6): //40% chance to be right, vague
                             {
                                 tipMessages[2].text = "Local units appear to have things covered; it's likely best to ignore this and move on.";
                                 break;
