@@ -157,9 +157,9 @@ public class MapController : MonoBehaviour
         personalLocations = personalLocationRoot.GetComponentsInChildren<Transform>();
         floodLocations = floodLocationRoot.GetComponentsInChildren<Transform>();
 
-        fireLocations = SelectObjectiveAreas(fireLocations, 3);
-        accidentLocations = SelectObjectiveAreas(accidentLocations, 6);
-        personalLocations = SelectObjectiveAreas(personalLocations, 7);
+        fireLocations = SelectObjectiveAreas(fireLocations, 6);
+        accidentLocations = SelectObjectiveAreas(accidentLocations, 8);
+        personalLocations = SelectObjectiveAreas(personalLocations, 11);
 
 
         playerControls = FindObjectOfType<PlayerControls>();

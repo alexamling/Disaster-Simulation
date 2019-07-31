@@ -2202,7 +2202,7 @@ RectTransform:
   - {fileID: 1893227226}
   - {fileID: 1839953567}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2282,7 +2282,7 @@ RectTransform:
   - {fileID: 540161793}
   - {fileID: 1490105247}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3284,7 +3284,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10413,7 +10413,7 @@ RectTransform:
   - {fileID: 1505905212}
   - {fileID: 1184786469}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -16989,7 +16989,7 @@ RectTransform:
   - {fileID: 2021530836}
   - {fileID: 1815916733}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -18930,7 +18930,7 @@ RectTransform:
   m_Children:
   - {fileID: 1470923443}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -23238,7 +23238,7 @@ RectTransform:
   - {fileID: 1688549165}
   - {fileID: 137113059}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -23893,7 +23893,7 @@ RectTransform:
   - {fileID: 1711843012}
   - {fileID: 199358951}
   m_Father: {fileID: 6768446003604391531}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -23917,6 +23917,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764114, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764113, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
@@ -23998,6 +24003,16 @@ PrefabInstance:
       propertyPath: iconRoot
       value: 
       objectReference: {fileID: 240644091}
+    - target: {fileID: 1529595122732764110, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: objectiveFrequency
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1529595122732764110, guid: cf007f96acfd48d42bd2c2264f72cbba,
+        type: 3}
+      propertyPath: objectiveVariance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1529595122732764111, guid: cf007f96acfd48d42bd2c2264f72cbba,
         type: 3}
       propertyPath: progressBar
@@ -24603,7 +24618,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &6768446003460883788
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24965,7 +24980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6768446003563614814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25042,6 +25057,10 @@ MonoBehaviour:
   injects: []
   injectFiles:
   - {fileID: 4900000, guid: 75b40f5a3a068e844985119eb714002e, type: 3}
+  - {fileID: 4900000, guid: c5620789805ea344ba9f09113d10253a, type: 3}
+  - {fileID: 4900000, guid: 8881d3483ad0ba74da93caadc1e8b9ae, type: 3}
+  - {fileID: 4900000, guid: c030668dfd29813489037827d15cc381, type: 3}
+  - {fileID: 4900000, guid: d503d971e579d1144875d7ca907aa31c, type: 3}
 --- !u!224 &6768446003604391531
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25053,6 +25072,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 240644092}
   - {fileID: 164659618}
   - {fileID: 909037021}
   - {fileID: 161621499}
@@ -25060,7 +25080,6 @@ RectTransform:
   - {fileID: 1499469080}
   - {fileID: 2040599440}
   - {fileID: 1625466530}
-  - {fileID: 240644092}
   - {fileID: 6768446003366997254}
   - {fileID: 883637961}
   - {fileID: 93556692}
@@ -25343,7 +25362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6768446005221511871
 MonoBehaviour:
   m_ObjectHideFlags: 0
