@@ -46,6 +46,13 @@ public class InjectsManager : MonoBehaviour
         //    StartInject(1, 0);
     }
 
+    float SetScore(float scoreNum, int currentValue)
+    {
+        float evaluatedScore = scoreNum / currentNode.numChoices;
+        evaluatedScore += evaluatedScore * currentValue;
+        return evaluatedScore;
+    }
+
     /// STARTINJECT
     /// Description:
     /// Prepares the inject for user input.  Sets up buttons and text
@@ -86,6 +93,7 @@ public class InjectsManager : MonoBehaviour
         // When earlyEnd is true, display the result from the inject and provide a continue button which exits the inject early.
         yield return new WaitUntil(() => selected == true);
         yield return new WaitForSeconds(delay + Random.Range(-delayVariance, delayVariance));
+        
 
         // Process next set of events
         ProcessChanges(chosenValue);
@@ -96,7 +104,6 @@ public class InjectsManager : MonoBehaviour
             EndInject();
 
         yield return new WaitUntil(() => selected == true);
-
         // When Early end is active, reset UI elements and scripts and break from the coroutine
         if (earlyEnd == true)
         {
@@ -117,7 +124,6 @@ public class InjectsManager : MonoBehaviour
             EndInject();
 
         yield return new WaitUntil(() => selected == true);
-
         // When Early end is active, reset UI elements and scripts and break from the coroutine
         if (earlyEnd == true)
         {
