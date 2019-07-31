@@ -38,17 +38,17 @@ public class advisorTracker : MonoBehaviour
         switch (noteToUpdate)
         {
             case 0: //planning hints to severity
-                if (playerController.selectedObjective.score < lowThreshhold)
+                if (playerController.selectedObjective.originalScore < lowThreshhold)
                 {
                     tipMessages[0].text = "The current incident is likely low in severity. We don't expect major reprucussions even if it is not swiftly dealt with.";
                 }
 
-                else if (playerController.selectedObjective.score >= lowThreshhold && playerController.selectedObjective.score < highThreshhold)
+                else if (playerController.selectedObjective.originalScore >= lowThreshhold && playerController.selectedObjective.score < highThreshhold)
                 {
                     tipMessages[0].text = "The current incident is likely of moderate severity. Major reprucussions may occur.";
                 }
 
-                else if (playerController.selectedObjective.score >= highThreshhold)
+                else if (playerController.selectedObjective.originalScore >= highThreshhold)
                 {
                     tipMessages[0].text = "The current situation is severe. Proceed with caution.";
                 }

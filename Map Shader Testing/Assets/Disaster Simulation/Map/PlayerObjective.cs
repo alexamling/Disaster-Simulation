@@ -212,7 +212,7 @@ public class PlayerObjective: MonoBehaviour
                 unitManager.controller.sucessfulObjectivesCount++;
             }
 
-            if (status <= 0f) // turn the outline solid black when the status is low enough
+            if (status <= 0.0f) // turn the outline solid black when the status is low enough
             {
                 iconImage.color = Color.black;
                 objectiveState = ObjectiveState.Resolved;
