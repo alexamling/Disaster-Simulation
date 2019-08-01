@@ -230,7 +230,6 @@ public class InjectsManager : MonoBehaviour
         buttons[0].SetActive(true);
         buttons[0].GetComponentInChildren<Text>().text = "Continue";
         chosenValue = 0;
-        Debug.Log("mult: " + multiplier);
     }
 
     /// GETINPUT
