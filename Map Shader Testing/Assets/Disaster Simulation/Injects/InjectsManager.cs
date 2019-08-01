@@ -9,6 +9,8 @@ using UnityEngine.UI;
 */
 public class InjectsManager : MonoBehaviour
 {
+    // Variables used throughout the class
+    #region Variables
     // List of all the injects able to be used
     List<InjectNode> injects;
 
@@ -30,6 +32,7 @@ public class InjectsManager : MonoBehaviour
 
     // Multiplier for calculating and adding to overall score
     int multiplier;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +44,8 @@ public class InjectsManager : MonoBehaviour
         earlyEnd = false;
     }
 
+    // Update function with a test debug that is currently inactive
+    #region Update
     // Update is called once per frame
     void Update()
     {
@@ -48,17 +53,11 @@ public class InjectsManager : MonoBehaviour
         //if (Random.Range(0f, 1f) > .99f && started == false)
             //StartInject(1, 0);
     }
+    #endregion
 
-
-    /// SETSCORE
-    /// Description:
-    /// Returns float of score increase based on multiplier
-    float SetScore(float scoreNum)
-    {
-        float evaluatedScore = scoreNum * (10-multiplier);
-        return evaluatedScore;
-    }
-
+    // Functions that handle moving through the Inject system node architecture and
+    // handles any changes in inject state and score modifications
+    #region InjectFunction
     /// STARTINJECT
     /// Description:
     /// Prepares the inject for user input.  Sets up buttons and text
@@ -160,16 +159,6 @@ public class InjectsManager : MonoBehaviour
         yield return null;
     }
 
-    /// RESETBUTTONS
-    /// Description:
-    /// Changes the button values of each of the buttons back to their defaults
-    /// by calling a function local to the ButtonValues script
-    void ResetButtons()
-    {
-        for (int x = 0; x < buttons.Count; x++)
-            buttons[x].GetComponent<ButtonValues>().Reset();
-    }
-
     /// PROCESSCHANGES
     /// Description:
     /// Takes the user input and uses it to change the next steps for the inject
@@ -231,6 +220,19 @@ public class InjectsManager : MonoBehaviour
         buttons[0].GetComponentInChildren<Text>().text = "Continue";
         chosenValue = 0;
     }
+    #endregion
+
+    // Buttons functionality that changes based on status of inject
+    #region Buttons
+    /// RESETBUTTONS
+    /// Description:
+    /// Changes the button values of each of the buttons back to their defaults
+    /// by calling a function local to the ButtonValues script
+    void ResetButtons()
+    {
+        for (int x = 0; x < buttons.Count; x++)
+            buttons[x].GetComponent<ButtonValues>().Reset();
+    }
 
     /// GETINPUT
     /// Description:
@@ -249,5 +251,15 @@ public class InjectsManager : MonoBehaviour
             buttons[x].SetActive(false);
 
         display.SetActive(false);
+    }
+    #endregion
+
+    /// SETSCORE
+    /// Description:
+    /// Returns float of score increase based on multiplier
+    float SetScore(float scoreNum)
+    {
+        float evaluatedScore = scoreNum * (10 - multiplier);
+        return evaluatedScore;
     }
 }
