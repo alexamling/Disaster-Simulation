@@ -28,6 +28,9 @@ public class InjectsManager : MonoBehaviour
     // Local value that holds the chosen interval value
     int chosenValue;
 
+    // Multiplier for calculating and adding to overall score
+    int multiplier;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +49,10 @@ public class InjectsManager : MonoBehaviour
             StartInject(1, 0);
     }
 
+
+    /// SETSCORE
+    /// Description:
+    /// Returns float of score increase based on multiplier
     float SetScore(float scoreNum)
     {
         float evaluatedScore = scoreNum * (10-multiplier);
@@ -162,7 +169,7 @@ public class InjectsManager : MonoBehaviour
         for (int x = 0; x < buttons.Count; x++)
             buttons[x].GetComponent<ButtonValues>().Reset();
     }
-    int multiplier;
+
     /// PROCESSCHANGES
     /// Description:
     /// Takes the user input and uses it to change the next steps for the inject
