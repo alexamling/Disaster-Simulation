@@ -3,41 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles Updates to the advisor tips shown for an objective
+/// </summary>
 public class advisorTracker : MonoBehaviour
 {
+    #region attributes
+
     public PlayerControls playerController;
+
+    //messages to change
     public Text[] tipMessages = new Text[3];
 
+    //currently selected objective
     private PlayerObjective curSelected;
 
     public float lowThreshhold = 100; //values below are low severity
     public float highThreshhold = 200; //values above are high severity, between thresholds is medium
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #endregion
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        //if an objective has been selected
         if (playerController.selectedObjective != null)
         {
+            //if the selected objective has changed from what it was previously
             if (playerController.selectedObjective != curSelected)
             {
                 UpdateNotes(4);
             }
 
+            //update the reference to the selected objective
             curSelected = playerController.selectedObjective;
         }
     }
 
+    /// <summary>
+    /// Function to update the tip text strings, generally called from the advisor call buttons
+    /// </summary>
+    /// <param name="noteToUpdate"></param>
     public void UpdateNotes(int noteToUpdate)
     {
         switch (noteToUpdate)
         {
-            case 0: //planning hints to severity
+
+            #region Planning (0)
+
+            case 0: //PLANNING hints to severity
                 if (playerController.selectedObjective.originalScore < lowThreshhold)
                 {
                     tipMessages[0].text = "The current incident is likely low in severity. We don't expect major reprucussions even if it is not swiftly dealt with.";
@@ -55,11 +69,19 @@ public class advisorTracker : MonoBehaviour
 
                 break;
 
-            case 1: //logistics hints to effective units
-                int logRange = Random.Range(0, 99);
-                float[] bestMod = new float[] { 0, 0 }; //index, value
-                float[] backupMod = new float[] { 0, 0 }; //index, value
+            #endregion
+
+            #region Logistics (1)
+
+            case 1: //LOGISTICS hints to effective units
+                int logRange = Random.Range(0, 99); //Generate a random int (essentially a percentage 1-100%)
+                float[] bestMod = new float[] { 0, 0 }; //index, value: best modifier in list
+                float[] backupMod = new float[] { 0, 0 }; //index, value: second best modifier in list
+
+                //Copy of the modifier list for the current selected objective
                 float[] backupModifiers = new float[playerController.selectedObjective.delayedResponseModifiers.Length];
+
+                #region arrayParsing
 
                 //Parse the modifiers and find the largest one, store it's index location and value in bestMod
                 for (int i = 0; i < playerController.selectedObjective.delayedResponseModifiers.Length; i++)
@@ -91,9 +113,13 @@ public class advisorTracker : MonoBehaviour
                     }
                 }
 
+                #endregion
+
+                #region textUpdating
+
                 switch (logRange)
                 {
-                    case int n when (n >= 0 && n < 10):
+                    case int n when (n >= 0 && n < 10): //10% chance to give the 2nd best answer
                         switch (backupMod[0])
                         {
                             case 0:
@@ -115,7 +141,7 @@ public class advisorTracker : MonoBehaviour
 
                         break;
 
-                    case int n when (n >= 10 && n < 100):
+                    case int n when (n >= 10 && n < 100): //90% chance to correctly give the best option
                         switch (bestMod[0])
                         {
                             case 0:
@@ -140,9 +166,17 @@ public class advisorTracker : MonoBehaviour
 
                 break;
 
-            case 2: //operations hints to needs response or not
+                #endregion
+
+            #endregion
+
+            #region Operations (2)
+
+            case 2: //OPERATIONS hints to needs response or not
                 int range = Random.Range(0, 9);
 
+                //if current objective actually should be responded to
+                #region needsResponse
                 if (playerController.selectedObjective.needsResponse)
                 {
                     switch (range)
@@ -167,6 +201,10 @@ public class advisorTracker : MonoBehaviour
                     }
                 }
 
+                #endregion
+
+                //if current objective should be passed on
+                #region !needsResponse
                 else if (!playerController.selectedObjective.needsResponse)
                 {
                     switch (range)
@@ -193,7 +231,11 @@ public class advisorTracker : MonoBehaviour
 
                 break;
 
-            case 4:
+            #endregion
+
+            #endregion
+
+            case 4: //A default case of sorts that resets the text strings when a new objective is accessed
                 for (int i = 0; i < tipMessages.Length; i++)
                 {
                     tipMessages[i].text = "Contact the associated advisor for more information.";
