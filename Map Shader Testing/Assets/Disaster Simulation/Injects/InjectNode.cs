@@ -8,6 +8,8 @@ using UnityEngine;
 */
 public class InjectNode : MonoBehaviour
 {
+    // Parameters used to set up nodes for the inject
+    #region varibales
     // Values used to determine displayed text and check levels of inject
     public string main;
     string endChoice;
@@ -25,6 +27,7 @@ public class InjectNode : MonoBehaviour
     public int localPart;
     public int localMax;
     public int numChoices;
+    #endregion
 
     // Set up Inject and prepare next one
     public InjectNode(List<List<string[]>> injectSections, int part, List<string> endScores, int index)
@@ -37,32 +40,24 @@ public class InjectNode : MonoBehaviour
         choices = injectSections[part][1];
         results = injectSections[part][2];
 
+        // Instantiates list
         scoreMultiplier = new List<int>();
-
        
+
+        // Goes through, checks each of the options and assigns a value based on contents of the string
         for (int x = 0; x < choices.Length; x++)
         {
+            // If the string contains 'End', parse the value and split the number from the string
             if (endScores[index].Contains("End"))
-            {
                 scoreMultiplier.Add(int.Parse(endScores[index].Split('^')[1]));
-            }
-            else
-            {
+            else // Add a '-1' as a placeholder
                 scoreMultiplier.Add(-1);
-            }
+
+            // increase index separately from loop so future iterations don't go over the same elements
             index++;
         }
-        
-        
 
-        string test = "";
-        for(int x = 0; x < scoreMultiplier.Count; x++)
-        {
-            test += scoreMultiplier[x] + " / ";
-        }
-        //Debug.Log(test);
-
-        // Sets local values and creates new Node with next part, if necessary
+        // Sets local values and creates new Node with next part, if necessary.
         numChoices = choices.Length;
         localPart = part + 1;
         localMax = injectSections.Count;
