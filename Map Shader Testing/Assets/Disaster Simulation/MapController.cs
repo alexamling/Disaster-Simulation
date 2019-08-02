@@ -364,6 +364,12 @@ public class MapController : MonoBehaviour
         return newArr;
     }
 
+
+    #region Objective Spawning
+
+    /// <summary>
+    /// Method used to spawn a new objective of a random type
+    /// </summary>
     void SpawnRandomObjective()
     {
         int val = Random.Range(0, 5);
@@ -386,14 +392,23 @@ public class MapController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The methods below each use a seperate list of locations to instantiate the associated objectives, before passing them on to SpawnObjective() to be put into the scene
+    /// </summary>
+
+
     void SpawnFloodObjective()
     {
+        // make a copy of a read in objective
         PlayerObjective objective = Instantiate(objectiveReader.floodList[Random.Range(0, objectiveReader.floodList.Count)]);
 
+        // find a point to place the objective at
         Transform placementValues = floodLocations[Random.Range(1, floodLocations.Length)].transform;
 
+        // get a random offset for that point
         Vector2 pos = Random.insideUnitCircle * placementValues.localScale.x * .5f;
 
+        // set the position to that point + offset
         objective.transform.position = new Vector3(pos.x + placementValues.position.x, 0, pos.y + placementValues.position.z);
 
         SpawnObjective(objective);
@@ -435,11 +450,18 @@ public class MapController : MonoBehaviour
         SpawnObjective(objective);
     }
 
+    /// <summary>
+    /// Base method used to add created objectives into the scene
+    /// </summary>
+    /// <param name="objective">The objective to be added to the scene</param>
     private void SpawnObjective(PlayerObjective objective)
     {
-
+        // create a notification to accompany the objective
         Notification newNotification = Instantiate(playerControls.notificationPrefab, playerControls.notificationPanel.panel.transform);
+        // set the notification at the top of the panel
         newNotification.transform.SetAsFirstSibling();
+
+        // assign all the needed values to the objective   
         newNotification.text.text = objective.notificationTitle;
         newNotification.severity = 0;
         newNotification.objective = objective;
@@ -455,4 +477,6 @@ public class MapController : MonoBehaviour
             playerControls.ignoredObjectivesIdeal++;
         }
     }
+
+    #endregion
 }

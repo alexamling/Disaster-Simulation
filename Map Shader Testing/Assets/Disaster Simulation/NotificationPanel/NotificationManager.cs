@@ -40,19 +40,8 @@ public class NotificationManager : MonoBehaviour
             Vector3 newPos; 
             newPos.x = Random.Range(-512, 512);
             newPos.z = Random.Range(-450, 450);
-            newPos.y = 5; // heightMap.GetPixel((int)newPos.x, (int)newPos.z).r;
+            newPos.y = 5;
             newObjective.transform.position = newPos;
         }
-    }
-
-    public void AddNotification(string message, int severity, PlayerObjective objective)
-    {
-        Notification newNotification = Instantiate(notificationPrefab, notificationPanel.panel.transform);
-        newNotification.text.text = message;
-        newNotification.severity = severity;
-        newNotification.objective = objective;
-        objective.notification = newNotification;
-        //newNotification.manager = this;
-        notifications.Add(newNotification);
     }
 }

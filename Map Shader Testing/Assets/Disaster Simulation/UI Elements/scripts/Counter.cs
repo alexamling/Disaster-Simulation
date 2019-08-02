@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class gives the buttons on the unit UI their functionality
+/// </summary>
 public class Counter : MonoBehaviour
 {
     public int value;
@@ -10,8 +13,7 @@ public class Counter : MonoBehaviour
 
     private Text number;
     private ManageUnits unitManager;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         unitManager = FindObjectOfType<ManageUnits>();

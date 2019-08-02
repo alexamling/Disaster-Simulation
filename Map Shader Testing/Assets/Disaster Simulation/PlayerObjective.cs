@@ -70,7 +70,6 @@ public class PlayerObjective: MonoBehaviour
     protected void Start()
     {
         selected = false;
-        //outline = gameObject.AddComponent<Outline>();
 
         timer = FindObjectOfType<gameTimer>();
 
@@ -87,10 +86,6 @@ public class PlayerObjective: MonoBehaviour
         iconImage = icon.GetComponentInChildren<Image>();
 
         unitManager = GameObject.Find("Main Camera").GetComponent<ManageUnits>();
-
-        //DEBUG
-        //revealed = true;
-        //units = new int[] { 1, 3};
     }
 
     private float value;
@@ -111,39 +106,21 @@ public class PlayerObjective: MonoBehaviour
             if (status > .5)
             {
                 mix = Mathf.InverseLerp(.5f, 1, status);
-                //outline.OutlineColor = mix * Color.green + (1 - mix) * Color.yellow;
                 c = value * (mix * Color.green + (1 - mix) * Color.yellow);
             }
             else if (status > .25)
             {
                 mix = Mathf.InverseLerp(.25f, .5f, status);
-                //outline.OutlineColor = mix * Color.yellow + (1 - mix) * new Color(1, .5f, 0);
                 c = value * (mix * Color.yellow + (1 - mix) * new Color(1, .5f, 0));
             }
             else
             {
                 mix = Mathf.InverseLerp(.0f, .25f, status);
-                //outline.OutlineColor = mix * new Color(1, .5f, 0) + (1 - mix) * Color.red;
                 c = value * (mix * new Color(1, .5f, 0) + (1 - mix) * Color.red);
             }
             c.a = 1.0f;
             iconImage.color = c;
-            //status -= .001f;
         }
-            
-        
-        if (selected)
-        {
-            //outline.OutlineWidth = 5.0f;
-            //outline.OutlineColor = new Color(1, .5f, 0);
-        }
-        else if (hover)
-        {
-            //outline.OutlineWidth = 7.5f;
-            //outline.OutlineColor = Color.yellow;
-            //hover = false;
-        }
-
     }
 
     void FixedUpdate()
@@ -184,7 +161,6 @@ public class PlayerObjective: MonoBehaviour
                         hasImmediateResponded = true;
                         for (int i = 0; i < units.Length; i++)
                         {
-                            //score += immediateResponseModifiers[units[i]] / 10.0f;
                             incrimentorImm = (0 + ((immediateResponseModifiers[i] / 10.0f) - 0) * (1 - 0) / (10.0f - 0)) * units[i];
                             status += incrimentorImm / 3.33f;
                             score += Mathf.Clamp((incrimentorImm * 9.25f), 0.0f, ((scoreDeprecator * 0.125f) / nonZeroUnits));
@@ -194,13 +170,15 @@ public class PlayerObjective: MonoBehaviour
 
                     for (int i = 0; i < units.Length; i++)
                     {
-                        //score += delayedResponseModifiers[units[i]] / 100.0f;
                         incrimentorDel = (0 + ((delayedResponseModifiers[i] / 100.0f) - 0) * (1 - 0) / (100.0f - 0) * units[i]);
                         status += incrimentorDel / 3.33f;
                         score += Mathf.Clamp((incrimentorDel * 25.0f), 0.0f, ((scoreDeprecator * 0.125f) / nonZeroUnits));
                     }
                 }
             }
+
+
+            #region Exit States
             if (status >= 1)
             {
                 iconImage.color = Color.green;
@@ -212,7 +190,7 @@ public class PlayerObjective: MonoBehaviour
                 unitManager.controller.sucessfulObjectivesCount++;
             }
 
-            if (status <= 0.0f) // turn the outline solid black when the status is low enough
+            if (status <= 0.0f) // turn the icon solid black when the status is low enough
             {
                 iconImage.color = Color.black;
                 objectiveState = ObjectiveState.Resolved;
@@ -221,6 +199,7 @@ public class PlayerObjective: MonoBehaviour
 
                 unitManager.controller.failedObjectivesCount++;
             }
+            #endregion
         }
 
     }

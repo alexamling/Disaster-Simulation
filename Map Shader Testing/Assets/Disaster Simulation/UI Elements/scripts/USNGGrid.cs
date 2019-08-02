@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controls UI elements that need to be anchored to a certain world location.
+/// The grid coordinates are each aligned to their anchor along one axis.
+/// Objective Icons are aligned on both axes.
+/// </summary>
+
+// struct to simplify the references to UI panels and their anchors
 [System.Serializable]
 public struct UIAnchor
 {

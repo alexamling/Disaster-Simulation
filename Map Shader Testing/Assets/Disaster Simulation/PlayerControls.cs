@@ -12,6 +12,7 @@ public struct InfoPanel
 }
 
 /// <summary>
+/// Written by Alexander Amling & Max Kaiser
 /// This class manages the player's ability to interact with the game
 /// </summary>
 
@@ -19,7 +20,7 @@ public class PlayerControls : MonoBehaviour
 {
     public MapController manager;
     public PlayerObjective selectedObjective;
-    private PlayerObjective lastSelected = null;
+    PlayerObjective lastSelected = null;
     public Image progressBar;
     public Image[] coolDowns;
     public ManageUnits unitManager;
@@ -36,9 +37,6 @@ public class PlayerControls : MonoBehaviour
     public int ignoredObjectivesIdeal = 0;
 
     #endregion
-
-    // TODO: improve on this/replace several lists with seperate menus
-    public List<Button> options;
 
     [Header("UI Variables")]
     #region UI Variables
@@ -84,7 +82,6 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         newFov = 60;
-        //panningBorderWidth = 10;
         numNotifications = 0;
         newCamPos = cameraPos.transform.position;
 
@@ -115,47 +112,8 @@ public class PlayerControls : MonoBehaviour
                 Pause();
             }
         }
-
-        /*
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            PlayerObjective newObjective = Instantiate(objectivePrefab);
-            Vector3 newPos;
-            newPos.x = Random.Range(-512, 512);
-            newPos.z = Random.Range(-512, 512);
-            newPos.y = 5; // heightMap.GetPixel((int)newPos.x, (int)newPos.z).r;
-            newObjective.transform.position = newPos;
-            AddNotification("Test " + ++numNotifications, 0, newObjective);
-        }
-
-        if (Input.GetKeyDown(KeyCode.G) && manager.terrainGenerator)
-        {
-            StartCoroutine(manager.terrainGenerator.Load());
-        }
-        */
         
         screenPos = Input.mousePosition;
-
-        /*
-        #region Camera Panning
-        if(screenPos.x > cam.scaledPixelWidth - panningBorderWidth)
-        {
-            newCamPos += Vector3.right * 3;
-        }
-        else if (screenPos.x < panningBorderWidth)
-        {
-            newCamPos += Vector3.left * 3;
-        }
-        else if (screenPos.y > cam.scaledPixelHeight - panningBorderWidth)
-        {
-            newCamPos += Vector3.forward * 3;
-        }
-        else if (screenPos.y < panningBorderWidth)
-        {
-            newCamPos += Vector3.back * 3;
-        }
-        #endregion
-        */
 
         // lerp the camera towards the new location
         newCamPos = Vector3.ClampMagnitude(newCamPos, 500);
@@ -181,7 +139,8 @@ public class PlayerControls : MonoBehaviour
             newFov = Mathf.Clamp(newFov, 1f, 65);
         }
         #endregion
-        
+
+        #region Move with Right-Click + Drag
         if (Input.GetMouseButtonDown(1))
         {
             clickedPos = screenPos;
@@ -194,6 +153,7 @@ public class PlayerControls : MonoBehaviour
             newCamPos.x += swapPos.x;
             newCamPos.z += swapPos.y;
         }
+        #endregion
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newFov, .2f);
         
@@ -244,6 +204,7 @@ public class PlayerControls : MonoBehaviour
                 float shortestDist = float.MaxValue;
                 PlayerObjective closestObjective = null;
 
+                // check collisions for the nearest player objective
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     playerObjective = colliders[i].GetComponent<PlayerObjective>();
@@ -275,11 +236,17 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This changes the image color of the currently selected objctive
+    /// </summary>
+    /// <param name="obj">objective that is tied to the desired notification</param>
     public void HighlightSelectedObjective(PlayerObjective obj)
     {
+        // unhighlight the last selected objective
         if (lastSelected)
             lastSelected.notification.GetComponent<Image>().color = new Color32(51, 47, 41, 200);
 
+        // highlight the new objective
         obj.notification.GetComponent<Image>().color = Color.grey;
         lastSelected = obj;
     }
@@ -301,6 +268,9 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This is a function to allow buttons to toggle the Pause gamestate
+    /// </summary>
     public void Pause()
     {
 
@@ -316,17 +286,7 @@ public class PlayerControls : MonoBehaviour
         }
 
     }
-
-    public void AddNotification(string message, int severity, PlayerObjective objective)
-    {
-        Notification newNotification = Instantiate(notificationPrefab, notificationPanel.panel.transform);
-        newNotification.transform.SetAsFirstSibling();
-        newNotification.text.text = message;
-        newNotification.severity = severity;
-        newNotification.objective = objective;
-        objective.notification = newNotification;
-        notifications.Add(newNotification);
-    }
+    
 
     public void Display(PlayerObjective objective)
     {
