@@ -253,14 +253,17 @@ public class PlayerControls : MonoBehaviour
 
     void FixedUpdate()
     {
+        //button cooldowns refill with time
         for (int i = 0; i < coolDowns.Length; i++)
         {
             if (coolDowns[i].fillAmount < 1)
             {
-                coolDowns[i].fillAmount += (1.0f / 1500.0f); //1/1500 = 30 seconds
+                //Time to cool = 1 / (0.02s * 50 * x) = 1 / (fixedDeltaTime * #ofCallsIn1Second * cooldownTime)
+                coolDowns[i].fillAmount += (1.0f / 1500.0f); // 1 / (.02 * 50 * 30) = 1/1500: 30 seconds
             }
         }
         
+        //Progress bar for selected objective fills and changes color with the objective status
         if (selectedObjective != null)
         {
             progressBar.fillAmount = selectedObjective.status;

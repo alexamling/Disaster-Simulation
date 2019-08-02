@@ -37,7 +37,7 @@ public class InjectsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Sets up local values defaults
+        // Sets up necessary defaults
         injects = GetComponent<ImportScript>().injects;
         started = false;
         selected = false;
@@ -51,7 +51,7 @@ public class InjectsManager : MonoBehaviour
     {
         // Small chance to activate inject based on random number and if an inject is already started
         //if (Random.Range(0f, 1f) > .99f && started == false)
-            //StartInject(1, 0);
+        //    StartInject(1, 0);
     }
     #endregion
 
@@ -71,8 +71,7 @@ public class InjectsManager : MonoBehaviour
         display.SetActive(true);
 
         // Sets current node to a random inject from the list
-        //currentNode = injects[Random.Range(0, injects.Count)];
-        currentNode = injects[0];
+        currentNode = injects[Random.Range(0, injects.Count)];
 
         // Set thte main text of the UI to reflect that of the starting text of the inject
         mainText.text = currentNode.main;

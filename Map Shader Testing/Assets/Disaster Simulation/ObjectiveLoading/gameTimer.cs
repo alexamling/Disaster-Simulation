@@ -7,9 +7,12 @@ public enum GameState { Paused, Completed, Running };
 
 public class gameTimer : MonoBehaviour
 {
-    public Text sceneTimer;
-    public Text scoreText;
 
+    #region attributes
+
+    public Text scoreText; //final score display
+
+    //Attributes for final stats
     public Text successfulObj;
     public Text failedObj;
     public Text ignoredObj;
@@ -17,13 +20,16 @@ public class gameTimer : MonoBehaviour
     public Text unitsSent;
     public Text unitsRequested;
 
+    //Game timer stuff
     public float currentTime;
     public float timeLimit = 600;
+    public Text sceneTimer; //game timer display
 
     private MapController mapControl;
     private GameObject gameOverPanel;
-
     public GameState gameState = GameState.Running;
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +51,7 @@ public class gameTimer : MonoBehaviour
     {
         if (gameState == GameState.Running)
         {
+            //Display the current time at each fixed pdate
             if (currentTime > 0.1f)
             {
                 currentTime -= Time.fixedDeltaTime;
@@ -52,6 +59,7 @@ public class gameTimer : MonoBehaviour
                 int seconds = Mathf.FloorToInt(currentTime - (minutes * 60));
                 sceneTimer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             }
+            //If timer hits zero (or near it) complete the game and print final stats
             if (currentTime <= 0.1f)
             {
                 gameState = GameState.Completed;
@@ -69,12 +77,12 @@ public class gameTimer : MonoBehaviour
         
         else if (gameState == GameState.Paused)
         {
-
+            //unused for now
         }
 
         else if (gameState == GameState.Completed)
         {
-            
+            //unused for now
         }
     }
 }
