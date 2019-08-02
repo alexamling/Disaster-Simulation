@@ -24,10 +24,15 @@ public class Notification : MonoBehaviour
         manager = FindObjectOfType<PlayerControls>();
     }
 
+    /// <summary>
+    /// when a notification is clocked on, the camera should refocus according to the stat of the objective
+    /// </summary>
     public void Clicked()
     {
+        // highlight the clicked notification
         manager.HighlightSelectedObjective(objective);
         manager.objectiveMessage.panel.SetActive(false);
+
         if (objective.revealed)
         {
             manager.currentObjectivePanel.panel.SetActive(false);
@@ -44,6 +49,9 @@ public class Notification : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method is used to clean up objectives and all objects attached to them, as well as make appropriate changes to the score
+    /// </summary>
     public void Close()
     {
         if (objective.objectiveState != ObjectiveState.Resolved)
@@ -70,40 +78,14 @@ public class Notification : MonoBehaviour
         Destroy(objective.icon);
     }
 
+    /// <summary>
+    /// used to focus the camera on whatever objective is tied to this notification
+    /// </summary>
     public void FocusOnObjective()
     {
         gameObject.GetComponent<Image>().color = Color.grey;
         Vector3 objectivePos = objective.transform.position;
         manager.selectedObjective = objective;
         manager.FocusOn(new Vector2(objectivePos.x, objectivePos.z), 20);
-    }
-}
-
-// http://answers.unity.com/answers/1610964/view.html
-/// <summary>
-/// Utility class to allow for easier manipulation of rectTransforms.
-/// Found on unity forums.
-/// Written by: https://answers.unity.com/users/546375/eldoir.html
-/// </summary>
-public static class RectTransformExtensions
-{
-    public static void SetLeft(this RectTransform rt, float left)
-    {
-        rt.offsetMin = new Vector2(left, rt.offsetMin.y);
-    }
-
-    public static void SetRight(this RectTransform rt, float right)
-    {
-        rt.offsetMax = new Vector2(-right, rt.offsetMax.y);
-    }
-
-    public static void SetTop(this RectTransform rt, float top)
-    {
-        rt.offsetMax = new Vector2(rt.offsetMax.x, -top);
-    }
-
-    public static void SetBottom(this RectTransform rt, float bottom)
-    {
-        rt.offsetMin = new Vector2(rt.offsetMin.x, bottom);
     }
 }

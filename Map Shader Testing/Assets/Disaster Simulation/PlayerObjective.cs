@@ -63,9 +63,9 @@ public class PlayerObjective: MonoBehaviour
 
     public bool active { get { return objectiveState == ObjectiveState.Responding || objectiveState == ObjectiveState.Requesting; } }
 
-    private float mix;
+    float mix;
 
-    private gameTimer timer;
+    gameTimer timer;
     
     protected void Start()
     {
@@ -88,11 +88,11 @@ public class PlayerObjective: MonoBehaviour
         unitManager = GameObject.Find("Main Camera").GetComponent<ManageUnits>();
     }
 
-    private float value;
+    float value;
 
     protected void Update()
     {
-
+        // move the icon to follow the objective 
         if (revealed)
         {
             icon.transform.position = cam.WorldToScreenPoint(transform.position);
@@ -156,6 +156,7 @@ public class PlayerObjective: MonoBehaviour
                         }
                     }
 
+                    // when response if first assigned, there is a one time immeiate effect from the units assigned
                     if (!hasImmediateResponded)
                     {
                         hasImmediateResponded = true;

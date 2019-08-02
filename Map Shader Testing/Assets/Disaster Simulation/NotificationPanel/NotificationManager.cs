@@ -29,19 +29,4 @@ public class NotificationManager : MonoBehaviour
         notifications = new List<Notification>();
         currentObjectivePanel.panel.SetActive(false);
     }
-    
-    void Update()
-    {
-    // test input to add new notification 
-    // TODO: remove this
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            PlayerObjective newObjective = Instantiate(objectivePrefab);
-            Vector3 newPos; 
-            newPos.x = Random.Range(-512, 512);
-            newPos.z = Random.Range(-450, 450);
-            newPos.y = 5;
-            newObjective.transform.position = newPos;
-        }
-    }
 }

@@ -30,12 +30,12 @@ public class USNGGrid : MonoBehaviour
     RectTransform[] xMarkers;
     RectTransform[] yMarkers;
 
+    // static method to convert between world space and USNG
     public static Vector2 ToUSNG(Vector3 pos)
     {
         return new Vector2(pos.x / .425f + 1783, pos.z / .425f + 4740);
     }
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         cam = Camera.main;
@@ -65,8 +65,7 @@ public class USNGGrid : MonoBehaviour
             yMarkers[i].SetParent(parent);
         }
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         Vector2 screenPos;
@@ -87,6 +86,7 @@ public class USNGGrid : MonoBehaviour
         PlaceDivisions();
     }
 
+    // place unlabled markers in between the labeled markers
     void PlaceDivisions()
     {
         Vector3 newPos;
